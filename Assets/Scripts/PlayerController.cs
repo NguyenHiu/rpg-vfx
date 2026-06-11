@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,10 +27,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         m_moveAction = InputSystem.actions.FindAction("Move");
-        // moveAction = InputActions.FindAction("Move");
-    }
+     }
 
-    // Update is called once per frame
     void Update()
     {
         m_moveVal =  m_moveAction.ReadValue<Vector2>();
@@ -37,6 +36,6 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Rb.MovePosition((Vector2)transform.position + WalkSpeed * m_moveVal);
+        Rb.linearVelocity = m_moveVal.normalized * WalkSpeed;
     }
 }
