@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class State
+public class State
 {
     public string Name;
     
@@ -9,7 +9,13 @@ public abstract class State
         Name = name;
     }
 
-    public abstract void Enter();
-    public abstract void Update();
-    public abstract void Exit();
+    public virtual void Enter() {
+        Debug.Log($"[State] Enter '{Name}'");
+    }
+    public virtual void Update() {
+
+    }
+    public virtual void Exit() {
+        Debug.Log($"[State] Exit '{Name}'");
+    }
 }

@@ -1,24 +1,30 @@
-using UnityEngine;
-
 public class PlayerState : State
 {
-    public Animator Anim;
+    public PlayerController Player;
+    public PlayerAnimController PlayerAnim; 
     public string VarName;
 
-    PlayerState() : base() {}
+    public PlayerState(PlayerController player, PlayerAnimController playerAnim, string varName) : base(varName)
+    {
+        Player = player; 
+        PlayerAnim = playerAnim;
+        VarName = varName;
+    }
 
     public override void Enter()
     {
-        Anim.SetBool(VarName, true);
+        base.Enter();
+        PlayerAnim.Anim.SetBool(VarName, true);
     }
 
     public override void Exit()
     {
-        Anim.SetBool(VarName, true);
+        base.Exit();
+        PlayerAnim.Anim.SetBool(VarName, false);
     }
 
     public override void Update()
     {
-        
+        base.Update();
     }
 }

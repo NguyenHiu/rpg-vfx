@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class Debug : MonoBehaviour
+public class CustomDebug : MonoBehaviour
 {
     public TextMeshProUGUI DebugText;
     public PlayerController Player;
