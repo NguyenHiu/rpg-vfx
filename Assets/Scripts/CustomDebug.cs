@@ -1,6 +1,8 @@
 using System;
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
+using Microsoft.Unity.VisualStudio.Editor;
 
 public class CustomDebug : MonoBehaviour
 {
@@ -15,11 +17,17 @@ public class CustomDebug : MonoBehaviour
     [Header("Panel")]
     public GameObject DebugBtn;
     public GameObject DebugPanel;
+    public CanvasGroup PanelGroup;
 
     void Awake()
     {
         Application.targetFrameRate = 120;  // or Screen.currentResolution.refreshRate
         QualitySettings.vSyncCount = 0;     // already 0, but safe to be explicit
+    }
+
+    void OnDisable()
+    {
+        PanelGroup.DOKill();
     }
 
     void Update()
@@ -37,23 +45,37 @@ public class CustomDebug : MonoBehaviour
 
     void UpdateStatsText()
     {
-        DebugText.text = 
-            $"FPS: {m_fps}\n" + 
+        DebugText.text =
+            $"FPS: {m_fps}\n" +
             $"Pos: {m_pos}\n" +
-            $"Speed Buff: {Player.SpeedBuff*100}%"
-            ; 
+            $"Speed Buff: {Player.SpeedBuff * 100}%"
+            ;
     }
 
     public void EnableDebugPanel()
     {
         DebugBtn.SetActive(false);
+        PanelGroup.alpha = 0;
+        PanelGroup.interactable = false;
+
         DebugPanel.SetActive(true);
+        PanelGroup.DOKill();
+        PanelGroup.DOFade(1f, 0.05f).OnComplete(() =>
+        {
+            PanelGroup.interactable = true;
+        });
     }
 
     public void DisableDebugPanel()
     {
-        DebugBtn.SetActive(true);
-        DebugPanel.SetActive(false);
+        PanelGroup.interactable = false;
+        PanelGroup.DOKill();
+        PanelGroup.DOFade(0f, 0.05f).OnComplete(() =>
+        {
+            DebugPanel.SetActive(false);
+            DebugBtn.SetActive(true);
+        });
+
     }
 
     public void SetSpeedBuff(float val = 1.0f)
