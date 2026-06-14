@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,7 +9,10 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D Rb;
 
     [Header("Stats")]
-    public float WalkSpeed;
+    [SerializeField] private float walkSpeed;
+    [SerializeField] private float speedBuff;
+    public float SpeedBuff => speedBuff;
+    public Action<float> OnSpeedBuffChange;
 
     private InputAction m_moveAction;
     private Vector2 m_moveVal;
@@ -27,15 +30,26 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         m_moveAction = InputSystem.actions.FindAction("Move");
-     }
+    }
 
     void Update()
     {
-        m_moveVal =  m_moveAction.ReadValue<Vector2>();
+        m_moveVal = m_moveAction.ReadValue<Vector2>();
     }
 
     void FixedUpdate()
     {
-        Rb.linearVelocity = m_moveVal.normalized * WalkSpeed;
+        Rb.linearVelocity = m_moveVal.normalized * GetSpeed();
+    }
+
+    public float GetSpeed()
+    {
+        return walkSpeed * SpeedBuff;
+    }
+
+    public void SetSpeedBuff(float newVal)
+    {
+        speedBuff = newVal;
+        OnSpeedBuffChange?.Invoke(SpeedBuff);
     }
 }
