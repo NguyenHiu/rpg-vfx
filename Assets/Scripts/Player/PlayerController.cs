@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     public float SpeedBuff => speedBuff;
     public Action<float> OnSpeedBuffChange;
 
+    [Header("Hand")]
+    public WeaponController Weapon;
+
     private InputAction m_moveAction;
     private Vector2 m_moveVal;
 

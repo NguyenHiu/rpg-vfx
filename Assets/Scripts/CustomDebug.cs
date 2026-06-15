@@ -2,7 +2,6 @@ using System;
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
-using Microsoft.Unity.VisualStudio.Editor;
 
 public class CustomDebug : MonoBehaviour
 {
