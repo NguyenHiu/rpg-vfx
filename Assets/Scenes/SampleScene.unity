@@ -1408,7 +1408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
   Player: {fileID: 2130083349}
   YRange: 0.025
-  speed: 0
+  speed: 1
 --- !u!1 &1166211856
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,7 +1778,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimController
   Player: {fileID: 2130083349}
   Anim: {fileID: 1446571701}
-  States: []
 --- !u!1 &1466925222
 GameObject:
   m_ObjectHideFlags: 0
@@ -2670,7 +2669,14 @@ MonoBehaviour:
   Rb: {fileID: 2130083350}
   walkSpeed: 5
   speedBuff: 1
+  dashSpeed: 15
+  DashCooldown: 0.5
+  DashTime: 0.2
+  IsDashing: 0
+  DashDir: {x: 0, y: 0}
   Weapon: {fileID: 1078091622}
+  MoveVal: {x: 0, y: 0}
+  PressDashThisFrame: 0
 --- !u!50 &2130083350
 Rigidbody2D:
   serializedVersion: 5

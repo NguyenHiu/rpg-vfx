@@ -9,16 +9,27 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D Rb;
 
     [Header("Stats")]
+    // Walk
     [SerializeField] private float walkSpeed;
     [SerializeField] private float speedBuff;
     public float SpeedBuff => speedBuff;
     public Action<float> OnSpeedBuffChange;
+    // Dash
+    [SerializeField] private float dashSpeed;
+    public float DashCooldown;
+    private float dashTimer;
+    public float DashTime;
+    public bool IsDashing;
+    public Vector2 DashDir;
 
     [Header("Hand")]
     public WeaponController Weapon;
 
+    // Inputs
     private InputAction m_moveAction;
-    private Vector2 m_moveVal;
+    private InputAction m_dashAction;
+    public Vector2 MoveVal;
+    public bool PressDashThisFrame;
 
     void OnEnable()
     {
@@ -33,26 +44,36 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         m_moveAction = InputSystem.actions.FindAction("Move");
+        m_dashAction = InputSystem.actions.FindAction("Dash");
     }
 
     void Update()
     {
-        m_moveVal = m_moveAction.ReadValue<Vector2>();
+        if (dashTimer >= 0) dashTimer -= Time.deltaTime;
+        MoveVal = m_moveAction.ReadValue<Vector2>();
+        PressDashThisFrame = dashTimer < 0f && m_dashAction.IsPressed();
     }
 
     void FixedUpdate()
     {
-        Rb.linearVelocity = m_moveVal.normalized * GetSpeed();
+        var dir = IsDashing ? DashDir : MoveVal.normalized;
+        Rb.linearVelocity = dir * GetSpeed();
     }
 
     public float GetSpeed()
     {
-        return walkSpeed * SpeedBuff;
+        var baseSpeed = IsDashing ? dashSpeed : walkSpeed;
+        return baseSpeed * SpeedBuff;
     }
 
     public void SetSpeedBuff(float newVal)
     {
         speedBuff = newVal;
         OnSpeedBuffChange?.Invoke(SpeedBuff);
+    }
+
+    public void ResetDashTimer()
+    {
+        dashTimer = DashCooldown;
     }
 }

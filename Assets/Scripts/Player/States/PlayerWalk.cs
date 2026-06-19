@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class PlayerWalk : PlayerState
 {
+    protected PlayerStates backState;
+
     public PlayerWalk(PlayerController player, PlayerAnimController playerAnim, string varName) : base(player, playerAnim, varName)
     {
+        Type = PlayerStates.WALK;
+        backState = PlayerStates.IDLE;
     }
 
     public override void Update()
@@ -12,63 +16,62 @@ public class PlayerWalk : PlayerState
         base.Update();
 
         if (Player.Rb.linearVelocity == Vector2.zero)
-            PlayerAnim.ChangeState(PlayerStates.IDLE);
-        else
-        {
-            var a = Player.Rb.linearVelocityX / Player.Rb.linearVelocityY;
-            if (a < -PlayerAnimController.VIRTUAL_DIR_RANGE || a > PlayerAnimController.VIRTUAL_DIR_RANGE)
-                PlayerAnim.ChangeState(PlayerStates.WALK_SIDE);
-            else if (Player.Rb.linearVelocityY > 0)
-                PlayerAnim.ChangeState(PlayerStates.WALK_BACK);
-        }
+            PlayerAnim.ChangeState(backState);
+        else if (Player.PressDashThisFrame) 
+            PlayerAnim.ChangeState(PlayerStates.DASH);
+        else DirectionCheck();
+    }
+
+    protected virtual void DirectionCheck()
+    {
+        var a = Player.Rb.linearVelocityX / Player.Rb.linearVelocityY;
+        if (a < -PlayerAnimController.VIRTUAL_DIR_RANGE || a > PlayerAnimController.VIRTUAL_DIR_RANGE)
+            PlayerAnim.ChangeState(PlayerStates.WALK_SIDE);
+        else if (Player.Rb.linearVelocityY > 0)
+            PlayerAnim.ChangeState(PlayerStates.WALK_BACK);
     }
 }
 
-public class PlayerWalkBack : PlayerState
+public class PlayerWalkBack : PlayerWalk
 {
     public PlayerWalkBack(PlayerController player, PlayerAnimController playerAnim, string varName) : base(player, playerAnim, varName)
     {
+        Type = PlayerStates.WALK_BACK;
+        backState = PlayerStates.IDLE_BACK;
     }
 
-    public override void Update()
+    protected override void DirectionCheck()
     {
-        base.Update();
-
-        if (Player.Rb.linearVelocity == Vector2.zero)
-            PlayerAnim.ChangeState(PlayerStates.IDLE_BACK);
-        else
-        {
-            var a = Player.Rb.linearVelocityX / Player.Rb.linearVelocityY;
-            if (a < -PlayerAnimController.VIRTUAL_DIR_RANGE || a > PlayerAnimController.VIRTUAL_DIR_RANGE)
-                PlayerAnim.ChangeState(PlayerStates.WALK_SIDE);
-            else if (Player.Rb.linearVelocityY < 0)
-                PlayerAnim.ChangeState(PlayerStates.WALK);
-        }
+        var a = Player.Rb.linearVelocityX / Player.Rb.linearVelocityY;
+        if (a < -PlayerAnimController.VIRTUAL_DIR_RANGE || a > PlayerAnimController.VIRTUAL_DIR_RANGE)
+            PlayerAnim.ChangeState(PlayerStates.WALK_SIDE);
+        else if (Player.Rb.linearVelocityY < 0)
+            PlayerAnim.ChangeState(PlayerStates.WALK);
     }
 }
 
-public class PlayerWalkSide : PlayerState
+public class PlayerWalkSide : PlayerWalk
 {
     public PlayerWalkSide(PlayerController player, PlayerAnimController playerAnim, string varName) : base(player, playerAnim, varName)
     {
+        Type = PlayerStates.WALK_SIDE;
+        backState = PlayerStates.IDLE_SIDE;
     }
 
     public override void Update()
     {
         base.Update();
         CheckSide();
+    }
 
-        if (Player.Rb.linearVelocity == Vector2.zero)
-            PlayerAnim.ChangeState(PlayerStates.IDLE_SIDE);
-        else
+    protected override void DirectionCheck()
+    {
+        var a = Player.Rb.linearVelocityX / Player.Rb.linearVelocityY;
+        if (a > -PlayerAnimController.VIRTUAL_DIR_RANGE & a < PlayerAnimController.VIRTUAL_DIR_RANGE)
         {
-            var a = Player.Rb.linearVelocityX / Player.Rb.linearVelocityY;
-            if (a > -PlayerAnimController.VIRTUAL_DIR_RANGE & a < PlayerAnimController.VIRTUAL_DIR_RANGE)
-            {
-                if (Player.Rb.linearVelocityY > 0)
-                    PlayerAnim.ChangeState(PlayerStates.WALK_BACK);
-                else PlayerAnim.ChangeState(PlayerStates.WALK);
-            }
+            if (Player.Rb.linearVelocityY > 0)
+                PlayerAnim.ChangeState(PlayerStates.WALK_BACK);
+            else PlayerAnim.ChangeState(PlayerStates.WALK);
         }
     }
 

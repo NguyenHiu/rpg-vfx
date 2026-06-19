@@ -1,12 +1,13 @@
 public class PlayerState : State
 {
+    public PlayerStates Type { get; protected set; }
     public PlayerController Player;
-    public PlayerAnimController PlayerAnim; 
+    public PlayerAnimController PlayerAnim;
     public string VarName;
 
     public PlayerState(PlayerController player, PlayerAnimController playerAnim, string varName) : base(varName)
     {
-        Player = player; 
+        Player = player;
         PlayerAnim = playerAnim;
         VarName = varName;
     }

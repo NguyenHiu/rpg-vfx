@@ -1,6 +1,7 @@
 public class StateMachine
 {
     public State CurrentState { get; private set; }
+    public State PreviousState {get; private set; }
 
     public StateMachine(State state)
     {
@@ -10,6 +11,7 @@ public class StateMachine
 
     public void ChangeState(State newState)
     {
+        PreviousState = CurrentState;
         CurrentState.Exit();
         CurrentState = newState;
         CurrentState.Enter();

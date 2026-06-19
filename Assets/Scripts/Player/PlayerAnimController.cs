@@ -9,19 +9,7 @@ public enum PlayerStates
     WALK,
     WALK_SIDE,
     WALK_BACK,
-}
-
-[System.Serializable]
-public struct PlayerStateInfo
-{
-    public PlayerStates StateType;
-    public PlayerState State;
-
-    public PlayerStateInfo(PlayerStates type, PlayerState state)
-    {
-        StateType = type;
-        State = state;
-    }
+    DASH,
 }
 
 public class PlayerAnimController : MonoBehaviour
@@ -30,18 +18,19 @@ public class PlayerAnimController : MonoBehaviour
     public PlayerController Player;
     public Animator Anim;
     public StateMachine StateM;
-    public List<PlayerStateInfo> States;
+    public List<PlayerState> States;
 
     void Awake()
     {
         States = new()
         {
-            new(PlayerStates.IDLE, new PlayerIdle(Player, this, "Idle")),
-            new(PlayerStates.IDLE_SIDE, new PlayerIdleSide(Player, this, "Idle_Side")),
-            new(PlayerStates.IDLE_BACK, new PlayerIdleBack(Player, this, "Idle_Back")),
-            new(PlayerStates.WALK, new PlayerWalk(Player, this, "Walk")),
-            new(PlayerStates.WALK_SIDE, new PlayerWalkSide(Player, this, "Walk_Side")),
-            new(PlayerStates.WALK_BACK, new PlayerWalkBack(Player, this, "Walk_Back")),
+            new PlayerIdle(Player, this, "Idle"),
+            new PlayerIdleSide(Player, this, "Idle_Side"),
+            new PlayerIdleBack(Player, this, "Idle_Back"),
+            new PlayerWalk(Player, this, "Walk"),
+            new PlayerWalkSide(Player, this, "Walk_Side"),
+            new PlayerWalkBack(Player, this, "Walk_Back"),
+            new PlayerDash(Player, this),
         };
 
         StateM = new(GetState(PlayerStates.IDLE));
@@ -67,7 +56,7 @@ public class PlayerAnimController : MonoBehaviour
     {
         for (int i = 0; i < States.Count; i++)
         {
-            if (States[i].StateType == type) return States[i].State;
+            if (States[i].Type == type) return States[i];
         }
         return null;
     }

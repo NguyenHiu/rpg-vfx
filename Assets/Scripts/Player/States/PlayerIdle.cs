@@ -5,6 +5,7 @@ public class PlayerIdle : PlayerState
 {
     public PlayerIdle(PlayerController player, PlayerAnimController playerAnim, string varName) : base(player, playerAnim, varName)
     {
+        Type = PlayerStates.IDLE;
     }
 
     public override void Update()
@@ -30,6 +31,7 @@ public class PlayerIdleSide : PlayerIdle
 {
     public PlayerIdleSide(PlayerController player, PlayerAnimController playerAnim, string varName) : base(player, playerAnim, varName)
     {
+        Type = PlayerStates.IDLE_SIDE;
     }
 }
 
@@ -37,5 +39,6 @@ public class PlayerIdleBack : PlayerIdle
 {
     public PlayerIdleBack(PlayerController player, PlayerAnimController playerAnim, string varName) : base(player, playerAnim, varName)
     {
+        Type = PlayerStates.IDLE_BACK;
     }
 }
