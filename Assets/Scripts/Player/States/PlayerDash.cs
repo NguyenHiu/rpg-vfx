@@ -19,9 +19,10 @@ public class PlayerDash : PlayerState
         m_animSpeed = PlayerAnim.Anim.speed;
         
         // Assign new
+        Player.GhostTrailCtrl.StartTrails();
         Player.ResetDashTimer();
         PlayerAnim.Anim.SetBool(m_varName, true);
-        PlayerAnim.Anim.speed = 0.1f;
+        PlayerAnim.Anim.speed = 0f;
         Player.IsDashing = true;
         Player.DashDir = Player.Rb.linearVelocity.normalized;
         m_timer = 0;
@@ -29,6 +30,7 @@ public class PlayerDash : PlayerState
 
     public override void Exit()
     {
+        Player.GhostTrailCtrl.EnoughTrails();
         PlayerAnim.Anim.speed = m_animSpeed;
         PlayerAnim.Anim.SetBool(m_varName, false);
         Player.IsDashing = false;

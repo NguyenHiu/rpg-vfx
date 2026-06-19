@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public Action<float> OnSpeedBuffChange;
     // Dash
     [SerializeField] private float dashSpeed;
+    public GhostTrailController GhostTrailCtrl;
     public float DashCooldown;
     private float dashTimer;
     public float DashTime;
