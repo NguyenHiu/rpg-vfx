@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [Header("Stats")]
     // Walk
     [SerializeField] private float walkSpeed;
-    [SerializeField] private float speedBuff;
+    [Min(0.2f)][SerializeField] private float speedBuff; // divided by SpeedBuff everywhere -> ensure not too small
     public float SpeedBuff => speedBuff;
     public Action<float> OnSpeedBuffChange;
     // Dash

@@ -17,7 +17,7 @@ public class PlayerDash : PlayerState
         // Get info
         m_varName = ((PlayerState)PlayerAnim.StateM.PreviousState).VarName;
         m_animSpeed = PlayerAnim.Anim.speed;
-        
+
         // Assign new
         Player.GhostTrailCtrl.StartTrails();
         Player.ResetDashTimer();
@@ -39,7 +39,7 @@ public class PlayerDash : PlayerState
     public override void Update()
     {
         m_timer += Time.deltaTime;
-        if (m_timer > Player.DashTime)
+        if (m_timer > Player.DashTime / Player.SpeedBuff)
         {
             var prvState = (PlayerState)PlayerAnim.StateM.PreviousState;
             switch (prvState.Type)

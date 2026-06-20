@@ -8,41 +8,31 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private float speed;
     public float Speed => speed;
 
+
     void OnEnable()
     {
-        EnableMoving();
-        Player.OnSpeedBuffChange += SetSpeed;
-    }   
+        EnableMoving(speed / Player.SpeedBuff);
+        Player.OnSpeedBuffChange += SetSpeedBuff;
+    }
 
     void OnDisable()
     {
         transform.DOKill();
-        Player.OnSpeedBuffChange -= SetSpeed;
-    } 
+        Player.OnSpeedBuffChange -= SetSpeedBuff;
+    }
 
-    void EnableMoving()
+    void EnableMoving(float s)
     {
         transform.DOKill();
         var pos = transform.localPosition;
-        pos.y -= YRange/2f;
+        pos.y -= YRange / 2f;
         transform.localPosition = pos;
 
-        transform.DOLocalMoveY(YRange, Speed).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+        transform.DOLocalMoveY(YRange, s).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
-    public void SetSpeed(float newSpeed)
+    public void SetSpeedBuff(float speedBuff)
     {
-        speed = newSpeed;
-        EnableMoving();
+        EnableMoving(speed / speedBuff);
     }
-
-    // void Update()
-    // {
-        
-    // }   
-
-    // void CheckSide()
-    // {
-    //     // if (Player)
-    // } 
 }

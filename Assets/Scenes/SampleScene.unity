@@ -1506,7 +1506,7 @@ MonoBehaviour:
   PlayerSR: {fileID: 1446571702}
   TrailLiveTime: 0.5
   Delta: 0.1
-  Count: 5
+  Count: 10
   TrailPool: []
   TrailPrefab: {fileID: 9112666078797984222, guid: c42f85800303b4c2aa4d4436ed911452, type: 3}
   WhiteMat: {fileID: 2100000, guid: 0696bef2c4f0f4e96998d0fd861ee68f, type: 2}

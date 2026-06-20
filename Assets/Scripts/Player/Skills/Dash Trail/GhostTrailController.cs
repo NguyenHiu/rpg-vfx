@@ -34,25 +34,30 @@ public class GhostTrailController : MonoBehaviour
         if (!IsShowing) return;
 
         m_timer -= Time.deltaTime;
-        if (m_timer < 0 && m_idx < TrailPool.Count)
+        if (m_timer < 0)
         {
-            m_timer = Delta;
-            TrailPool[m_idx].StartTrail(PlayerSR, TrailLiveTime);
-            m_idx++;
+            m_timer = Delta / Player.SpeedBuff;
+            SpawnTrail();
         }
+    }
+
+    void SpawnTrail()
+    {
+        if (m_idx >= TrailPool.Count) m_idx = 0;
+        TrailPool[m_idx].StartTrail(PlayerSR, TrailLiveTime);
+        m_idx++;
     }
 
     public void StartTrails()
     {
         IsShowing = true;
         m_timer = 0;
-        m_idx = 0;
     }
 
     public void EnoughTrails()
     {
         IsShowing = false;
-        if (m_idx < TrailPool.Count) 
-            TrailPool[m_idx].StartTrail(PlayerSR, TrailLiveTime);
+        // Spawn one more trail
+        SpawnTrail();
     }
 }
