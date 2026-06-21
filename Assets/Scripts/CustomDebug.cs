@@ -31,7 +31,8 @@ public class CustomDebug : MonoBehaviour
 
     void Update()
     {
-        m_fps = (float)Math.Round(100.0f / Time.unscaledDeltaTime) / 100.0f;
+        float currentFps = 1.0f / Time.unscaledDeltaTime;
+        m_fps = Mathf.Round(Mathf.Lerp(m_fps, currentFps, 4f * Time.unscaledDeltaTime));
         m_pos = Player.transform.position;
 
         m_timer -= Time.deltaTime;

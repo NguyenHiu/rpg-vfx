@@ -1456,8 +1456,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
   Player: {fileID: 2130083349}
-  YRange: 0.025
-  speed: 1
+  YRange: 0.02
+  speed: 0.4
 --- !u!1 &1127835814
 GameObject:
   m_ObjectHideFlags: 0
