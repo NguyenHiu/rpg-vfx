@@ -5,6 +5,9 @@ using DG.Tweening;
 
 public class CustomDebug : MonoBehaviour
 {
+    public GameObject DebugArrow;
+    public float ArrowRadius;
+
     [Header("Stats")]
     public TextMeshProUGUI DebugText;
     public PlayerController Player;
@@ -18,15 +21,19 @@ public class CustomDebug : MonoBehaviour
     public GameObject DebugPanel;
     public CanvasGroup PanelGroup;
 
+    void OnDisable()
+    {
+        PanelGroup.DOKill();
+    }
+
     void Awake()
     {
         Application.targetFrameRate = 120;  // or Screen.currentResolution.refreshRate
         QualitySettings.vSyncCount = 0;     // already 0, but safe to be explicit
     }
 
-    void OnDisable()
+    void Start()
     {
-        PanelGroup.DOKill();
     }
 
     void Update()
@@ -41,6 +48,8 @@ public class CustomDebug : MonoBehaviour
             m_timer = RefreshDuration;
             UpdateStatsText();
         }
+
+        RotateArrow();
     }
 
     void UpdateStatsText()
@@ -81,5 +90,11 @@ public class CustomDebug : MonoBehaviour
     public void SetSpeedBuff(float val = 1.0f)
     {
         Player.SetSpeedBuff(val);
+    }
+
+    void RotateArrow()
+    {
+        DebugArrow.transform.localEulerAngles = new(0, 0, Mathf.Atan2(Player.FacingDir.y, Player.FacingDir.x) * Mathf.Rad2Deg);
+        DebugArrow.transform.localPosition = Player.FacingDir * ArrowRadius;
     }
 }

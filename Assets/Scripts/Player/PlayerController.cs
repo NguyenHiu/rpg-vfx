@@ -25,12 +25,17 @@ public class PlayerController : MonoBehaviour
 
     [Header("Hand")]
     public WeaponController Weapon;
+    public Vector2 FacingDir = new(0, -1);
+    public Animator SlashAnim;
+    public bool IsAttacking;
 
     // Inputs
     private InputAction m_moveAction;
     private InputAction m_dashAction;
+    private InputAction m_attackAction;
     public Vector2 MoveVal;
     public bool PressDashThisFrame;
+    public bool AttackThisFrame;
 
     void OnEnable()
     {
@@ -46,6 +51,7 @@ public class PlayerController : MonoBehaviour
     {
         m_moveAction = InputSystem.actions.FindAction("Move");
         m_dashAction = InputSystem.actions.FindAction("Dash");
+        m_attackAction = InputSystem.actions.FindAction("Attack");
     }
 
     void Update()
@@ -53,12 +59,18 @@ public class PlayerController : MonoBehaviour
         if (dashTimer >= 0) dashTimer -= Time.deltaTime;
         MoveVal = m_moveAction.ReadValue<Vector2>();
         PressDashThisFrame = dashTimer < 0f && m_dashAction.IsPressed();
+        AttackThisFrame = !IsAttacking && m_attackAction.IsPressed();
     }
 
     void FixedUpdate()
     {
         var dir = IsDashing ? DashDir : MoveVal.normalized;
         Rb.linearVelocity = dir * GetSpeed();
+
+        if (Rb.linearVelocity != Vector2.zero) FacingDir = Rb.linearVelocity.normalized;
+
+        if (AttackThisFrame && !IsAttacking)
+            SlashAnim.SetTrigger("Attack");
     }
 
     public float GetSpeed()
