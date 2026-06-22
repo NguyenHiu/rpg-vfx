@@ -1,38 +1,52 @@
 using UnityEngine;
-using DG.Tweening;
+using System.Collections.Generic;
 
 public class WeaponController : MonoBehaviour
 {
     public PlayerController Player;
+    public StateMachine StateM;
+    public List<WeaponState> States;
+
+    [Header("===== Stats =====")]
+    [Header("Idle")]
     public float YRange;
-    [SerializeField] private float speed;
-    public float Speed => speed;
+    public float IdleSpeed;
 
+    [Header("Attack")]
+    public float AttackSpeed;
+    public Vector2 AngleRange;
 
-    void OnEnable()
+    void Awake()
     {
-        EnableMoving(speed / Player.SpeedBuff);
-        Player.OnSpeedBuffChange += SetSpeedBuff;
+        States = new()
+        {
+            new WeaponIdle(this, Player, "Idle"),
+            new WeaponAttack(this, Player, "Attack"),
+        };
+
+
+        StateM = new(GetState(WState.IDLE));
     }
 
-    void OnDisable()
+    void Update()
     {
-        transform.DOKill();
-        Player.OnSpeedBuffChange -= SetSpeedBuff;
+        StateM.CurrentState.Update();
     }
 
-    void EnableMoving(float s)
+    public void ChangeState(WState state)
     {
-        transform.DOKill();
-        var pos = transform.localPosition;
-        pos.y -= YRange / 2f;
-        transform.localPosition = pos;
-
-        transform.DOLocalMoveY(YRange, s).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+        StateM.ChangeState(GetState(state));
     }
 
-    public void SetSpeedBuff(float speedBuff)
+    private WeaponState GetState(WState state)
     {
-        EnableMoving(speed / speedBuff);
+        foreach (var s in States)
+        {
+            if (s.Type == state) return s;
+        }
+
+        return null;
     }
+
+
 }

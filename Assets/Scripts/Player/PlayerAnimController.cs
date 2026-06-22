@@ -1,17 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerStates
-{
-    IDLE,
-    IDLE_SIDE,
-    IDLE_BACK,
-    WALK,
-    WALK_SIDE,
-    WALK_BACK,
-    DASH,
-}
-
 public class PlayerAnimController : MonoBehaviour
 {
     public const float VIRTUAL_DIR_RANGE = 0.58f;
@@ -33,7 +22,7 @@ public class PlayerAnimController : MonoBehaviour
             new PlayerDash(Player, this),
         };
 
-        StateM = new(GetState(PlayerStates.IDLE));
+        StateM = new(GetState(PState.IDLE));
 
         // Init default value
         OnSpeedBuffChange(Player.SpeedBuff);
@@ -47,12 +36,12 @@ public class PlayerAnimController : MonoBehaviour
         StateM.CurrentState.Update();
     }
 
-    public void ChangeState(PlayerStates type)
+    public void ChangeState(PState type)
     {
         StateM.ChangeState(GetState(type));
     }
 
-    PlayerState GetState(PlayerStates type)
+    PlayerState GetState(PState type)
     {
         for (int i = 0; i < States.Count; i++)
         {

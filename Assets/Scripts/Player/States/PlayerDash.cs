@@ -9,7 +9,7 @@ public class PlayerDash : PlayerState
 
     public PlayerDash(PlayerController player, PlayerAnimController playerAnim) : base(player, playerAnim, "")
     {
-        Type = PlayerStates.DASH;
+        Type = PState.DASH;
     }
 
     public override void Enter()
@@ -44,18 +44,18 @@ public class PlayerDash : PlayerState
             var prvState = (PlayerState)PlayerAnim.StateM.PreviousState;
             switch (prvState.Type)
             {
-                case PlayerStates.WALK:
-                    PlayerAnim.ChangeState(PlayerStates.IDLE);
+                case PState.WALK:
+                    PlayerAnim.ChangeState(PState.IDLE);
                     break;
-                case PlayerStates.WALK_SIDE:
-                    PlayerAnim.ChangeState(PlayerStates.IDLE_SIDE);
+                case PState.WALK_SIDE:
+                    PlayerAnim.ChangeState(PState.IDLE_SIDE);
                     break;
-                case PlayerStates.WALK_BACK:
-                    PlayerAnim.ChangeState(PlayerStates.IDLE_BACK);
+                case PState.WALK_BACK:
+                    PlayerAnim.ChangeState(PState.IDLE_BACK);
                     break;
 
                 default:
-                    PlayerAnim.ChangeState(PlayerStates.IDLE);
+                    PlayerAnim.ChangeState(PState.IDLE);
                     break;
             }
         }

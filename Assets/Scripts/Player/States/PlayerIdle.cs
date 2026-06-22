@@ -5,7 +5,7 @@ public class PlayerIdle : PlayerState
 {
     public PlayerIdle(PlayerController player, PlayerAnimController playerAnim, string varName) : base(player, playerAnim, varName)
     {
-        Type = PlayerStates.IDLE;
+        Type = PState.IDLE;
     }
 
     public override void Update()
@@ -15,12 +15,12 @@ public class PlayerIdle : PlayerState
         if (Player.Rb.linearVelocity != Vector2.zero)
         {
             // Switch to Walk
-            PlayerStates nxtState = PlayerStates.WALK;
+            PState nxtState = PState.WALK;
             var a = Player.Rb.linearVelocityX / Player.Rb.linearVelocityY;
             if (a < -PlayerAnimController.VIRTUAL_DIR_RANGE || a > PlayerAnimController.VIRTUAL_DIR_RANGE)
-                nxtState = PlayerStates.WALK_SIDE;
+                nxtState = PState.WALK_SIDE;
             else if (Player.Rb.linearVelocityY > 0)
-                nxtState = PlayerStates.WALK_BACK;
+                nxtState = PState.WALK_BACK;
 
             PlayerAnim.ChangeState(nxtState);
         }
@@ -31,7 +31,7 @@ public class PlayerIdleSide : PlayerIdle
 {
     public PlayerIdleSide(PlayerController player, PlayerAnimController playerAnim, string varName) : base(player, playerAnim, varName)
     {
-        Type = PlayerStates.IDLE_SIDE;
+        Type = PState.IDLE_SIDE;
     }
 }
 
@@ -39,6 +39,6 @@ public class PlayerIdleBack : PlayerIdle
 {
     public PlayerIdleBack(PlayerController player, PlayerAnimController playerAnim, string varName) : base(player, playerAnim, varName)
     {
-        Type = PlayerStates.IDLE_BACK;
+        Type = PState.IDLE_BACK;
     }
 }

@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class PlayerWalk : PlayerState
 {
-    protected PlayerStates backState;
+    protected PState backState;
 
     public PlayerWalk(PlayerController player, PlayerAnimController playerAnim, string varName) : base(player, playerAnim, varName)
     {
-        Type = PlayerStates.WALK;
-        backState = PlayerStates.IDLE;
+        Type = PState.WALK;
+        backState = PState.IDLE;
     }
 
     public override void Update()
@@ -18,7 +18,7 @@ public class PlayerWalk : PlayerState
         if (Player.Rb.linearVelocity == Vector2.zero)
             PlayerAnim.ChangeState(backState);
         else if (Player.PressDashThisFrame) 
-            PlayerAnim.ChangeState(PlayerStates.DASH);
+            PlayerAnim.ChangeState(PState.DASH);
         else DirectionCheck();
     }
 
@@ -26,9 +26,9 @@ public class PlayerWalk : PlayerState
     {
         var a = Player.Rb.linearVelocityX / Player.Rb.linearVelocityY;
         if (a < -PlayerAnimController.VIRTUAL_DIR_RANGE || a > PlayerAnimController.VIRTUAL_DIR_RANGE)
-            PlayerAnim.ChangeState(PlayerStates.WALK_SIDE);
+            PlayerAnim.ChangeState(PState.WALK_SIDE);
         else if (Player.Rb.linearVelocityY > 0)
-            PlayerAnim.ChangeState(PlayerStates.WALK_BACK);
+            PlayerAnim.ChangeState(PState.WALK_BACK);
     }
 }
 
@@ -36,17 +36,17 @@ public class PlayerWalkBack : PlayerWalk
 {
     public PlayerWalkBack(PlayerController player, PlayerAnimController playerAnim, string varName) : base(player, playerAnim, varName)
     {
-        Type = PlayerStates.WALK_BACK;
-        backState = PlayerStates.IDLE_BACK;
+        Type = PState.WALK_BACK;
+        backState = PState.IDLE_BACK;
     }
 
     protected override void DirectionCheck()
     {
         var a = Player.Rb.linearVelocityX / Player.Rb.linearVelocityY;
         if (a < -PlayerAnimController.VIRTUAL_DIR_RANGE || a > PlayerAnimController.VIRTUAL_DIR_RANGE)
-            PlayerAnim.ChangeState(PlayerStates.WALK_SIDE);
+            PlayerAnim.ChangeState(PState.WALK_SIDE);
         else if (Player.Rb.linearVelocityY < 0)
-            PlayerAnim.ChangeState(PlayerStates.WALK);
+            PlayerAnim.ChangeState(PState.WALK);
     }
 }
 
@@ -54,8 +54,8 @@ public class PlayerWalkSide : PlayerWalk
 {
     public PlayerWalkSide(PlayerController player, PlayerAnimController playerAnim, string varName) : base(player, playerAnim, varName)
     {
-        Type = PlayerStates.WALK_SIDE;
-        backState = PlayerStates.IDLE_SIDE;
+        Type = PState.WALK_SIDE;
+        backState = PState.IDLE_SIDE;
     }
 
     public override void Update()
@@ -70,8 +70,8 @@ public class PlayerWalkSide : PlayerWalk
         if (a > -PlayerAnimController.VIRTUAL_DIR_RANGE & a < PlayerAnimController.VIRTUAL_DIR_RANGE)
         {
             if (Player.Rb.linearVelocityY > 0)
-                PlayerAnim.ChangeState(PlayerStates.WALK_BACK);
-            else PlayerAnim.ChangeState(PlayerStates.WALK);
+                PlayerAnim.ChangeState(PState.WALK_BACK);
+            else PlayerAnim.ChangeState(PState.WALK);
         }
     }
 

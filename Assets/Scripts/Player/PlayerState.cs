@@ -1,6 +1,17 @@
+public enum PState
+{
+    IDLE,
+    IDLE_SIDE,
+    IDLE_BACK,
+    WALK,
+    WALK_SIDE,
+    WALK_BACK,
+    DASH,
+}
+
 public class PlayerState : State
 {
-    public PlayerStates Type { get; protected set; }
+    public PState Type { get; protected set; }
     public PlayerController Player;
     public PlayerAnimController PlayerAnim;
     public string VarName;
