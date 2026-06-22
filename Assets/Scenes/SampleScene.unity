@@ -990,6 +990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlashController
   Player: {fileID: 2130083349}
+  Radius: 0.12
 --- !u!1 &574987671
 GameObject:
   m_ObjectHideFlags: 0
@@ -1491,7 +1492,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0}
 --- !u!225 &889530451
@@ -3125,18 +3126,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   InputActions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   Rb: {fileID: 2130083350}
-  walkSpeed: 5
-  speedBuff: 1
-  dashSpeed: 15
+  m_walkSpeed: 5
+  m_speedBuff: 1
+  m_dashSpeed: 12
   GhostTrailCtrl: {fileID: 1127835816}
   DashCooldown: 0.5
   DashTime: 0.2
   IsDashing: 0
   DashDir: {x: 0, y: 0}
-  Weapon: {fileID: 1078091622}
   FacingDir: {x: 0, y: -1}
   SlashAnim: {fileID: 565278274}
   IsAttacking: 0
+  AttackCooldown: 0.15
+  Weapon: {fileID: 1078091622}
+  m_moveAction:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: e4f11369-2e9d-4c3d-978f-d724b0e30442
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  m_dashAction:
+    m_Name: Dash
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: e9f647fb-fb2e-4f36-8d8b-70ebc36c0fab
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  m_attackAction:
+    m_Name: Attack
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4778da3e-b2ee-4d34-a63a-155d961707fe
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   MoveVal: {x: 0, y: 0}
   PressDashThisFrame: 0
   AttackThisFrame: 0
