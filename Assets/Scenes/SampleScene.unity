@@ -1678,7 +1678,7 @@ MonoBehaviour:
   Player: {fileID: 2130083349}
   YRange: 0.02
   IdleSpeed: 0
-  AttackSpeed: 1
+  AttackSpeed: 0.1
   AngleRange: {x: -70, y: -120}
 --- !u!1 &1127835814
 GameObject:
