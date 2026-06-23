@@ -24,7 +24,6 @@ public class WeaponController : MonoBehaviour
             new WeaponAttack(this, Player, "Attack"),
         };
 
-
         StateM = new(GetState(WState.IDLE));
     }
 

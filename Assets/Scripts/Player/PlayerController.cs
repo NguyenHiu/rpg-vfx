@@ -79,9 +79,6 @@ public class PlayerController : MonoBehaviour
         Rb.linearVelocity = dir * GetSpeed();
 
         if (Rb.linearVelocity != Vector2.zero) FacingDir = Rb.linearVelocity.normalized;
-
-        if (AttackThisFrame && !IsAttacking)
-            SlashAnim.SetTrigger("Attack");
     }
 
     public float GetSpeed()
