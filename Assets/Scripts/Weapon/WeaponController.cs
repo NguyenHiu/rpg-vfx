@@ -4,17 +4,24 @@ using System.Collections.Generic;
 public class WeaponController : MonoBehaviour
 {
     public PlayerController Player;
+    public SpriteRenderer SR;
+    public Transform Head;
     public StateMachine StateM;
     public List<WeaponState> States;
+    public Animator SlashAnim;
+    public float WeaponLength;
 
     [Header("===== Stats =====")]
     [Header("Idle")]
     public float YRange;
     public float IdleSpeed;
+    public float IdleAngle;
 
     [Header("Attack")]
     public float AttackSpeed;
     public Vector2 AngleRange;
+    public float AttackRadius;
+    public Transform AttackCenter;
 
     void Awake()
     {
@@ -25,6 +32,8 @@ public class WeaponController : MonoBehaviour
         };
 
         StateM = new(GetState(WState.IDLE));
+
+        WeaponLength = Mathf.Sqrt(Head.localPosition.x * Head.localPosition.x + Head.localPosition.y + Head.localPosition.y);
     }
 
     void Update()

@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
     // Attack
     [Header("Attack")]
     public Vector2 FacingDir = new(0, -1);
-    public Animator SlashAnim;
     public bool IsAttacking;
     public float AttackCooldown;
     private float m_attackTimer;

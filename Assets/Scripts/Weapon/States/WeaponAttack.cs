@@ -1,11 +1,9 @@
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class WeaponAttack : WeaponState
 {
-    public Vector2 OriginLocalPos;
-    public Vector3 OriginLocalEulerAngles;
+    public Vector2 OriginalPos;
 
     public WeaponAttack(WeaponController weapon, PlayerController player, string name) : base(weapon, player, name)
     {
@@ -17,13 +15,20 @@ public class WeaponAttack : WeaponState
     {
         base.Enter();
         Player.IsAttacking = true;
-        Weapon.transform.DOKill();
-        OriginLocalPos = Weapon.transform.localPosition;
-        OriginLocalEulerAngles = Weapon.transform.localEulerAngles;
+        Weapon.SR.transform.DOKill();
+        OriginalPos = Weapon.SR.transform.localPosition;
 
-        Player.SlashAnim.SetBool("IsAttacking", true);
-        Weapon.transform.localEulerAngles = new(0, 0, Weapon.AngleRange.x);
-        Weapon.transform.DOLocalRotate(new(0, 0, Weapon.AngleRange.y), Weapon.AttackSpeed).OnComplete(() =>
+        // TODO: change position
+        // 1. Calculate 
+        var attackPeak = Player.FacingDir * Weapon.AttackRadius;
+        var attackHandle = attackPeak.normalized * (attackPeak.magnitude - Weapon.Head.transform.localPosition.magnitude);
+        var attackPoint = attackHandle + (Vector2)Weapon.AttackCenter.transform.localPosition;
+        Debug.Log($"peak: {attackPeak}; handle: {attackHandle}; point: {attackPoint}");
+        Weapon.transform.localPosition = attackPoint;
+
+        Weapon.SlashAnim.SetBool("IsAttacking", true);
+        Weapon.SR.transform.localEulerAngles = new(0, 0, Weapon.AngleRange.x);
+        Weapon.SR.transform.DOLocalRotate(new(0, 0, Weapon.AngleRange.y), Weapon.AttackSpeed).OnComplete(() =>
         {
             Weapon.ChangeState(WState.IDLE);
         });
@@ -32,9 +37,10 @@ public class WeaponAttack : WeaponState
     public override void Exit()
     {
         base.Exit();
-        Weapon.transform.localPosition = OriginLocalPos;
-        Weapon.transform.localEulerAngles = OriginLocalEulerAngles;
+        Weapon.SR.transform.localPosition = OriginalPos;
+        Weapon.SR.transform.localEulerAngles = Vector3.zero;
+
         Player.IsAttacking = false;
-        Player.SlashAnim.SetBool("IsAttacking", false);
+        Weapon.SlashAnim.SetBool("IsAttacking", false);
     }
 }
