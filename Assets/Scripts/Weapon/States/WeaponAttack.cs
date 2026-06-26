@@ -18,29 +18,38 @@ public class WeaponAttack : WeaponState
         Weapon.SR.transform.DOKill();
         OriginalPos = Weapon.SR.transform.localPosition;
 
-        // TODO: change position
-        // 1. Calculate 
+        /// Find position (set to the weapon)
         var attackPeak = Player.FacingDir * Weapon.AttackRadius;
-        var attackHandle = attackPeak.normalized * (attackPeak.magnitude - Weapon.Head.transform.localPosition.magnitude);
+        var attackHandle = attackPeak.normalized * (attackPeak.magnitude - Weapon.WeaponLength);
         var attackPoint = attackHandle + (Vector2)Weapon.AttackCenter.transform.localPosition;
-        Debug.Log($"peak: {attackPeak}; handle: {attackHandle}; point: {attackPoint}");
         Weapon.transform.localPosition = attackPoint;
 
-        Weapon.SlashAnim.SetBool("IsAttacking", true);
-        Weapon.SR.transform.localEulerAngles = new(0, 0, Weapon.AngleRange.x);
-        Weapon.SR.transform.DOLocalRotate(new(0, 0, Weapon.AngleRange.y), Weapon.AttackSpeed).OnComplete(() =>
+        /// Find rotation (set to the sprite only)
+        // Correct the slam direction
+        var dir = Player.FacingDir.x > 0 ? -1 : 1;
+        var scale = Weapon.SR.transform.localScale;
+        if (Player.FacingDir.x * scale.x > 0) scale.x *= -1;
+        Weapon.SR.transform.localScale = scale;
+
+        // Rotote the sword
+        var deltaAngle = Mathf.Atan2(Player.FacingDir.x, Player.FacingDir.y) * Mathf.Rad2Deg;
+        Weapon.SR.transform.localEulerAngles = new(0, 0, -Weapon.AttackAngle * dir - deltaAngle);
+        Weapon.SR.transform.DOLocalRotate(new(0, 0, Weapon.AttackAngle * dir - deltaAngle), Weapon.AttackSpeed).OnComplete(() =>
         {
             Weapon.ChangeState(WState.IDLE);
         });
+        Weapon.PC2D.transform.localEulerAngles = new(0, 0, -deltaAngle);
+
+        // Change the anim to attack
+        Weapon.Anim.SetTrigger("Attack");
     }
 
     public override void Exit()
     {
         base.Exit();
-        Weapon.SR.transform.localPosition = OriginalPos;
-        Weapon.SR.transform.localEulerAngles = Vector3.zero;
 
         Player.IsAttacking = false;
-        Weapon.SlashAnim.SetBool("IsAttacking", false);
+        Player.ResetAttackTimer();
+        Weapon.SR.transform.localPosition = OriginalPos;
     }
 }

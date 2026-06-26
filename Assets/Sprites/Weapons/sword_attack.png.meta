@@ -1,13 +1,16 @@
 fileFormatVersion: 2
-guid: a05dcf90c7c6be04ca55facef955750b
+guid: de27e8373c8bdf7438107e84e7d1d013
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6939695964637348897
-    second: slash_0
+      213: 8368981835052362653
+    second: sword_attack_0
   - first:
-      213: 4408985956767555964
-    second: slash_1
+      213: 1383562102539706073
+    second: sword_attack_1
+  - first:
+      213: -3619154114769531277
+    second: sword_attack_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -116,45 +119,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: slash_0
+      name: sword_attack_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 12
-        height: 32
-      alignment: 5
-      pivot: {x: 1, y: 0.5}
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.21784085, y: 0.028566433}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fdb349ac94f31bf90800000000000000
-      internalID: -6939695964637348897
+      spriteID: d9b2ef163a8942470800000000000000
+      internalID: 8368981835052362653
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: slash_1
+      name: sword_attack_1
       rect:
         serializedVersion: 2
-        x: 12
+        x: 16
         y: 0
-        width: 12
-        height: 32
-      alignment: 5
-      pivot: {x: 1, y: 0.5}
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.21784085, y: 0.028566433}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c71e0dc2e5ddf2d30800000000000000
-      internalID: 4408985956767555964
+      spriteID: 9de529ed666633310800000000000000
+      internalID: 1383562102539706073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sword_attack_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.21784085, y: 0.028566433}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37ec4c9f18e26cdc0800000000000000
+      internalID: -3619154114769531277
       vertices: []
       indices: 
       edges: []
@@ -163,7 +188,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 02b7983b2bf0b964a9bcb59714abf955
+    spriteID: 3d3610792a2846d4d8d58c55fc6aa726
     internalID: 0
     vertices: []
     indices: 
@@ -172,13 +197,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries:
-      - key: SpriteEditor.SliceOnImport
-        value: False
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":12.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      slash_0: -6939695964637348897
-      slash_1: 4408985956767555964
+      sword_attack_0: 8368981835052362653
+      sword_attack_1: 1383562102539706073
+      sword_attack_2: -3619154114769531277
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
