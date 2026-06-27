@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class WeaponAttack : WeaponState
 {
-    public Vector2 OriginalPos;
-
+    public Vector3 LocalPosition, SRLocalPosition, SRLocalScale, SRLocalEulerAngle;
     public WeaponAttack(WeaponController weapon, PlayerController player, string name) : base(weapon, player, name)
     {
         Type = WState.ATTACK;
@@ -14,15 +13,23 @@ public class WeaponAttack : WeaponState
     public override void Enter()
     {
         base.Enter();
+        // Restore when existing
+        LocalPosition = Weapon.transform.localPosition;
+        SRLocalPosition = Weapon.SR.transform.localPosition;
+        SRLocalScale = Weapon.SR.transform.localScale;
+        SRLocalEulerAngle = Weapon.SR.transform.localEulerAngles;
+        
         Player.IsAttacking = true;
-        Weapon.SR.transform.DOKill();
-        OriginalPos = Weapon.SR.transform.localPosition;
+        Weapon.PC2D.gameObject.SetActive(true);
 
         /// Find position (set to the weapon)
         var attackPeak = Player.FacingDir * Weapon.AttackRadius;
         var attackHandle = attackPeak.normalized * (attackPeak.magnitude - Weapon.WeaponLength);
         var attackPoint = attackHandle + (Vector2)Weapon.AttackCenter.transform.localPosition;
         Weapon.transform.localPosition = attackPoint;
+
+        // Reset the SR
+        Weapon.SR.transform.localPosition = Vector3.zero;
 
         /// Find rotation (set to the sprite only)
         // Correct the slam direction
@@ -38,7 +45,7 @@ public class WeaponAttack : WeaponState
         {
             Weapon.ChangeState(WState.IDLE);
         });
-        Weapon.PC2D.transform.localEulerAngles = new(0, 0, -deltaAngle);
+        Weapon.PC2D.transform.localEulerAngles = new(0, 0, -deltaAngle); // Do not need to restore this one
 
         // Change the anim to attack
         Weapon.Anim.SetTrigger("Attack");
@@ -48,8 +55,15 @@ public class WeaponAttack : WeaponState
     {
         base.Exit();
 
+        // Restore
+        Weapon.transform.localPosition = LocalPosition;
+        Weapon.SR.transform.localPosition = SRLocalPosition;
+        Weapon.SR.transform.localScale = SRLocalScale;
+        Weapon.SR.transform.localEulerAngles = SRLocalEulerAngle;
+        
         Player.IsAttacking = false;
+        Weapon.PC2D.gameObject.SetActive(false);
+        Weapon.SR.transform.DOKill();
         Player.ResetAttackTimer();
-        Weapon.SR.transform.localPosition = OriginalPos;
     }
 }

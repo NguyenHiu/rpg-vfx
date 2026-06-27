@@ -17,6 +17,7 @@ public class WeaponController : MonoBehaviour
     public float YRange;
     public float IdleSpeed;
     public float IdleAngle;
+    public Transform IdlePointRight;
 
     [Header("Attack")]
     public float AttackSpeed;
@@ -37,20 +38,24 @@ public class WeaponController : MonoBehaviour
 
         // Calculate length of the sword
         WeaponLength = Mathf.Abs(Head.transform.localPosition.magnitude * SR.transform.localScale.x);
-        Debug.Log($"Debug; WeaponLength: {WeaponLength}");
+        // Debug.Log($"Debug; WeaponLength: {WeaponLength}");
 
         // Create the pizza collision xD
-        var sinVal = Mathf.Abs(Mathf.Sin(AttackAngle));
-        var cosVal = Mathf.Abs(Mathf.Cos(AttackAngle));
-        Debug.Log($"Debug; AttackAngle: {AttackAngle}");
-        Debug.Log($"Debug; sinVal: {sinVal}; cosVal: {cosVal}");
+        var rad = AttackAngle*Mathf.Deg2Rad;
+        var sinVal = Mathf.Sin(rad);
+        var cosVal = Mathf.Cos(rad);
+        // Debug.Log($"Debug; AttackAngle: {AttackAngle}");
+        // Debug.Log($"Debug; sinVal: {sinVal}; cosVal: {cosVal}");
         Vector2[] points = new Vector2[]
         {
             new(0, 0),
             new(-sinVal*WeaponLength, cosVal*WeaponLength),
+            new(0, WeaponLength),
             new(sinVal*WeaponLength, cosVal*WeaponLength)
         };
+        // Debug.Log($"Debug; points: {points[0]}, {points[1]}, {points[2]};");
         PC2D.SetPath(0, points);
+        PC2D.gameObject.SetActive(false);
     }
 
     void Update()
@@ -89,5 +94,8 @@ public class WeaponController : MonoBehaviour
         return null;
     }
 
-
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        // if ()
+    }
 }

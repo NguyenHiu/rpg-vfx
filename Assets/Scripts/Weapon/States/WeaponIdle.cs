@@ -3,29 +3,34 @@ using UnityEngine;
 
 public class WeaponIdle : WeaponState
 {
-    public Vector2 OriginalPos;
-    public Vector2 IdlePos;
+    public Vector3 IdlePos, IdleAngle;
+    public Vector3 SRLocalPosition, SRLocalEulerAngles;
 
     public WeaponIdle(WeaponController weapon, PlayerController player, string name) : base(weapon, player, name)
     {
         Type = WState.IDLE;
         DebugLog = true;
 
-        // Used to restore original position
-        OriginalPos = Weapon.SR.transform.localPosition;
-
         // Pos to start idling (bottom)
-        IdlePos = new(OriginalPos.x, OriginalPos.y - Weapon.YRange / 2f);
+        IdlePos = new(Weapon.IdlePointRight.localPosition.x, Weapon.IdlePointRight.localPosition.y - Weapon.YRange / 2f);
+        IdleAngle = new(0, 0, Weapon.IdleAngle);
     }
 
     public override void Enter()
     {
         base.Enter();
-        Weapon.SR.transform.DOKill();
+        // Restore when existing
+        SRLocalPosition = Weapon.SR.transform.localPosition;
+        SRLocalEulerAngles = Weapon.SR.transform.localEulerAngles;
 
         // Set the sprite to the bottom position
+        if (Player.FacingDir.x * IdlePos.x < 0)
+        {
+            IdlePos.x *= -1;
+            IdleAngle.z *= -1;
+        }
         Weapon.SR.transform.localPosition = IdlePos;
-        Weapon.SR.transform.localEulerAngles = new(0, 0, Weapon.IdleAngle);
+        Weapon.SR.transform.localEulerAngles = IdleAngle;
 
         // Start moving
         Weapon.SR.transform.DOLocalMoveY(IdlePos.y + Weapon.YRange, Weapon.IdleSpeed / Player.SpeedBuff).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
@@ -38,6 +43,15 @@ public class WeaponIdle : WeaponState
         // Switch to attack state
         if (Player.AttackThisFrame)
             Weapon.ChangeState(WState.ATTACK);
+
+        // Update position & rotate when switching side
+        if (Player.FacingDir.x * IdlePos.x < 0)
+        {
+            IdlePos.x *= -1;
+            IdleAngle.z *= -1;
+            Weapon.SR.transform.localPosition = IdlePos;
+            Weapon.SR.transform.localEulerAngles = IdleAngle;
+        }
     }
 
     public override void Exit()
@@ -45,7 +59,8 @@ public class WeaponIdle : WeaponState
         base.Exit();
 
         // Restore
-        Weapon.SR.transform.localPosition = OriginalPos;
-        Weapon.SR.transform.localEulerAngles = Vector3.zero;
+        Weapon.SR.transform.DOKill();
+        Weapon.SR.transform.localPosition = SRLocalPosition;
+        Weapon.SR.transform.localEulerAngles = SRLocalEulerAngles;
     }
 }

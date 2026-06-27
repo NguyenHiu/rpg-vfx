@@ -68,8 +68,8 @@ public class PlayerController : MonoBehaviour
         if (m_dashTimer >= 0) m_dashTimer -= Time.deltaTime;
         if (m_attackTimer >= 0) m_attackTimer -= Time.deltaTime;
         MoveVal = m_moveAction.ReadValue<Vector2>();
-        PressDashThisFrame = m_dashTimer < 0f && m_dashAction.IsPressed();
-        AttackThisFrame = m_attackTimer < 0f && m_attackAction.IsPressed();
+        PressDashThisFrame = !AttackThisFrame && m_dashTimer < 0f && m_dashAction.IsPressed();
+        AttackThisFrame = !PressDashThisFrame && m_attackTimer < 0f && m_attackAction.IsPressed();
     }
 
     void FixedUpdate()
