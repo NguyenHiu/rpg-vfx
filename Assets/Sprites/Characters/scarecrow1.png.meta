@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 1101889dcefd9ef47af6e96e41a5ec0d
+guid: c028630bc6cf99f4391d807d047e5c43
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4679625771356100558
-    second: shadow_static_0
+      213: 7054545734025834808
+    second: scarecrow1_0
+  - first:
+      213: -3225743847545796304
+    second: scarecrow1_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,23 +116,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: shadow_static_0
+      name: scarecrow1_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 6
-        width: 14
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 16
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2386e889721ae0fb0800000000000000
-      internalID: -4679625771356100558
+      spriteID: 8317b50f7f7c6e160800000000000000
+      internalID: 7054545734025834808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: scarecrow1_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 24
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03981a6bf0bdb33d0800000000000000
+      internalID: -3225743847545796304
       vertices: []
       indices: 
       edges: []
@@ -138,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: a136ecfab18b88d4ea3340ae0022a632
     internalID: 0
     vertices: []
     indices: 
@@ -146,9 +171,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":24.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      shadow_static_0: -4679625771356100558
+      scarecrow1_0: 7054545734025834808
+      scarecrow1_1: -3225743847545796304
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

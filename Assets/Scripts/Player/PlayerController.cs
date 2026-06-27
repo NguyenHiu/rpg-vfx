@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputAction m_attackAction;
     public Vector2 MoveVal;
     public bool PressDashThisFrame;
-    public bool AttackThisFrame;
+    public bool PressAttackThisFrame;
 
     void OnEnable()
     {
@@ -68,8 +68,8 @@ public class PlayerController : MonoBehaviour
         if (m_dashTimer >= 0) m_dashTimer -= Time.deltaTime;
         if (m_attackTimer >= 0) m_attackTimer -= Time.deltaTime;
         MoveVal = m_moveAction.ReadValue<Vector2>();
-        PressDashThisFrame = !AttackThisFrame && m_dashTimer < 0f && m_dashAction.IsPressed();
-        AttackThisFrame = !PressDashThisFrame && m_attackTimer < 0f && m_attackAction.IsPressed();
+        PressDashThisFrame = m_dashTimer < 0f && m_dashAction.IsPressed();
+        PressAttackThisFrame = m_attackTimer < 0f && m_attackAction.IsPressed();
     }
 
     void FixedUpdate()
@@ -100,5 +100,15 @@ public class PlayerController : MonoBehaviour
     public void ResetAttackTimer()
     {
         m_attackTimer = AttackCooldown;
+    }
+
+    public bool IsAbleToDash()
+    {
+        return !IsDashing && !IsAttacking && PressDashThisFrame;
+    }
+
+    public bool IsAbleToAttack()
+    {
+        return !IsDashing && !IsAttacking && PressAttackThisFrame;
     }
 }
