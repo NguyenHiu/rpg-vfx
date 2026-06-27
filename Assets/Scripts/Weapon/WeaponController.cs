@@ -93,9 +93,4 @@ public class WeaponController : MonoBehaviour
 
         return null;
     }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        // if ()
-    }
 }

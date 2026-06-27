@@ -9,7 +9,7 @@ public class WeaponIdle : WeaponState
     public WeaponIdle(WeaponController weapon, PlayerController player, string name) : base(weapon, player, name)
     {
         Type = WState.IDLE;
-        DebugLog = true;
+        DebugLog = false;
 
         // Pos to start idling (bottom)
         IdlePos = new(Weapon.IdlePointRight.localPosition.x, Weapon.IdlePointRight.localPosition.y - Weapon.YRange / 2f);
