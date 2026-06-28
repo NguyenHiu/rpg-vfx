@@ -653,9 +653,9 @@ GameObject:
   - component: {fileID: 377088355}
   - component: {fileID: 377088354}
   - component: {fileID: 377088356}
-  - component: {fileID: 377088357}
   - component: {fileID: 377088358}
   - component: {fileID: 377088359}
+  - component: {fileID: 377088357}
   - component: {fileID: 377088360}
   m_Layer: 3
   m_Name: Scarecrow
@@ -872,8 +872,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScarerowController
   SR: {fileID: 377088354}
-  HitCooldown: 0.5
+  BlinkDuration: 0.5
   Timer: 0
+  Duration: 0.03
+  Angle: 8
+  iFrameDuration: 0.2
+  iFrameTimer: 0
 --- !u!1 &384326877
 GameObject:
   m_ObjectHideFlags: 0

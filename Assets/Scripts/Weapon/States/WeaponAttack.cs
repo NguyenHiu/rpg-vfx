@@ -33,7 +33,7 @@ public class WeaponAttack : WeaponState
 
         /// Find rotation (set to the sprite only)
         // Correct the slam direction
-        var dir = Player.FacingDir.x > 0 ? -1 : 1;
+        var dir = Player.FacingDir.x >= 0 ? -1 : 1;
         var scale = Weapon.SR.transform.localScale;
         if (Player.FacingDir.x * scale.x > 0) scale.x *= -1;
         Weapon.SR.transform.localScale = scale;

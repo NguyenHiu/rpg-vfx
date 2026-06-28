@@ -2,6 +2,12 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum PlayerMode
+{
+    FREE,
+    ATTACK,
+}
+
 public class PlayerController : MonoBehaviour
 {
     [Header("Components")]
@@ -29,6 +35,7 @@ public class PlayerController : MonoBehaviour
 
     // Attack
     [Header("Attack")]
+    public Transform FocusTF;
     public Vector2 FacingDir = new(0, -1);
     public bool IsAttacking;
     public float AttackCooldown;
