@@ -658,7 +658,7 @@ GameObject:
   - component: {fileID: 377088357}
   - component: {fileID: 377088360}
   m_Layer: 3
-  m_Name: Scarecrow
+  m_Name: _Scarecrow
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2287,20 +2287,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9330c8c9dfd175b4595907b71ac4bb67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
-  Player: {fileID: 2130083349}
-  SR: {fileID: 199573084}
-  Head: {fileID: 1975939524}
-  Anim: {fileID: 199573085}
-  WeaponLength: 0
-  YRange: 0.2
-  IdleSpeed: 0.5
-  IdleAngle: -20
-  IdlePointRight: {fileID: 1953636055}
-  AttackSpeed: 0.3
-  AttackAngle: 54
-  AttackRadius: 2
-  AttackCenter: {fileID: 1391658911}
-  PC2D: {fileID: 932818957}
+  <Player>k__BackingField: {fileID: 2130083349}
+  <SR>k__BackingField: {fileID: 199573084}
+  <Head>k__BackingField: {fileID: 1975939524}
+  <Anim>k__BackingField: {fileID: 199573085}
+  <WeaponLength>k__BackingField: 0
+  <YRange>k__BackingField: 0.2
+  <IdleSpeed>k__BackingField: 0.5
+  <IdleAngle>k__BackingField: -20
+  <IdlePointRight>k__BackingField: {fileID: 1953636055}
+  <AttackSpeed>k__BackingField: 0.2
+  <AttackAngle>k__BackingField: 54
+  <AttackRadius>k__BackingField: 2
+  <AttackCenter>k__BackingField: {fileID: 1391658911}
+  <PC2D>k__BackingField: {fileID: 932818957}
 --- !u!210 &1078091623
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -2358,15 +2358,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6712cdca2563b45d899748132545e55d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostTrail
-  Player: {fileID: 2130083349}
-  PlayerSR: {fileID: 1446571702}
-  TrailLiveTime: 0.5
-  Delta: 0.1
-  Count: 10
-  TrailPool: []
-  TrailPrefab: {fileID: 9112666078797984222, guid: c42f85800303b4c2aa4d4436ed911452, type: 3}
-  WhiteMat: {fileID: 2100000, guid: 0696bef2c4f0f4e96998d0fd861ee68f, type: 2}
-  IsShowing: 0
+  <Player>k__BackingField: {fileID: 2130083349}
+  <PlayerSR>k__BackingField: {fileID: 1446571702}
+  <TrailLiveTime>k__BackingField: 0.5
+  <Delta>k__BackingField: 0.12
+  <Count>k__BackingField: 5
+  <TrailPool>k__BackingField: []
+  <TrailPrefab>k__BackingField: {fileID: 9112666078797984222, guid: c42f85800303b4c2aa4d4436ed911452, type: 3}
+  <WhiteMat>k__BackingField: {fileID: 2100000, guid: 0696bef2c4f0f4e96998d0fd861ee68f, type: 2}
 --- !u!1 &1166211856
 GameObject:
   m_ObjectHideFlags: 0
@@ -2765,8 +2764,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ce84e7ae497e43219af53a9473324ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimController
-  Player: {fileID: 2130083349}
-  Anim: {fileID: 1446571701}
+  <Player>k__BackingField: {fileID: 2130083349}
+  <Anim>k__BackingField: {fileID: 1446571701}
 --- !u!1 &1466925222
 GameObject:
   m_ObjectHideFlags: 0
@@ -3593,7 +3592,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1953636055}
   m_Layer: 0
-  m_Name: Idle Point
+  m_Name: Idle Point | Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3917,20 +3916,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef049731f16eb3c4a9d6093bef0996b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  InputActions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
-  Rb: {fileID: 2130083350}
+  m_inputActions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
+  <Rb>k__BackingField: {fileID: 2130083350}
   m_walkSpeed: 5
-  m_speedBuff: 1
+  <SpeedBuff>k__BackingField: 1
   m_dashSpeed: 12
-  GhostTrailCtrl: {fileID: 1127835816}
-  DashCooldown: 0.5
-  DashTime: 0.2
-  IsDashing: 0
-  DashDir: {x: 0, y: 0}
-  FacingDir: {x: 0, y: -1}
-  IsAttacking: 0
-  AttackCooldown: 0.15
-  Weapon: {fileID: 1078091622}
+  <GhostTrailCtrl>k__BackingField: {fileID: 1127835816}
+  <DashCooldown>k__BackingField: 0.5
+  <DashTime>k__BackingField: 0.25
+  <IsDashing>k__BackingField: 0
+  <DashDir>k__BackingField: {x: 0, y: 0}
+  <FocusTF>k__BackingField: {fileID: 0}
+  <FacingDir>k__BackingField: {x: 0, y: 0}
+  <IsAttacking>k__BackingField: 0
+  <AttackCooldown>k__BackingField: 0
+  <Weapon>k__BackingField: {fileID: 1078091622}
   m_moveAction:
     m_Name: Move
     m_Type: 0
@@ -3958,9 +3958,9 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  MoveVal: {x: 0, y: 0}
-  PressDashThisFrame: 0
-  PressAttackThisFrame: 0
+  <MoveVal>k__BackingField: {x: 0, y: 0}
+  <PressDashThisFrame>k__BackingField: 0
+  <PressAttackThisFrame>k__BackingField: 0
 --- !u!50 &2130083350
 Rigidbody2D:
   serializedVersion: 5

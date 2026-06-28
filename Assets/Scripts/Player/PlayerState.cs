@@ -12,9 +12,9 @@ public enum PState
 public class PlayerState : State
 {
     public PState Type { get; protected set; }
-    public PlayerController Player;
-    public PlayerAnimController PlayerAnim;
-    public string VarName;
+    public PlayerController Player {get; protected set; } 
+    public PlayerAnimController PlayerAnim {get; protected set; }
+    public string VarName {get; protected set; }
 
     public PlayerState(PlayerController player, PlayerAnimController playerAnim, string varName) : base(varName)
     {

@@ -3,22 +3,22 @@ using UnityEngine;
 
 public struct LocalTransformSnapshot
 {
-    public Vector3 LocalPosition;
-    public Vector3 LocalEuler;
-    public Vector3 LocalScale;
+    private Vector3 m_localPosition;
+    private Vector3 m_localEuler;
+    private Vector3 m_localScale;
 
     public LocalTransformSnapshot(Transform t)
     {
-        LocalPosition = t.localPosition;
-        LocalEuler = t.localEulerAngles;
-        LocalScale = t.localScale;
+        m_localPosition = t.localPosition;
+        m_localEuler = t.localEulerAngles;
+        m_localScale = t.localScale;
     }
 
     public void RestoreTo(Transform t)
     {
-        t.localPosition = LocalPosition;
-        t.localEulerAngles = LocalEuler;
-        t.localScale = LocalScale;
+        t.localPosition = m_localPosition;
+        t.localEulerAngles = m_localEuler;
+        t.localScale = m_localScale;
     }
 }
 

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class WeaponIdle : WeaponState
 {
-    public Vector3 IdlePos, IdleAngle;
-    public Vector3 SRLocalPosition, SRLocalEulerAngles;
+    private Vector3 m_idlePos, m_idleAngle;
+    private Vector3 m_SRLocalPosition, m_SRLocalEulerAngles;
 
     public WeaponIdle(WeaponController weapon, PlayerController player, string name) : base(weapon, player, name)
     {
@@ -12,28 +12,28 @@ public class WeaponIdle : WeaponState
         DebugLog = false;
 
         // Pos to start idling (bottom)
-        IdlePos = new(Weapon.IdlePointRight.localPosition.x, Weapon.IdlePointRight.localPosition.y - Weapon.YRange / 2f);
-        IdleAngle = new(0, 0, Weapon.IdleAngle);
+        m_idlePos = new(Weapon.IdlePointRight.localPosition.x, Weapon.IdlePointRight.localPosition.y - Weapon.YRange / 2f);
+        m_idleAngle = new(0, 0, Weapon.IdleAngle);
     }
 
     public override void Enter()
     {
         base.Enter();
         // Restore when existing
-        SRLocalPosition = Weapon.SR.transform.localPosition;
-        SRLocalEulerAngles = Weapon.SR.transform.localEulerAngles;
+        m_SRLocalPosition = Weapon.SR.transform.localPosition;
+        m_SRLocalEulerAngles = Weapon.SR.transform.localEulerAngles;
 
         // Set the sprite to the bottom position
-        if (Player.FacingDir.x * IdlePos.x < 0)
+        if (Player.FacingDir.x * m_idlePos.x < 0)
         {
-            IdlePos.x *= -1;
-            IdleAngle.z *= -1;
+            m_idlePos.x *= -1;
+            m_idleAngle.z *= -1;
         }
-        Weapon.SR.transform.localPosition = IdlePos;
-        Weapon.SR.transform.localEulerAngles = IdleAngle;
+        Weapon.SR.transform.localPosition = m_idlePos;
+        Weapon.SR.transform.localEulerAngles = m_idleAngle;
 
         // Start moving
-        Weapon.SR.transform.DOLocalMoveY(IdlePos.y + Weapon.YRange, Weapon.IdleSpeed / Player.SpeedBuff).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+        Weapon.SR.transform.DOLocalMoveY(m_idlePos.y + Weapon.YRange, Weapon.IdleSpeed / Player.SpeedBuff).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
     public override void Update()
@@ -45,12 +45,12 @@ public class WeaponIdle : WeaponState
             Weapon.ChangeState(WState.ATTACK);
 
         // Update position & rotate when switching side
-        if (Player.FacingDir.x * IdlePos.x < 0)
+        if (Player.FacingDir.x * m_idlePos.x < 0)
         {
-            IdlePos.x *= -1;
-            IdleAngle.z *= -1;
-            Weapon.SR.transform.localPosition = IdlePos;
-            Weapon.SR.transform.localEulerAngles = IdleAngle;
+            m_idlePos.x *= -1;
+            m_idleAngle.z *= -1;
+            Weapon.SR.transform.localPosition = m_idlePos;
+            Weapon.SR.transform.localEulerAngles = m_idleAngle;
         }
     }
 
@@ -60,7 +60,7 @@ public class WeaponIdle : WeaponState
 
         // Restore
         Weapon.SR.transform.DOKill();
-        Weapon.SR.transform.localPosition = SRLocalPosition;
-        Weapon.SR.transform.localEulerAngles = SRLocalEulerAngles;
+        Weapon.SR.transform.localPosition = m_SRLocalPosition;
+        Weapon.SR.transform.localEulerAngles = m_SRLocalEulerAngles;
     }
 }

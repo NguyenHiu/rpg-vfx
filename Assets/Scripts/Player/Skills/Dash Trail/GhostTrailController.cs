@@ -6,17 +6,17 @@ using UnityEngine.Video;
 
 public class GhostTrailController : MonoBehaviour
 {
-    public PlayerController Player;
-    public SpriteRenderer PlayerSR;
-    public float TrailLiveTime;
-    public float Delta;
+    [field: SerializeField] public PlayerController Player {get; private set;}
+    [field: SerializeField] public SpriteRenderer PlayerSR {get; private set;}
+    [field: SerializeField] public float TrailLiveTime {get; private set;}
+    [field: SerializeField] public float Delta {get; private set;}
     private float m_timer;
-    public int Count;
-    public List<GhostTrail> TrailPool;
-    public GameObject TrailPrefab;
+    [field: SerializeField] public int Count {get; private set;}
+    [field: SerializeField] public List<GhostTrail> TrailPool {get; private set;}
+    [field: SerializeField] public GameObject TrailPrefab {get; private set;}
     private int m_idx;
-    public Material WhiteMat;
-    public bool IsShowing;
+    [field: SerializeField] public Material WhiteMat {get; private set;}
+    private bool m_isShowing;
 
     void Awake()
     {
@@ -26,12 +26,12 @@ public class GhostTrailController : MonoBehaviour
             TrailPool.Add(obj.GetComponent<GhostTrail>());
             obj.SetActive(false);
         }
-        IsShowing = false;
+        m_isShowing = false;
     }
 
     void Update()
     {
-        if (!IsShowing) return;
+        if (!m_isShowing) return;
 
         m_timer -= Time.deltaTime;
         if (m_timer < 0)
@@ -50,13 +50,13 @@ public class GhostTrailController : MonoBehaviour
 
     public void StartTrails()
     {
-        IsShowing = true;
+        m_isShowing = true;
         m_timer = 0;
     }
 
     public void EnoughTrails()
     {
-        IsShowing = false;
+        m_isShowing = false;
         // Spawn one more trail
         SpawnTrail();
     }

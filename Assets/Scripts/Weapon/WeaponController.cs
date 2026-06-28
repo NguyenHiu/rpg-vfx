@@ -4,27 +4,27 @@ using Unity.VisualScripting;
 
 public class WeaponController : MonoBehaviour
 {
-    public PlayerController Player;
-    public SpriteRenderer SR;
-    public Transform Head;
-    public StateMachine StateM;
-    public List<WeaponState> States;
-    public Animator Anim;
-    public float WeaponLength;
+    [field: SerializeField] public PlayerController Player {get; private set; }
+    [field: SerializeField] public SpriteRenderer SR {get; private set; }
+    [field: SerializeField] public Transform Head {get; private set; }
+    [field: SerializeField] public StateMachine StateM {get; private set; }
+    [field: SerializeField] public List<WeaponState> States {get; private set; }
+    [field: SerializeField] public Animator Anim {get; private set; }
+    [field: SerializeField] public float WeaponLength {get; private set; }
 
-    [Header("===== Stats =====")]
-    [Header("Idle")]
-    public float YRange;
-    public float IdleSpeed;
-    public float IdleAngle;
-    public Transform IdlePointRight;
+    [field: Header("===== Stats =====")]
+    [field: Header("Idle")]
+    [field: SerializeField] public float YRange {get; private set; }
+    [field: SerializeField] public float IdleSpeed {get; private set; }
+    [field: SerializeField] public float IdleAngle {get; private set; }
+    [field: SerializeField] public Transform IdlePointRight {get; private set; }
 
-    [Header("Attack")]
-    public float AttackSpeed;
-    public float AttackAngle;
-    public float AttackRadius;
-    public Transform AttackCenter;
-    public PolygonCollider2D PC2D;
+    [field: Header("Attack")]
+    [field: SerializeField] public float AttackSpeed {get; private set; }
+    [field: SerializeField] public float AttackAngle {get; private set; }
+    [field: SerializeField] public float AttackRadius {get; private set; }
+    [field: SerializeField] public Transform AttackCenter {get; private set; }
+    [field: SerializeField] public PolygonCollider2D PC2D {get; private set; }
 
     void Awake()
     {

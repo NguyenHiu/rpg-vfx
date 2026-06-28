@@ -4,14 +4,14 @@ using UnityEngine;
 public class PlayerAnimController : MonoBehaviour
 {
     public const float VIRTUAL_DIR_RANGE = 0.58f;
-    public PlayerController Player;
-    public Animator Anim;
-    public StateMachine StateM;
-    public List<PlayerState> States;
+    [field: SerializeField] public PlayerController Player {get; private set; }
+    [field: SerializeField] public Animator Anim {get; private set; }
+    [field: SerializeField] public StateMachine StateM {get; private set; }
+    private List<PlayerState> m_states;
 
     void Awake()
     {
-        States = new()
+        m_states = new()
         {
             new PlayerIdle(Player, this, "Idle"),
             new PlayerIdleSide(Player, this, "Idle_Side"),
@@ -43,9 +43,9 @@ public class PlayerAnimController : MonoBehaviour
 
     PlayerState GetState(PState type)
     {
-        for (int i = 0; i < States.Count; i++)
+        for (int i = 0; i < m_states.Count; i++)
         {
-            if (States[i].Type == type) return States[i];
+            if (m_states[i].Type == type) return m_states[i];
         }
         return null;
     }

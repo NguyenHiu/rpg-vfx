@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class ScarecrowController : MonoBehaviour
 {
-    public SpriteRenderer SR;
-    public float BlinkDuration;
-    public float Timer;
+    [field: SerializeField] public SpriteRenderer SR {get; private set; }
+    [field: SerializeField] public float BlinkDuration {get; private set; }
+    [field: SerializeField] public float Timer {get; private set; }
     private bool IsBlinking;
 
     // TODO: make the scarecrow loop left-right when being hit by rotating
     // TEST
-    public Sequence seq;
-    public float Duration;
-    public float Angle;
-    public float iFrameDuration;
-    public float iFrameTimer;
+    [field: SerializeField] public Sequence Seq {get; private set; }
+    [field: SerializeField] public float Duration {get; private set; }
+    [field: SerializeField] public float Angle {get; private set; }
+    [field: SerializeField] public float iFrameDuration {get; private set; }
+    [field: SerializeField] public float iFrameTimer {get; private set; }
 
     void OnDisable()
     {
@@ -25,11 +25,11 @@ public class ScarecrowController : MonoBehaviour
     void Start()
     {
         // Init sequence
-        seq = DOTween.Sequence().SetAutoKill(false);
-        seq.Pause();
-        seq.Append(transform.DORotate(new(0, 0, -Angle), Duration));
-        seq.Append(transform.DORotate(new(0, 0, Angle), Duration * 2));
-        seq.Append(transform.DORotate(new(0, 0, 0), Duration));
+        Seq = DOTween.Sequence().SetAutoKill(false);
+        Seq.Pause();
+        Seq.Append(transform.DORotate(new(0, 0, -Angle), Duration));
+        Seq.Append(transform.DORotate(new(0, 0, Angle), Duration * 2));
+        Seq.Append(transform.DORotate(new(0, 0, 0), Duration));
     }
 
     void Update()
@@ -61,6 +61,6 @@ public class ScarecrowController : MonoBehaviour
 
     private void HitAnim()
     {
-        seq.Restart();
+        Seq.Restart();
     }
 }

@@ -11,56 +11,55 @@ public enum PlayerMode
 public class PlayerController : MonoBehaviour
 {
     [Header("Components")]
-    public InputActionAsset InputActions;
-    public Rigidbody2D Rb;
+    [SerializeField] private InputActionAsset m_inputActions;
+    [field: SerializeField] public Rigidbody2D Rb { get; private set; }
 
     [Header("===== Stats =====")]
 
     // Walk
     [Header("Walk")]
     [SerializeField] private float m_walkSpeed;
-    [Min(0.2f)][SerializeField] private float m_speedBuff; // divided by SpeedBuff everywhere -> ensure not too small
-    public float SpeedBuff => m_speedBuff;
+    [Min(0.2f)][field: SerializeField] public float SpeedBuff { get; private set; } // divided by SpeedBuff everywhere -> ensure not too small
     public Action<float> OnSpeedBuffChange;
 
     // Dash
     [Header("Dash")]
     [SerializeField] private float m_dashSpeed;
-    public GhostTrailController GhostTrailCtrl;
-    public float DashCooldown;
+    [field: SerializeField] public GhostTrailController GhostTrailCtrl { get; private set; }
+    [field: SerializeField] public float DashCooldown { get; private set; }
     private float m_dashTimer;
-    public float DashTime;
-    public bool IsDashing;
-    public Vector2 DashDir;
+    [field: SerializeField] public float DashTime { get; private set; }
+    [field: SerializeField] public bool IsDashing { get; private set; }
+    [field: SerializeField] public Vector2 DashDir { get; private set; }
 
     // Attack
-    [Header("Attack")]
-    public Transform FocusTF;
-    public Vector2 FacingDir = new(0, -1);
-    public bool IsAttacking;
-    public float AttackCooldown;
+    [field: Header("Attack")]
+    [field: SerializeField] public Transform FocusTF { get; private set; }
+    [field: SerializeField] public Vector2 FacingDir { get; private set; }
+    [field: SerializeField] public bool IsAttacking { get; private set; }
+    [field: SerializeField] public float AttackCooldown { get; private set; }
     private float m_attackTimer;
 
-    [Header("Hand")]
-    public WeaponController Weapon;
+    [field: Header("Hand")]
+    [field: SerializeField] public WeaponController Weapon { get; private set; }
 
     // Inputs
     [Header("Inputs")]
     [SerializeField] private InputAction m_moveAction;
     [SerializeField] private InputAction m_dashAction;
     [SerializeField] private InputAction m_attackAction;
-    public Vector2 MoveVal;
-    public bool PressDashThisFrame;
-    public bool PressAttackThisFrame;
+    [field: SerializeField] public Vector2 MoveVal { get; private set; }
+    [field: SerializeField] public bool PressDashThisFrame { get; private set; }
+    [field: SerializeField] public bool PressAttackThisFrame { get; private set; }
 
     void OnEnable()
     {
-        InputActions.FindActionMap("Player").Enable();
+        m_inputActions.FindActionMap("Player").Enable();
     }
 
     void OnDisable()
     {
-        InputActions.FindActionMap("Player").Disable();
+        m_inputActions.FindActionMap("Player").Disable();
     }
 
     void Start()
@@ -95,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
     public void SetSpeedBuff(float newVal)
     {
-        m_speedBuff = newVal;
+        SpeedBuff = newVal;
         OnSpeedBuffChange?.Invoke(SpeedBuff);
     }
 
@@ -114,8 +113,19 @@ public class PlayerController : MonoBehaviour
         return !IsDashing && !IsAttacking && PressDashThisFrame;
     }
 
+    public void SetDashing(bool val)
+    {
+        IsDashing = val;
+        if (val) DashDir = Rb.linearVelocity.normalized;
+    }
+
     public bool IsAbleToAttack()
     {
         return !IsDashing && !IsAttacking && PressAttackThisFrame;
+    }
+
+    public void SetAttacking(bool val)
+    {
+        IsAttacking = val;
     }
 }
