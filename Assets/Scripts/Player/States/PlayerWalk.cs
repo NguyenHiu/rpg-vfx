@@ -24,10 +24,10 @@ public class PlayerWalk : PlayerState
 
     protected virtual void DirectionCheck()
     {
-        var a = Player.Rb.linearVelocityX / Player.Rb.linearVelocityY;
+        var a = Player.FacingDir.x / Player.FacingDir.y;
         if (a < -PlayerAnimController.VIRTUAL_DIR_RANGE || a > PlayerAnimController.VIRTUAL_DIR_RANGE)
             PlayerAnim.ChangeState(PState.WALK_SIDE);
-        else if (Player.Rb.linearVelocityY > 0)
+        else if (Player.FacingDir.y > 0)
             PlayerAnim.ChangeState(PState.WALK_BACK);
     }
 }
@@ -42,10 +42,10 @@ public class PlayerWalkBack : PlayerWalk
 
     protected override void DirectionCheck()
     {
-        var a = Player.Rb.linearVelocityX / Player.Rb.linearVelocityY;
+        var a = Player.FacingDir.x / Player.FacingDir.y;
         if (a < -PlayerAnimController.VIRTUAL_DIR_RANGE || a > PlayerAnimController.VIRTUAL_DIR_RANGE)
             PlayerAnim.ChangeState(PState.WALK_SIDE);
-        else if (Player.Rb.linearVelocityY < 0)
+        else if (Player.FacingDir.y < 0)
             PlayerAnim.ChangeState(PState.WALK);
     }
 }
@@ -66,10 +66,10 @@ public class PlayerWalkSide : PlayerWalk
 
     protected override void DirectionCheck()
     {
-        var a = Player.Rb.linearVelocityX / Player.Rb.linearVelocityY;
+        var a = Player.FacingDir.x / Player.FacingDir.y;
         if (a > -PlayerAnimController.VIRTUAL_DIR_RANGE & a < PlayerAnimController.VIRTUAL_DIR_RANGE)
         {
-            if (Player.Rb.linearVelocityY > 0)
+            if (Player.FacingDir.y > 0)
                 PlayerAnim.ChangeState(PState.WALK_BACK);
             else PlayerAnim.ChangeState(PState.WALK);
         }
@@ -77,7 +77,7 @@ public class PlayerWalkSide : PlayerWalk
 
     void CheckSide()
     {
-        if (Player.Rb.linearVelocityX * PlayerAnim.transform.localScale.x < 0)
+        if (Player.FacingDir.x * PlayerAnim.transform.localScale.x < 0)
             PlayerAnim.transform.localScale = new Vector2(PlayerAnim.transform.localScale.x * -1, PlayerAnim.transform.localScale.y);
     }
 }

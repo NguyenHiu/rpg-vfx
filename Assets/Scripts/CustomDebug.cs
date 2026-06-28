@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class CustomDebug : MonoBehaviour
 {
@@ -21,6 +22,11 @@ public class CustomDebug : MonoBehaviour
     public GameObject DebugPanel;
     public CanvasGroup PanelGroup;
 
+    [Header("Auto Focus")]
+    public Sprite TickText;
+    public Sprite UntickText;
+    public Image ToggleImg;
+
     void OnDisable()
     {
         PanelGroup.DOKill();
@@ -34,6 +40,7 @@ public class CustomDebug : MonoBehaviour
 
     void Start()
     {
+        ToggleAutoFocus(true);
     }
 
     void Update()
@@ -96,5 +103,21 @@ public class CustomDebug : MonoBehaviour
     {
         DebugArrow.transform.localEulerAngles = new(0, 0, Mathf.Atan2(Player.FacingDir.y, Player.FacingDir.x) * Mathf.Rad2Deg);
         DebugArrow.transform.localPosition = Player.FacingDir * ArrowRadius;
+    }
+
+    public void ToggleAutoFocus(bool isForcedUntick)
+    {
+        if (isForcedUntick || Player.Mode == PlayerMode.ATTACK)
+        {
+            Player.ExitAttackMode();
+            ToggleImg.sprite = UntickText;
+            Debug.Log("Exit Attack Mode");
+        }
+        else if (Player.Mode == PlayerMode.FREE)
+        {
+            Player.EnterAttackMode();
+            ToggleImg.sprite = TickText;
+            Debug.Log("Enter Attack Mode");
+        }
     }
 }

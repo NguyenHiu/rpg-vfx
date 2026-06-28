@@ -19,7 +19,7 @@ public class PlayerIdle : PlayerState
             var a = Player.Rb.linearVelocityX / Player.Rb.linearVelocityY;
             if (a < -PlayerAnimController.VIRTUAL_DIR_RANGE || a > PlayerAnimController.VIRTUAL_DIR_RANGE)
                 nxtState = PState.WALK_SIDE;
-            else if (Player.Rb.linearVelocityY > 0)
+            else if (Player.FacingDir.y > 0)
                 nxtState = PState.WALK_BACK;
 
             PlayerAnim.ChangeState(nxtState);
