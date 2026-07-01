@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [Min(0.2f)][field: SerializeField] public float SpeedBuff { get; private set; } // divided by SpeedBuff everywhere -> ensure not too small
     public Action<float> OnSpeedBuffChange;
 
+    [Header("Skills")]
     // Dash
     [Header("Dash")]
     [SerializeField] private float m_dashSpeed;
