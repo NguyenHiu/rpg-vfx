@@ -2820,7 +2820,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1127835815}
-  - component: {fileID: 1127835816}
   m_Layer: 0
   m_Name: Ghost Trails
   m_TagString: Untagged
@@ -2843,26 +2842,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1127835816
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1127835814}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6712cdca2563b45d899748132545e55d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GhostTrail
-  <Player>k__BackingField: {fileID: 2130083349}
-  <PlayerSR>k__BackingField: {fileID: 1446571702}
-  <TrailLiveTime>k__BackingField: 0.5
-  <Delta>k__BackingField: 0.12
-  <Count>k__BackingField: 5
-  <TrailPool>k__BackingField: []
-  <TrailPrefab>k__BackingField: {fileID: 9112666078797984222, guid: c42f85800303b4c2aa4d4436ed911452, type: 3}
-  <WhiteMat>k__BackingField: {fileID: 2100000, guid: 0696bef2c4f0f4e96998d0fd861ee68f, type: 2}
 --- !u!1 &1166211856
 GameObject:
   m_ObjectHideFlags: 0
@@ -4616,15 +4595,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   m_inputActions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   <Rb>k__BackingField: {fileID: 2130083350}
+  Anim: {fileID: 1446571703}
+  SR: {fileID: 1446571702}
   <Mode>k__BackingField: 0
   m_walkSpeed: 5
   <SpeedBuff>k__BackingField: 1
-  m_dashSpeed: 12
-  <GhostTrailCtrl>k__BackingField: {fileID: 1127835816}
-  <DashCooldown>k__BackingField: 0.5
-  <DashTime>k__BackingField: 0.25
-  <IsDashing>k__BackingField: 0
-  <DashDir>k__BackingField: {x: 0, y: 0}
+  DashConfig: {fileID: 11400000, guid: 0ac3f870b3cee564d985b32208eb0829, type: 2}
+  TrailsParent: {fileID: 1127835815}
   <FocusTF>k__BackingField: {fileID: 0}
   m_battleRadius: 5.05
   m_enemyLayer:

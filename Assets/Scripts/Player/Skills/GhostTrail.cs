@@ -1,6 +1,5 @@
 using UnityEngine;
 using DG.Tweening;
-using Unity.VisualScripting;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class GhostTrail : MonoBehaviour

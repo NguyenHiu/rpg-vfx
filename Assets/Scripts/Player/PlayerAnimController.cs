@@ -4,9 +4,9 @@ using UnityEngine;
 public class PlayerAnimController : MonoBehaviour
 {
     public const float VIRTUAL_DIR_RANGE = 0.58f;
-    [field: SerializeField] public PlayerController Player {get; private set; }
-    [field: SerializeField] public Animator Anim {get; private set; }
-    [field: SerializeField] public StateMachine StateM {get; private set; }
+    [field: SerializeField] public PlayerController Player { get; private set; }
+    [field: SerializeField] public Animator Anim { get; private set; }
+    [field: SerializeField] public StateMachine StateM { get; private set; }
     private List<PlayerState> m_states;
 
     void Awake()
@@ -39,6 +39,11 @@ public class PlayerAnimController : MonoBehaviour
     public void ChangeState(PState type)
     {
         StateM.ChangeState(GetState(type));
+    }
+
+    public PlayerState GetCurrentState()
+    {
+        return (PlayerState)StateM.CurrentState;
     }
 
     PlayerState GetState(PState type)

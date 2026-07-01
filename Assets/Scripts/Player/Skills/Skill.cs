@@ -1,3 +1,5 @@
+using UnityEngine;
+
 /// <summary>
 /// Standard Skill class for all skills
 /// NOTE: This class currently supports Time-Based Skills only!
@@ -7,7 +9,7 @@ public class Skill
     protected readonly SkillCfg Cfg;
     public readonly PlayerController Player;
     public bool IsRunning { get; protected set; }
-    protected float m_timer;
+    protected float m_timer = 0;
 
     public Skill(SkillCfg cfg, PlayerController player)
     {
@@ -17,7 +19,8 @@ public class Skill
 
     public virtual bool CanTrigger()
     {
-        return m_timer < 0;
+        Debug.Log("Skill - m_timer: " + m_timer);
+        return m_timer <= 0.01f;
     }
     public virtual void Enter()
     {
