@@ -16,23 +16,18 @@ public class DashSkill : Skill
         m_trailCtrl = new(player, sampleSr, trailParent, cfg);
     }
 
-    public Vector2 GetDir() => m_dashDir;
-    public float GetSpeed() => Cfg.Speed;
-
-    // public override bool CanUse()
-    // {
-    //     var isFree = base.CanUse();
-    //     if (!isFree) return false;
-
-
-    // }
-
-    public override void FixedUpdate(float dt)
+    public override void FixedUpdate(float dt, PlayerContext context)
     {
-        base.FixedUpdate(dt);
+        base.FixedUpdate(dt, context);
         m_dashTimer -= dt;
         if (m_dashTimer <= 0)
+        {
             Stop();
+            return;
+        }
+
+        context.Direction = m_dashDir;
+        context.Speed = Cfg.Speed;
         m_trailCtrl.FixedUpdate(dt);
     }
 
@@ -113,7 +108,7 @@ public class TrailsController
         m_timer -= dt;
         if (m_timer < 0)
         {
-            m_timer = Cfg.TrailSpawnDelta / Player.SpeedBuff;
+            m_timer = Cfg.TrailSpawnDelta;
             SpawnTrail();
         }
     }

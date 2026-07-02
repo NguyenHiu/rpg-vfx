@@ -10,13 +10,12 @@ public struct ActiveSkill
     public Skill Skill;
 }
 
-[Serializable]
-public class SkillController
+public class SkillController : MonoBehaviour
 {
     [Header("Skills Controller")]
     [SerializeField] private PlayerController m_player;
-    [SerializeField] private List<ActiveSkill> m_activeSkills;
-    [SerializeField] private Skill m_lastSkill;
+    private List<ActiveSkill> m_activeSkills;
+    private Skill m_lastSkill;
 
     [Header("Dash")]
     [SerializeField] private DashConfig m_dashCfg;
@@ -26,27 +25,17 @@ public class SkillController
 
     public SkillController()
     {
-        InitActiveSkills();
+        m_activeSkills = new();
+        // {
+        //     new ActiveSkill()
+        //     {
+        //         Action = InputSystem.actions.FindAction("Dash"),
+        //         Skill = new DashSkill(m_dashCfg, m_player, m_trailSample, m_trailParent)
+        //     }
+        // };
     }
 
-    public void FixedUpdate(float dt)
-    {
-        UpdateActiveSkills(dt);
-    }
-
-    private void InitActiveSkills()
-    {
-        m_activeSkills = new()
-        {
-            new ActiveSkill()
-            {
-                Action = InputSystem.actions.FindAction("Dash"),
-                Skill = new DashSkill(m_dashCfg, m_player, m_trailSample, m_trailParent)
-            }
-        };
-    }
-
-    private void UpdateActiveSkills(float dt)
+    public void ManualUpdate(float dt, PlayerContext context)
     {
         if (m_lastSkill == null || !m_lastSkill.IsRunning)
         {
@@ -59,7 +48,7 @@ public class SkillController
 
         if (m_lastSkill == null) return;
 
-        // m_lastSkill.FixedUpdate(dt);
+        m_lastSkill.FixedUpdate(dt, context);
         Debug.Log("Last Skill");
     }
 }

@@ -26,7 +26,7 @@ public class Skill
     {
         IsRunning = true;
     }
-    public virtual void FixedUpdate(float dt)
+    public virtual void FixedUpdate(float dt, PlayerContext context)
     {
         if (m_timer > 0) m_timer -= dt;
     }

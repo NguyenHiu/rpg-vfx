@@ -33,7 +33,7 @@ public class WeaponIdle : WeaponState
         Weapon.SR.transform.localEulerAngles = m_idleAngle;
 
         // Start moving
-        Weapon.SR.transform.DOLocalMoveY(m_idlePos.y + Weapon.YRange, Weapon.IdleSpeed / Player.SpeedBuff).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+        Weapon.SR.transform.DOLocalMoveY(m_idlePos.y + Weapon.YRange, Weapon.IdleSpeed).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
     public override void Update()

@@ -4,7 +4,7 @@ using UnityEngine;
 public class DashConfig : SkillCfg
 {
     public float Speed;
-    public float Duration;
+    public float Duration; 
 
     [Header("Trail")]
     public int NGhostTrails;

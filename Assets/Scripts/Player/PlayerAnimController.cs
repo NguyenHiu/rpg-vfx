@@ -23,12 +23,6 @@ public class PlayerAnimController : MonoBehaviour
         };
 
         StateM = new(GetState(PState.IDLE));
-
-        // Init default value
-        OnSpeedBuffChange(Player.SpeedBuff);
-
-        // Register for future changes
-        Player.OnSpeedBuffChange += OnSpeedBuffChange;
     }
 
     void Update()
@@ -53,10 +47,5 @@ public class PlayerAnimController : MonoBehaviour
             if (m_states[i].Type == type) return m_states[i];
         }
         return null;
-    }
-
-    private void OnSpeedBuffChange(float val)
-    {
-        Anim.speed = val;
     }
 }

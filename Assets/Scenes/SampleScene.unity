@@ -4554,6 +4554,8 @@ GameObject:
   - component: {fileID: 2130083350}
   - component: {fileID: 2130083351}
   - component: {fileID: 2130083349}
+  - component: {fileID: 2130083352}
+  - component: {fileID: 2130083353}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -4597,11 +4599,11 @@ MonoBehaviour:
   <Rb>k__BackingField: {fileID: 2130083350}
   Anim: {fileID: 1446571703}
   SR: {fileID: 1446571702}
-  <Mode>k__BackingField: 0
-  m_walkSpeed: 5
+  m_mode: 0
+  m_cfg: {fileID: 11400000, guid: 5f0daa8df3cfb624e827a2a4778d9ea0, type: 2}
+  m_stats: {fileID: 2130083353}
   <SpeedBuff>k__BackingField: 1
-  DashConfig: {fileID: 11400000, guid: 0ac3f870b3cee564d985b32208eb0829, type: 2}
-  TrailsParent: {fileID: 1127835815}
+  m_skillCtrl: {fileID: 2130083352}
   <FocusTF>k__BackingField: {fileID: 0}
   m_battleRadius: 5.05
   m_enemyLayer:
@@ -4706,6 +4708,35 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.56}
   m_Size: {x: 1.22, y: 0.38}
   m_Direction: 1
+--- !u!114 &2130083352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130083346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd6dfd0e107ad47d08497c8ea6036000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillController
+  m_player: {fileID: 2130083349}
+  m_dashCfg: {fileID: 11400000, guid: 0ac3f870b3cee564d985b32208eb0829, type: 2}
+  m_trailSample: {fileID: 1446571702}
+  m_trailParent: {fileID: 1127835815}
+--- !u!114 &2130083353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130083346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25aa40f8bfef34c8c83b7b473b721ac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  m_cfg: {fileID: 11400000, guid: 5f0daa8df3cfb624e827a2a4778d9ea0, type: 2}
 --- !u!1 &2141037157
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,14 @@ public enum PlayerMode
     ATTACK,
 }
 
+public struct PlayerContext
+{
+    public Vector2 Direction;
+    public float Speed;
+}
+[RequireComponent(typeof(SkillController))]
+
+[RequireComponent(typeof(PlayerStats))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Components")]
@@ -19,15 +27,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("===== Stats =====")]
     [SerializeField] private PlayerMode m_mode;
+    [SerializeField] private PlayerContext m_ctx;
     [SerializeField] private PlayerStats m_stats;
-
-    // Walk
-    [Header("Walk")]
-    [SerializeField] private float m_walkSpeed;
-    [Min(0.2f)][field: SerializeField] public float SpeedBuff { get; private set; } // divided by SpeedBuff everywhere -> ensure not too small
-    public Action<float> OnSpeedBuffChange;
-
-    [Header("Skills")]
     [SerializeField] private SkillController m_skillCtrl;
 
     // Attack
@@ -64,17 +65,14 @@ public class PlayerController : MonoBehaviour
         m_inputActions.FindActionMap("Player").Disable();
     }
 
-    void Awake()
-    {
-        m_skillCtrl = new();
-    }
-
     void Start()
     {
         m_moveAction = InputSystem.actions.FindAction("Move");
         m_attackAction = InputSystem.actions.FindAction("Attack");
 
         m_mode = PlayerMode.FREE;
+        m_skillCtrl = GetComponent<SkillController>();
+        m_stats = GetComponent<PlayerStats>();
     }
 
     void Update()
@@ -87,13 +85,11 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        m_skillCtrl.FixedUpdate(Time.deltaTime);
-
-        // var dir = DASHHH.IsRunning ? DASHHH.GetDir() : MoveVal.normalized;
-        // Rb.linearVelocity = dir * GetSpeed();
-
-        // if (Rb.linearVelocity != Vector2.zero) FacingDir = Rb.linearVelocity.normalized;
-
+        m_ctx.Direction = MoveVal.normalized;
+        m_ctx.Speed = m_stats.GetWalkSpeed();
+        m_skillCtrl.ManualUpdate(Time.deltaTime, m_ctx);
+        Rb.linearVelocity = m_ctx.Direction * m_ctx.Speed;
+        if (Rb.linearVelocity != Vector2.zero) FacingDir = Rb.linearVelocity.normalized;
         // if (m_mode == PlayerMode.ATTACK) FixedUpdate_AttackMode();
     }
 
@@ -149,19 +145,6 @@ public class PlayerController : MonoBehaviour
             Gizmos.DrawLine(prevPoint, newPoint);
             prevPoint = newPoint;
         }
-    }
-
-    public float GetSpeed()
-    {
-        // var baseSpeed = DASHHH.IsRunning ? DASHHH.GetSpeed() : m_walkSpeed;
-        var baseSpeed = 1;
-        return baseSpeed * SpeedBuff;
-    }
-
-    public void SetSpeedBuff(float newVal)
-    {
-        SpeedBuff = newVal;
-        OnSpeedBuffChange?.Invoke(SpeedBuff);
     }
 
     public void ResetAttackTimer()

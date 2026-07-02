@@ -31,9 +31,16 @@ public class StatModifier
     public bool IsRunning() => IsInf || Timer > 0;
 }
 
+[Serializable]
 public class StatModifierSet
 {
     public List<StatModifier> Plus;
     public List<StatModifier> Mul;
     public Action<float> OnChange;
+
+    public StatModifierSet()
+    {
+        Plus = new();
+        Mul = new();
+    }
 }

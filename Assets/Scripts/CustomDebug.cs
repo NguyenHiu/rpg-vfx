@@ -63,8 +63,9 @@ public class CustomDebug : MonoBehaviour
     {
         DebugText.text =
             $"FPS: {m_fps}\n" +
-            $"Pos: {m_pos}\n" +
-            $"Speed Buff: {Player.SpeedBuff * 100}%"
+            $"Pos: {m_pos}\n" 
+            // +
+            // $"Speed Buff: {Player.SpeedBuff * 100}%"
             ;
     }
 
@@ -92,11 +93,6 @@ public class CustomDebug : MonoBehaviour
             DebugBtn.SetActive(true);
         });
 
-    }
-
-    public void SetSpeedBuff(float val = 1.0f)
-    {
-        Player.SetSpeedBuff(val);
     }
 
     void RotateArrow()

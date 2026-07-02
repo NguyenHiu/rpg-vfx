@@ -19,14 +19,13 @@ public struct ModifierInput
     }
 }
 
-[Serializable]
-public class PlayerStats
+public class PlayerStats : MonoBehaviour
 {
     [SerializeField] private PlayerStatsConfig m_cfg;
     [SerializeField] private StatModifierSet m_speedModifiers;
     // public ModifierSet AttackModifiers;
 
-    public PlayerStats()
+    void Awake()
     {
         m_speedModifiers = new();
     }
@@ -78,6 +77,7 @@ public class PlayerStats
     }
 }
 
+[CreateAssetMenu(fileName="PlayerStatsConfig", menuName ="ScriptableObject/PlayerStatsConfig")]
 public class PlayerStatsConfig : ScriptableObject
 {
     public float WalkSpeed;
