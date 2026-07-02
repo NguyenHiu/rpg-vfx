@@ -17,12 +17,12 @@ public class Skill
         Player = player;
     }
 
-    public virtual bool CanTrigger()
+    public virtual bool CanUse()
     {
         Debug.Log("Skill - m_timer: " + m_timer);
         return m_timer <= 0.01f;
     }
-    public virtual void Enter()
+    public virtual void Use()
     {
         IsRunning = true;
     }
@@ -30,7 +30,7 @@ public class Skill
     {
         if (m_timer > 0) m_timer -= dt;
     }
-    public virtual void Exit()
+    public virtual void Stop()
     {
         IsRunning = false;
     }

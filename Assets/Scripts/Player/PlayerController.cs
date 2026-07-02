@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,8 +17,9 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField] public PlayerAnimController Anim;
     [field: SerializeField] public SpriteRenderer SR;
 
-    [field: Header("===== Stats =====")]
-    [field: SerializeField] public PlayerMode Mode { get; private set; }
+    [Header("===== Stats =====")]
+    [SerializeField] private PlayerMode m_mode;
+    [SerializeField] private PlayerStats m_stats;
 
     // Walk
     [Header("Walk")]
@@ -28,18 +28,7 @@ public class PlayerController : MonoBehaviour
     public Action<float> OnSpeedBuffChange;
 
     [Header("Skills")]
-    // DASHHH
-    [Header("DASHHH")]
-    public DashCfg DashConfig;
-    public DashSkill DASHHH;
-    public Transform TrailsParent;
-    // [SerializeField] private float m_dashSpeed;
-    // [field: SerializeField] public GhostTrailController GhostTrailCtrl { get; private set; }
-    // [field: SerializeField] public float DashCooldown { get; private set; }
-    // private float m_dashTimer;
-    // [field: SerializeField] public float DashTime { get; private set; }
-    // [field: SerializeField] public bool IsDashing { get; private set; }
-    // [field: SerializeField] public Vector2 DashDir { get; private set; }
+    [SerializeField] private SkillController m_skillCtrl;
 
     // Attack
     [field: Header("Attack")]
@@ -77,16 +66,15 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        DASHHH = new(DashConfig, this, SR, TrailsParent);
+        m_skillCtrl = new();
     }
 
     void Start()
     {
         m_moveAction = InputSystem.actions.FindAction("Move");
-        m_dashAction = InputSystem.actions.FindAction("Dash");
         m_attackAction = InputSystem.actions.FindAction("Attack");
 
-        Mode = PlayerMode.FREE;
+        m_mode = PlayerMode.FREE;
     }
 
     void Update()
@@ -94,19 +82,19 @@ public class PlayerController : MonoBehaviour
         // if (m_dashTimer >= 0) m_dashTimer -= Time.deltaTime;
         if (m_attackTimer >= 0) m_attackTimer -= Time.deltaTime;
         MoveVal = m_moveAction.ReadValue<Vector2>();
-        PressDashThisFrame = DASHHH.CanTrigger() && m_dashAction.IsPressed();
-        if (PressDashThisFrame) DASHHH.Enter();
         PressAttackThisFrame = m_attackTimer < 0f && m_attackAction.IsPressed();
     }
 
     void FixedUpdate()
     {
-        var dir = DASHHH.IsRunning ? DASHHH.GetDir() : MoveVal.normalized;
-        Rb.linearVelocity = dir * GetSpeed();
+        m_skillCtrl.FixedUpdate(Time.deltaTime);
 
-        if (Rb.linearVelocity != Vector2.zero) FacingDir = Rb.linearVelocity.normalized;
+        // var dir = DASHHH.IsRunning ? DASHHH.GetDir() : MoveVal.normalized;
+        // Rb.linearVelocity = dir * GetSpeed();
 
-        if (Mode == PlayerMode.ATTACK) FixedUpdate_AttackMode();
+        // if (Rb.linearVelocity != Vector2.zero) FacingDir = Rb.linearVelocity.normalized;
+
+        // if (m_mode == PlayerMode.ATTACK) FixedUpdate_AttackMode();
     }
 
     void FixedUpdate_AttackMode()
@@ -165,7 +153,8 @@ public class PlayerController : MonoBehaviour
 
     public float GetSpeed()
     {
-        var baseSpeed = DASHHH.IsRunning ? DASHHH.GetSpeed() : m_walkSpeed;
+        // var baseSpeed = DASHHH.IsRunning ? DASHHH.GetSpeed() : m_walkSpeed;
+        var baseSpeed = 1;
         return baseSpeed * SpeedBuff;
     }
 
@@ -182,12 +171,14 @@ public class PlayerController : MonoBehaviour
 
     public bool IsAbleToDash()
     {
-        return !DASHHH.IsRunning && !IsAttacking && PressDashThisFrame;
+        return false;
+        // return !DASHHH.IsRunning && !IsAttacking && PressDashThisFrame;
     }
 
     public bool IsAbleToAttack()
     {
-        return !DASHHH.IsRunning && !IsAttacking && PressAttackThisFrame;
+        return false;
+        // return !DASHHH.IsRunning && !IsAttacking && PressAttackThisFrame;
     }
 
     public void SetAttacking(bool val)
@@ -199,7 +190,7 @@ public class PlayerController : MonoBehaviour
     // Debug
     public void EnterAttackMode()
     {
-        Mode = PlayerMode.ATTACK;
+        m_mode = PlayerMode.ATTACK;
     }
 
     public void ExitAttackMode()
@@ -208,6 +199,12 @@ public class PlayerController : MonoBehaviour
         {
             comp.color = Color.white;
         }
-        Mode = PlayerMode.FREE;
+        m_mode = PlayerMode.FREE;
     }
+
+
+    // DEBUG ONLY
+    #if UNITY_EDITOR || DEVELOPMENT_BUILD
+    public PlayerMode Mode => m_mode;
+    #endif
 }
