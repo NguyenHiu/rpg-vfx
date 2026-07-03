@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System;
 
 public class WeaponController : MonoBehaviour
 {
     [field: SerializeField] public PlayerController Player {get; private set; }
     [field: SerializeField] public SpriteRenderer SR {get; private set; }
     [field: SerializeField] public Transform Head {get; private set; }
-    [field: SerializeField] public StateMachine StateM {get; private set; }
+    [field: SerializeField] public WeaponStateMachine StateM {get; private set; }
     [field: SerializeField] public List<WeaponState> States {get; private set; }
     [field: SerializeField] public Animator Anim {get; private set; }
     [field: SerializeField] public float WeaponLength {get; private set; }
@@ -79,9 +79,9 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    public void ChangeState(WState state)
+    public void ChangeState(WState state, Action callback=null)
     {
-        StateM.ChangeState(GetState(state));
+        StateM.ChangeState(GetState(state), callback);
     }
 
     private WeaponState GetState(WState state)

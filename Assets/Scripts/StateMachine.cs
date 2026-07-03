@@ -1,7 +1,7 @@
 public class StateMachine
 {
-    public State CurrentState { get; private set; }
-    public State PreviousState {get; private set; }
+    public State CurrentState { get; protected set; }
+    public State PreviousState {get; protected set; }
 
     public StateMachine(State state)
     {

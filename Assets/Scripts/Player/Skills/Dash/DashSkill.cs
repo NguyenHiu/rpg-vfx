@@ -1,19 +1,19 @@
 
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class DashSkill : Skill
 {
     protected new DashConfig Cfg;
-    protected Vector2 m_dashDir;
-    protected TrailsController m_trailCtrl;
+    private Vector2 m_dashDir;
+    private TrailsController m_trailCtrl;
     private float m_dashTimer;
+    private PlayerState m_prvState;
 
-    public DashSkill(DashConfig cfg, PlayerController player, SpriteRenderer sampleSr, Transform trailParent) : base(cfg, player)
+    public DashSkill(DashConfig cfg, SkillController skillCtrl, SpriteRenderer sampleSr, Transform trailParent) : base(cfg, skillCtrl)
     {
         Cfg = cfg;
-        m_trailCtrl = new(player, sampleSr, trailParent, cfg);
+        m_trailCtrl = new(sampleSr, trailParent, cfg);
     }
 
     public override void FixedUpdate(float dt, PlayerContext context)
@@ -31,10 +31,15 @@ public class DashSkill : Skill
         m_trailCtrl.FixedUpdate(dt);
     }
 
+    public override bool CanUse()
+    {
+        return base.CanUse() && Player.Rb.linearVelocity != Vector2.zero;
+    }
+
     public override void Use()
     {
-        Debug.Log("DashSkill - Use");
         base.Use();
+        m_prvState = Player.Anim.GetCurrentState();
         Player.Anim.ChangeState(PState.DASH);
         m_timer = Cfg.Cooldown;
         m_dashTimer = Cfg.Duration;
@@ -44,12 +49,10 @@ public class DashSkill : Skill
 
     public override void Stop()
     {
-        Debug.Log("DashSkill - Stop");
         base.Stop();
         m_trailCtrl.EnoughTrails();
 
-        var prvState = (PlayerState)Player.Anim.StateM.PreviousState;
-        switch (prvState.Type)
+        switch (m_prvState.Type)
         {
             case PState.WALK:
                 Player.Anim.ChangeState(PState.IDLE);
@@ -70,7 +73,6 @@ public class DashSkill : Skill
 
 public class TrailsController
 {
-    public readonly PlayerController Player;
     private readonly SpriteRenderer m_sampleSr;
     public readonly Transform ParentTf;
     public readonly DashConfig Cfg;
@@ -79,9 +81,8 @@ public class TrailsController
     private float m_timer;
     private int m_trailIdx;
 
-    public TrailsController(PlayerController player, SpriteRenderer sample, Transform parentTf, DashConfig cfg)
+    public TrailsController(SpriteRenderer sample, Transform parentTf, DashConfig cfg)
     {
-        Player = player;
         ParentTf = parentTf;
         Cfg = cfg;
         m_sampleSr = sample;

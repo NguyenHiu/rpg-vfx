@@ -12,9 +12,9 @@ public enum PState
 public class PlayerState : State
 {
     public PState Type { get; protected set; }
-    public PlayerController Player {get; protected set; } 
-    public PlayerAnimController PlayerAnim {get; protected set; }
-    public string VarName {get; protected set; }
+    public PlayerController Player { get; protected set; }
+    public PlayerAnimController PlayerAnim { get; protected set; }
+    public string VarName { get; protected set; }
 
     public PlayerState(PlayerController player, PlayerAnimController playerAnim, string varName) : base(varName)
     {
@@ -38,5 +38,12 @@ public class PlayerState : State
     public override void Update()
     {
         base.Update();
+    }
+
+    // OVERRIDE this method totally to perform custom EXIT
+    public virtual void ForceExit()
+    {
+        // Switch back to the default state: IDLE
+        PlayerAnim.ChangeState(PState.IDLE);
     }
 }

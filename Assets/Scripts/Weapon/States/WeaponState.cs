@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 
 public struct LocalTransformSnapshot
@@ -33,10 +34,17 @@ public class WeaponState : State
     public WState Type { get; protected set; }
     public WeaponController Weapon;
     public PlayerController Player;
+    public Action Callback;
 
     public WeaponState(WeaponController weapon, PlayerController player, string name) : base(name)
     {
         Weapon = weapon;
         Player = player;
+    }
+
+    public void Enter(Action callback)
+    {
+        Callback = callback;
+        base.Enter();
     }
 }

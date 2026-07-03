@@ -17,8 +17,6 @@ public class PlayerWalk : PlayerState
 
         if (Player.Rb.linearVelocity == Vector2.zero)
             PlayerAnim.ChangeState(backState);
-        else if (Player.IsAbleToDash()) 
-            PlayerAnim.ChangeState(PState.DASH);
         else DirectionCheck();
     }
 

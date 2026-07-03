@@ -7,7 +7,7 @@ public class WeaponAttack : WeaponState
     public WeaponAttack(WeaponController weapon, PlayerController player, string name) : base(weapon, player, name)
     {
         Type = WState.ATTACK;
-        DebugLog = false;
+        DebugLog = true;
     }
 
     public override void Enter()
@@ -40,10 +40,12 @@ public class WeaponAttack : WeaponState
 
         // Rotote the sword
         var deltaAngle = Mathf.Atan2(Player.FacingDir.x, Player.FacingDir.y) * Mathf.Rad2Deg;
+        Debug.Log($"{Weapon.AttackAngle} - {dir} - {-deltaAngle}");
         Weapon.SR.transform.localEulerAngles = new(0, 0, -Weapon.AttackAngle * dir - deltaAngle);
+        // TODO: use Attack Speed
         Weapon.SR.transform.DOLocalRotate(new(0, 0, Weapon.AttackAngle * dir - deltaAngle), Weapon.AttackSpeed).OnComplete(() =>
         {
-            Weapon.ChangeState(WState.IDLE);
+            Callback?.Invoke();
         });
         Weapon.PC2D.transform.localEulerAngles = new(0, 0, -deltaAngle); // Do not need to restore this one
 

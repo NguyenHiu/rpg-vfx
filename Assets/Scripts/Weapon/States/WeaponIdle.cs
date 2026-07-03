@@ -40,10 +40,6 @@ public class WeaponIdle : WeaponState
     {
         base.Update();
 
-        // Switch to attack state
-        if (Player.IsAbleToAttack())
-            Weapon.ChangeState(WState.ATTACK);
-
         // Update position & rotate when switching side
         if (Player.FacingDir.x * m_idlePos.x < 0)
         {

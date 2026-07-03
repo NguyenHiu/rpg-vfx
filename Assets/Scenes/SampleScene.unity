@@ -4600,9 +4600,7 @@ MonoBehaviour:
   Anim: {fileID: 1446571703}
   SR: {fileID: 1446571702}
   m_mode: 0
-  m_cfg: {fileID: 11400000, guid: 5f0daa8df3cfb624e827a2a4778d9ea0, type: 2}
   m_stats: {fileID: 2130083353}
-  <SpeedBuff>k__BackingField: 1
   m_skillCtrl: {fileID: 2130083352}
   <FocusTF>k__BackingField: {fileID: 0}
   m_battleRadius: 5.05
@@ -4720,10 +4718,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6dfd0e107ad47d08497c8ea6036000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillController
-  m_player: {fileID: 2130083349}
+  Player: {fileID: 2130083349}
+  Weapon: {fileID: 1078091622}
+  m_dashInputActionName: Dash
   m_dashCfg: {fileID: 11400000, guid: 0ac3f870b3cee564d985b32208eb0829, type: 2}
   m_trailSample: {fileID: 1446571702}
   m_trailParent: {fileID: 1127835815}
+  m_attackInputActionName: Attack
+  m_basicAttackCfg: {fileID: 11400000, guid: 2dfde5cd33d6c407eb2197634cf61558, type: 2}
 --- !u!114 &2130083353
 MonoBehaviour:
   m_ObjectHideFlags: 0

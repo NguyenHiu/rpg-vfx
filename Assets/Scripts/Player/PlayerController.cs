@@ -9,13 +9,13 @@ public enum PlayerMode
     ATTACK,
 }
 
-public struct PlayerContext
+public class PlayerContext
 {
     public Vector2 Direction;
     public float Speed;
 }
-[RequireComponent(typeof(SkillController))]
 
+[RequireComponent(typeof(SkillController))]
 [RequireComponent(typeof(PlayerStats))]
 public class PlayerController : MonoBehaviour
 {
@@ -73,21 +73,23 @@ public class PlayerController : MonoBehaviour
         m_mode = PlayerMode.FREE;
         m_skillCtrl = GetComponent<SkillController>();
         m_stats = GetComponent<PlayerStats>();
+        m_ctx = new();
     }
 
     void Update()
     {
-        // if (m_dashTimer >= 0) m_dashTimer -= Time.deltaTime;
         if (m_attackTimer >= 0) m_attackTimer -= Time.deltaTime;
         MoveVal = m_moveAction.ReadValue<Vector2>();
         PressAttackThisFrame = m_attackTimer < 0f && m_attackAction.IsPressed();
+        m_skillCtrl.ManualUpdate(Time.deltaTime);
     }
 
     void FixedUpdate()
     {
         m_ctx.Direction = MoveVal.normalized;
         m_ctx.Speed = m_stats.GetWalkSpeed();
-        m_skillCtrl.ManualUpdate(Time.deltaTime, m_ctx);
+        m_skillCtrl.ManualFixedUpdate(Time.deltaTime, m_ctx);
+        Debug.Log($"Context_2: {m_ctx.Speed}");
         Rb.linearVelocity = m_ctx.Direction * m_ctx.Speed;
         if (Rb.linearVelocity != Vector2.zero) FacingDir = Rb.linearVelocity.normalized;
         // if (m_mode == PlayerMode.ATTACK) FixedUpdate_AttackMode();
@@ -151,19 +153,7 @@ public class PlayerController : MonoBehaviour
     {
         m_attackTimer = AttackCooldown;
     }
-
-    public bool IsAbleToDash()
-    {
-        return false;
-        // return !DASHHH.IsRunning && !IsAttacking && PressDashThisFrame;
-    }
-
-    public bool IsAbleToAttack()
-    {
-        return false;
-        // return !DASHHH.IsRunning && !IsAttacking && PressAttackThisFrame;
-    }
-
+    
     public void SetAttacking(bool val)
     {
         IsAttacking = val;
