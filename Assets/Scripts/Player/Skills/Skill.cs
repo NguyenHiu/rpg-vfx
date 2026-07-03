@@ -23,13 +23,17 @@ public class Skill
         Weapon = SkillCtrl.Weapon;
     }
 
-    public virtual bool CanUse()
+    public virtual bool Available()
     {
         return m_timer <= 0.01f;
     }
-    public virtual void Use()
+    public virtual void Activate()
     {
         IsRunning = true;
+    }
+    public virtual void Cancel()
+    {
+        IsRunning = false;
     }
 
     // DON'T ASK ME WHY
@@ -43,9 +47,5 @@ public class Skill
     }
     public virtual void FixedUpdate(float dt, PlayerContext context)
     {
-    }
-    public virtual void Stop()
-    {
-        IsRunning = false;
     }
 }

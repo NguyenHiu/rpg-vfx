@@ -1,15 +1,6 @@
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
-[Serializable]
-public struct ActiveSkill
-{
-    public InputAction Action;
-    public Skill Skill;
-}
 
 public class SkillController : MonoBehaviour
 {
@@ -33,16 +24,8 @@ public class SkillController : MonoBehaviour
     {
         m_activeSkills = new()
         {
-            new ActiveSkill()
-            {
-                Action = InputSystem.actions.FindAction(m_dashInputActionName),
-                Skill = new DashSkill(m_dashCfg, this, m_trailSample, m_trailParent)
-            },
-            new ActiveSkill()
-            {
-                Action = InputSystem.actions.FindAction(m_attackInputActionName),
-                Skill = new BasicAttack(m_basicAttackCfg, this)
-            }
+            new DashSkill(m_dashCfg, this, InputSystem.actions.FindAction(m_dashInputActionName), m_trailSample, m_trailParent),
+            new BasicAttack(m_basicAttackCfg, this, InputSystem.actions.FindAction(m_attackInputActionName))
         };
         m_lastSkill = null;
     }
@@ -51,7 +34,7 @@ public class SkillController : MonoBehaviour
     {
         foreach (var skill in m_activeSkills)
         {
-            skill.Skill.Update(dt);
+            skill.Update(dt);
         }
     }
 
@@ -62,9 +45,9 @@ public class SkillController : MonoBehaviour
         {
             foreach (var skill in m_activeSkills)
             {
-                if (skill.Action.IsPressed() && skill.Skill.CanUse())
+                if (skill.IsTriggering())
                 {
-                    m_lastSkill = skill.Skill;
+                    m_lastSkill = skill;
                     isUseSkill = true;
                 }
             }
@@ -74,7 +57,7 @@ public class SkillController : MonoBehaviour
 
         if (isUseSkill)
         {
-            m_lastSkill.Use();
+            m_lastSkill.Activate();
             Debug.Log("[SkillController] Use new skill");
         }
         else if (m_lastSkill.IsRunning)
@@ -82,6 +65,6 @@ public class SkillController : MonoBehaviour
             m_lastSkill.FixedUpdate(dt, context);
             Debug.Log("[SkillController] Update Running Skill");
         }
-        
+
     }
 }

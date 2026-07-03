@@ -1,8 +1,9 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class DashSkill : Skill
+public class DashSkill : ActiveSkill
 {
     protected new DashConfig Cfg;
     private Vector2 m_dashDir;
@@ -10,7 +11,7 @@ public class DashSkill : Skill
     private float m_dashTimer;
     private PlayerState m_prvState;
 
-    public DashSkill(DashConfig cfg, SkillController skillCtrl, SpriteRenderer sampleSr, Transform trailParent) : base(cfg, skillCtrl)
+    public DashSkill(DashConfig cfg, SkillController skillCtrl, InputAction action, SpriteRenderer sampleSr, Transform trailParent) : base(cfg, skillCtrl, action)
     {
         Cfg = cfg;
         m_trailCtrl = new(sampleSr, trailParent, cfg);
@@ -22,7 +23,7 @@ public class DashSkill : Skill
         m_dashTimer -= dt;
         if (m_dashTimer <= 0)
         {
-            Stop();
+            Cancel();
             return;
         }
 
@@ -31,14 +32,14 @@ public class DashSkill : Skill
         m_trailCtrl.FixedUpdate(dt);
     }
 
-    public override bool CanUse()
+    public override bool Available()
     {
-        return base.CanUse() && Player.Rb.linearVelocity != Vector2.zero;
+        return base.Available() && Player.Rb.linearVelocity != Vector2.zero;
     }
 
-    public override void Use()
+    public override void Activate()
     {
-        base.Use();
+        base.Activate();
         m_prvState = Player.Anim.GetCurrentState();
         Player.Anim.ChangeState(PState.DASH);
         m_timer = Cfg.Cooldown;
@@ -47,9 +48,9 @@ public class DashSkill : Skill
         m_trailCtrl.StartTrails();
     }
 
-    public override void Stop()
+    public override void Cancel()
     {
-        base.Stop();
+        base.Cancel();
         m_trailCtrl.EnoughTrails();
 
         switch (m_prvState.Type)

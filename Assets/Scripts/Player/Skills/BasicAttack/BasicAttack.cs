@@ -1,18 +1,19 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class BasicAttack : Skill
+public class BasicAttack : ActiveSkill
 {
     // TODO: Use Cfg.Speed
     protected new BasicAttackCfg Cfg;
 
-    public BasicAttack(BasicAttackCfg cfg, SkillController skillCtrl) : base(cfg, skillCtrl)
+    public BasicAttack(BasicAttackCfg cfg, SkillController skillCtrl, InputAction action) : base(cfg, skillCtrl, action)
     {
         Cfg = cfg;
     }
 
-    public override void Use()
+    public override void Activate()
     {
-        base.Use();
+        base.Activate();
         Debug.Log("[BasicAttack] - Change state to ATTACK");
         Weapon.ChangeState(WState.ATTACK, CompleteAttack);
     }
@@ -20,6 +21,6 @@ public class BasicAttack : Skill
     public void CompleteAttack()
     {
         Weapon.ChangeState(WState.IDLE);
-        Stop();
+        Cancel();
     }
 }
