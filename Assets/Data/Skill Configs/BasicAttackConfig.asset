@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BasicAttackConfig
   m_EditorClassIdentifier: Assembly-CSharp::BasicAttackCfg
   Name: Attack
-  Cooldown: 10
+  Cooldown: 0.2
   Speed: 0.2

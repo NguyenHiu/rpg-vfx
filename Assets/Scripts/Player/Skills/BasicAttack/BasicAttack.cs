@@ -14,7 +14,7 @@ public class BasicAttack : ActiveSkill
     public override void Activate()
     {
         base.Activate();
-        Debug.Log("[BasicAttack] - Change state to ATTACK");
+        // Debug.Log("[BasicAttack] - Change state to ATTACK");
         Weapon.ChangeState(WState.ATTACK, CompleteAttack);
     }
 

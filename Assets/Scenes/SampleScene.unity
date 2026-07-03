@@ -4724,8 +4724,10 @@ MonoBehaviour:
   m_dashCfg: {fileID: 11400000, guid: 0ac3f870b3cee564d985b32208eb0829, type: 2}
   m_trailSample: {fileID: 1446571702}
   m_trailParent: {fileID: 1127835815}
-  m_attackInputActionName: Attack
   m_basicAttackCfg: {fileID: 11400000, guid: 2dfde5cd33d6c407eb2197634cf61558, type: 2}
+  m_attackInputActionName: Attack
+  m_autoTargetCfg: {fileID: 11400000, guid: ea6ff040dbb9cf34492a1ca097f788b5, type: 2}
+  m_centerTf: {fileID: 1391658911}
 --- !u!114 &2130083353
 MonoBehaviour:
   m_ObjectHideFlags: 0

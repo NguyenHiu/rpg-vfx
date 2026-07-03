@@ -42,7 +42,6 @@ public class DashSkill : ActiveSkill
         base.Activate();
         m_prvState = Player.Anim.GetCurrentState();
         Player.Anim.ChangeState(PState.DASH);
-        m_timer = Cfg.Cooldown;
         m_dashTimer = Cfg.Duration;
         m_dashDir = Player.Rb.linearVelocity.normalized;
         m_trailCtrl.StartTrails();

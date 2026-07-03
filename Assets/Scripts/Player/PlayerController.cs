@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +14,7 @@ public class PlayerContext
 {
     public Vector2 Direction;
     public float Speed;
+    public List<GameObject> Targets;
 }
 
 [RequireComponent(typeof(SkillController))]
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("===== Stats =====")]
     [SerializeField] private PlayerMode m_mode;
+    public PlayerMode Mode => m_mode;
     [SerializeField] private PlayerContext m_ctx;
     [SerializeField] private PlayerStats m_stats;
     [SerializeField] private SkillController m_skillCtrl;
@@ -89,64 +92,8 @@ public class PlayerController : MonoBehaviour
         m_ctx.Direction = MoveVal.normalized;
         m_ctx.Speed = m_stats.GetWalkSpeed();
         m_skillCtrl.ManualFixedUpdate(Time.deltaTime, m_ctx);
-        Debug.Log($"Context_2: {m_ctx.Speed}");
         Rb.linearVelocity = m_ctx.Direction * m_ctx.Speed;
         if (Rb.linearVelocity != Vector2.zero) FacingDir = Rb.linearVelocity.normalized;
-        // if (m_mode == PlayerMode.ATTACK) FixedUpdate_AttackMode();
-    }
-
-    void FixedUpdate_AttackMode()
-    {
-        if (FocusTF)
-            FacingDir = (FocusTF.position - transform.position).normalized;
-
-        if (m_scanTimer > 0)
-        {
-            m_scanTimer -= Time.deltaTime;
-            return;
-        }
-        m_scanTimer = m_enemyScanDuration;
-
-        // Find nearest enemy in radius
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, m_battleRadius, m_enemyLayer);
-        if (hits.Length == 0)
-        {
-            if (FocusTF && FocusTF.TryGetComponent<SpriteRenderer>(out var sr))
-                sr.color = Color.white;
-            FocusTF = null;
-            return;
-        }
-        float nearestVal = -1;
-        GameObject nearest = null;
-        foreach (var col in hits)
-        {
-            if (nearestVal == -1 || (col.transform.position - transform.position).magnitude < nearestVal)
-            {
-                nearestVal = (col.transform.position - transform.position).magnitude;
-                nearest = col.gameObject;
-            }
-        }
-
-        FocusTF = nearest.transform;
-        if (nearest.TryGetComponent<SpriteRenderer>(out var sr1))
-            sr1.color = Color.green;
-        Debug.Log($"Focus on: {nearest.name}");
-    }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-
-        float angleStep = 360f / 10;
-        Vector3 prevPoint = transform.position + new Vector3(m_battleRadius, 0f, 0f);
-
-        for (int i = 1; i <= 10; i++)
-        {
-            float angle = i * angleStep * Mathf.Deg2Rad;
-            Vector3 newPoint = transform.position + new Vector3(Mathf.Cos(angle) * m_battleRadius, Mathf.Sin(angle) * m_battleRadius, 0f);
-            Gizmos.DrawLine(prevPoint, newPoint);
-            prevPoint = newPoint;
-        }
     }
 
     public void ResetAttackTimer()
@@ -174,10 +121,4 @@ public class PlayerController : MonoBehaviour
         }
         m_mode = PlayerMode.FREE;
     }
-
-
-    // DEBUG ONLY
-    #if UNITY_EDITOR || DEVELOPMENT_BUILD
-    public PlayerMode Mode => m_mode;
-    #endif
 }

@@ -62,23 +62,7 @@ public class WeaponController : MonoBehaviour
     {
         StateM.CurrentState.Update();
     }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-
-        float angleStep = 360f / 10;
-        Vector3 prevPoint = AttackCenter.transform.position + new Vector3(AttackRadius, 0f, 0f);
-
-        for (int i = 1; i <= 10; i++)
-        {
-            float angle = i * angleStep * Mathf.Deg2Rad;
-            Vector3 newPoint = AttackCenter.transform.position + new Vector3(Mathf.Cos(angle) * AttackRadius, Mathf.Sin(angle) * AttackRadius, 0f);
-            Gizmos.DrawLine(prevPoint, newPoint);
-            prevPoint = newPoint;
-        }
-    }
-
+    
     public void ChangeState(WState state, Action callback=null)
     {
         StateM.ChangeState(GetState(state), callback);

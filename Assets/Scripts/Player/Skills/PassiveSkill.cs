@@ -1,12 +1,17 @@
 
 
-public class PassiveSkill
+public class PassiveSkill : Skill
 {
-    public string Name;
-    public bool IsRunning;
-    public Skill Skill;
 
-    // public virtual bool 
+    public PassiveSkill(SkillCfg cfg, SkillController skillCtrl) : base(cfg, skillCtrl)
+    {
+
+    }
+
+    public virtual bool MeetCondition()
+    {
+        return false;
+    }
 }
 
 

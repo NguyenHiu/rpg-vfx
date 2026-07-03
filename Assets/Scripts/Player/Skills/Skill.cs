@@ -30,6 +30,7 @@ public class Skill
     public virtual void Activate()
     {
         IsRunning = true;
+        m_timer = Cfg.Cooldown;
     }
     public virtual void Cancel()
     {
@@ -48,4 +49,10 @@ public class Skill
     public virtual void FixedUpdate(float dt, PlayerContext context)
     {
     }
+
+    #if UNITY_EDITOR || DEVELOPMENT_BUILD
+    public virtual void OnDrawGizmos()
+    {
+    }
+    #endif
 }

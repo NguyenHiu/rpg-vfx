@@ -8,7 +8,7 @@ public class WeaponAttack : WeaponState
     public WeaponAttack(WeaponController weapon, PlayerController player, string name) : base(weapon, player, name)
     {
         Type = WState.ATTACK;
-        DebugLog = true;
+        DebugLog = false;
     }
 
     public override void EnterCb(Action callback)

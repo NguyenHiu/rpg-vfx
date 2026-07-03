@@ -8,6 +8,7 @@ public class SkillController : MonoBehaviour
     public PlayerController Player;
     public WeaponController Weapon;
     private List<ActiveSkill> m_activeSkills;
+    private List<PassiveSkill> m_passiveSkills;
     private Skill m_lastSkill;
 
     [Header("Dash")]
@@ -17,11 +18,19 @@ public class SkillController : MonoBehaviour
     [SerializeField] private Transform m_trailParent;
 
     [Header("Basic Attack")]
-    [SerializeField] private string m_attackInputActionName;
     [SerializeField] private BasicAttackCfg m_basicAttackCfg;
+    [SerializeField] private string m_attackInputActionName;
+
+    [Header("Auto Target")]
+    [SerializeField] private AutoTargetCfg m_autoTargetCfg;
+    [SerializeField] private Transform m_centerTf;
 
     void Awake()
     {
+        m_passiveSkills = new()
+        {
+            new AutoTargetSkill(m_autoTargetCfg, this, m_centerTf)
+        };
         m_activeSkills = new()
         {
             new DashSkill(m_dashCfg, this, InputSystem.actions.FindAction(m_dashInputActionName), m_trailSample, m_trailParent),
@@ -32,13 +41,29 @@ public class SkillController : MonoBehaviour
 
     public void ManualUpdate(float dt)
     {
-        foreach (var skill in m_activeSkills)
-        {
+        foreach (var skill in m_passiveSkills)
             skill.Update(dt);
-        }
+        foreach (var skill in m_activeSkills)
+            skill.Update(dt);
     }
 
     public void ManualFixedUpdate(float dt, PlayerContext context)
+    {
+        FixedUpdate_PassiveSkills(dt, context);
+        FixedUpdate_ActiveSkills(dt, context);
+    }
+
+    void FixedUpdate_PassiveSkills(float dt, PlayerContext context)
+    {
+        // Allow inf passive skills activate at once
+        foreach (var skill in m_passiveSkills)
+        {
+            if (skill.MeetCondition())
+                skill.Activate();
+        }
+    }
+
+    void FixedUpdate_ActiveSkills(float dt, PlayerContext context)
     {
         bool isUseSkill = false;
         if (m_lastSkill == null || !m_lastSkill.IsRunning)
@@ -58,13 +83,22 @@ public class SkillController : MonoBehaviour
         if (isUseSkill)
         {
             m_lastSkill.Activate();
-            Debug.Log("[SkillController] Use new skill");
+            // Debug.Log("[SkillController] Use new skill");
         }
         else if (m_lastSkill.IsRunning)
         {
             m_lastSkill.FixedUpdate(dt, context);
-            Debug.Log("[SkillController] Update Running Skill");
+            // Debug.Log("[SkillController] Update Running Skill");
         }
+    }
 
+    void OnDrawGizmos()
+    {
+        if (m_passiveSkills != null)
+            foreach (var skill in m_passiveSkills)
+                skill?.OnDrawGizmos();
+        if (m_activeSkills != null)
+            foreach (var skill in m_activeSkills)
+                skill?.OnDrawGizmos();
     }
 }
