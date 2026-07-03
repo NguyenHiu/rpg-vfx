@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -10,9 +11,9 @@ public class WeaponAttack : WeaponState
         DebugLog = true;
     }
 
-    public override void Enter()
+    public override void EnterCb(Action callback)
     {
-        base.Enter();
+        base.EnterCb(callback);
         // Restore when existing
         LocalPosition = Weapon.transform.localPosition;
         SRLocalPosition = Weapon.SR.transform.localPosition;
@@ -40,7 +41,6 @@ public class WeaponAttack : WeaponState
 
         // Rotote the sword
         var deltaAngle = Mathf.Atan2(Player.FacingDir.x, Player.FacingDir.y) * Mathf.Rad2Deg;
-        Debug.Log($"{Weapon.AttackAngle} - {dir} - {-deltaAngle}");
         Weapon.SR.transform.localEulerAngles = new(0, 0, -Weapon.AttackAngle * dir - deltaAngle);
         // TODO: use Attack Speed
         Weapon.SR.transform.DOLocalRotate(new(0, 0, Weapon.AttackAngle * dir - deltaAngle), Weapon.AttackSpeed).OnComplete(() =>

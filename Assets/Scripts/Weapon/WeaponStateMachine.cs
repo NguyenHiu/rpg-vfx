@@ -15,6 +15,9 @@ public class WeaponStateMachine : StateMachine
         PreviousState = CurrentState;
         CurrentState.Exit();
         CurrentState = newState;
-        ((WeaponState)CurrentState).Enter(callback);
+
+        var state = (WeaponState)CurrentState;
+        if (callback == null) state.Enter();
+        else state.EnterCb(callback);
     }
 }

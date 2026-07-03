@@ -42,7 +42,7 @@ public class WeaponState : State
         Player = player;
     }
 
-    public void Enter(Action callback)
+    public virtual void EnterCb(Action callback)
     {
         Callback = callback;
         base.Enter();

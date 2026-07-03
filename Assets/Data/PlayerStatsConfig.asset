@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerStatsConfig
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatsConfig
   WalkSpeed: 5
-  AttackSpeed: 1
+  AttackSpeed: 0.2
