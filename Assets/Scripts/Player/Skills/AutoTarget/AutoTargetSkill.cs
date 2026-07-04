@@ -40,7 +40,7 @@ public class AutoTargetSkill : PassiveSkill
         int take = Math.Min(Cfg.NTarget, count);
         Targets.Clear();
         for (int i = 0; i < take; i++)
-            Targets.Add(hits[i].gameObject);
+            Targets.Add(m_buffer[i].gameObject);
     }
 
     private int FilterAndSort(Collider2D[] hits)

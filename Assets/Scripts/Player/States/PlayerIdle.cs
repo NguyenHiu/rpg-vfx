@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerIdle : PlayerState
 {
+    private Vector2 m_prevFacingDir;
+
     public PlayerIdle(PlayerController player, PlayerAnimController playerAnim, string varName) : base(player, playerAnim, varName)
     {
         Type = PState.IDLE;
@@ -12,8 +14,9 @@ public class PlayerIdle : PlayerState
     {
         base.Update();
 
-        if (Player.Rb.linearVelocity != Vector2.zero)
+        if (Player.Rb.linearVelocity != Vector2.zero || m_prevFacingDir != Player.FacingDir)
         {
+            m_prevFacingDir = Player.FacingDir;
             // Switch to Walk
             PState nxtState = PState.WALK;
             var a = Player.Rb.linearVelocityX / Player.Rb.linearVelocityY;

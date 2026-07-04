@@ -83,15 +83,29 @@ public class PlayerController : MonoBehaviour
     {
         m_ctx.Direction = MoveVal.normalized;
         m_ctx.Speed = m_stats.GetWalkSpeed();
-        m_skillCtrl.ManualFixedUpdate(Time.fixedDeltaTime, m_ctx);
+        m_skillCtrl.FixedUpdate_PassiveSkills(Time.fixedDeltaTime, m_ctx);
+
+        // Debug.Log("FixedUpdate");
+        // foreach (var go in m_ctx.Targets) 
+        //     Debug.Log(go.name);
+
+        // AUTO TARGET in BATTLE MODE
+        if (m_mode == PlayerMode.ATTACK && m_ctx.Targets.Count != 0)
+            FacingDir = (m_ctx.Targets[0].transform.position - transform.position).normalized;
+        else if (Rb.linearVelocity != Vector2.zero)
+            FacingDir = Rb.linearVelocity.normalized;
+
+        // Debug.Log($"Count Targets: {m_ctx.Targets.Count}");
+        // Debug.Log($"Mode: {m_mode}");
+
+        m_skillCtrl.FixedUpdate_ActiveSkills(Time.fixedDeltaTime, m_ctx);
         Rb.linearVelocity = m_ctx.Direction * m_ctx.Speed;
-        if (Rb.linearVelocity != Vector2.zero) FacingDir = Rb.linearVelocity.normalized;
     }
 
-    #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
     public void ChangeMode(PlayerMode mode)
     {
         m_mode = mode;
     }
-    #endif
+#endif
 }

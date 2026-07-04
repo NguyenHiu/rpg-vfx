@@ -47,23 +47,24 @@ public class SkillController : MonoBehaviour
             skill.Update(dt);
     }
 
-    public void ManualFixedUpdate(float dt, PlayerContext context)
-    {
-        FixedUpdate_PassiveSkills(dt, context);
-        FixedUpdate_ActiveSkills(dt, context);
-    }
+    // public void ManualFixedUpdate(float dt, PlayerContext context)
+    // {
+    //     FixedUpdate_PassiveSkills(dt, context);
+    //     FixedUpdate_ActiveSkills(dt, context);
+    // }
 
-    void FixedUpdate_PassiveSkills(float dt, PlayerContext context)
+    public void FixedUpdate_PassiveSkills(float dt, PlayerContext context)
     {
         // Allow inf passive skills activate at once
         foreach (var skill in m_passiveSkills)
         {
             if (skill.MeetCondition())
                 skill.Activate();
+            skill.FixedUpdate(dt, context);
         }
     }
 
-    void FixedUpdate_ActiveSkills(float dt, PlayerContext context)
+    public void FixedUpdate_ActiveSkills(float dt, PlayerContext context)
     {
         bool isUseSkill = false;
         if (m_lastSkill == null || !m_lastSkill.IsRunning)
