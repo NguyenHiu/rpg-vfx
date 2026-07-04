@@ -34,7 +34,6 @@ public class DashSkill : ActiveSkill
 
     public override bool Available()
     {
-        Debug.Log($"Linear Velocity: {Player.Rb.linearVelocity}");
         return base.Available() && Player.Rb.linearVelocity != Vector2.zero;
     }
 

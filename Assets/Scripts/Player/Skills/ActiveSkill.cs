@@ -13,7 +13,7 @@ public class ActiveSkill : Skill
 
     public virtual bool IsTriggering()
     {
-        return Action.IsPressed() && base.Available();
+        return Action.IsPressed() && Available();
     }
 
     public override void Activate()
