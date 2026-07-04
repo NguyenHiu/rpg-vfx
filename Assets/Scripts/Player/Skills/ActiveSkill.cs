@@ -1,5 +1,5 @@
 
-
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ActiveSkill : Skill
@@ -13,6 +13,12 @@ public class ActiveSkill : Skill
 
     public virtual bool IsTriggering()
     {
-        return base.Available() && Action.IsPressed();
+        return Action.IsPressed() && base.Available();
+    }
+
+    public override void Activate()
+    {
+        Debug.Log($"Activate Skill '{Cfg.Name}'");
+        base.Activate();
     }
 }

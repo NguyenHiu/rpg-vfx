@@ -15,6 +15,11 @@ public class PlayerContext
     public Vector2 Direction;
     public float Speed;
     public List<GameObject> Targets;
+
+    public PlayerContext()
+    {
+        Targets = new();
+    }
 }
 
 [RequireComponent(typeof(SkillController))]
@@ -35,16 +40,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SkillController m_skillCtrl;
 
     // Attack
-    [field: Header("Attack")]
-    [field: SerializeField] public Transform FocusTF { get; private set; }
-    [SerializeField] private float m_battleRadius;
-    [SerializeField] private LayerMask m_enemyLayer;
-    [SerializeField] private float m_enemyScanDuration;
-    private float m_scanTimer;
+    [field: Header("Attack  ")]
     [field: SerializeField] public Vector2 FacingDir { get; private set; }
-    [field: SerializeField] public bool IsAttacking { get; private set; }
-    [field: SerializeField] public float AttackCooldown { get; private set; }
-    private float m_attackTimer;
 
     [field: Header("Hand")]
     [field: SerializeField] public WeaponController Weapon { get; private set; }
@@ -52,26 +49,23 @@ public class PlayerController : MonoBehaviour
     // Inputs
     [Header("Inputs")]
     [SerializeField] private InputAction m_moveAction;
-    [SerializeField] private InputAction m_dashAction;
-    [SerializeField] private InputAction m_attackAction;
     [field: SerializeField] public Vector2 MoveVal { get; private set; }
-    [field: SerializeField] public bool PressDashThisFrame { get; private set; }
-    [field: SerializeField] public bool PressAttackThisFrame { get; private set; }
 
     void OnEnable()
     {
-        m_inputActions.FindActionMap("Player").Enable();
+        if (m_inputActions)
+            m_inputActions.FindActionMap("Player").Enable();
     }
 
     void OnDisable()
     {
-        m_inputActions.FindActionMap("Player").Disable();
+        if (m_inputActions)
+            m_inputActions.FindActionMap("Player").Disable();
     }
 
-    void Start()
+    void Awake()
     {
         m_moveAction = InputSystem.actions.FindAction("Move");
-        m_attackAction = InputSystem.actions.FindAction("Attack");
 
         m_mode = PlayerMode.FREE;
         m_skillCtrl = GetComponent<SkillController>();
@@ -81,9 +75,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (m_attackTimer >= 0) m_attackTimer -= Time.deltaTime;
         MoveVal = m_moveAction.ReadValue<Vector2>();
-        PressAttackThisFrame = m_attackTimer < 0f && m_attackAction.IsPressed();
         m_skillCtrl.ManualUpdate(Time.deltaTime);
     }
 
@@ -91,34 +83,15 @@ public class PlayerController : MonoBehaviour
     {
         m_ctx.Direction = MoveVal.normalized;
         m_ctx.Speed = m_stats.GetWalkSpeed();
-        m_skillCtrl.ManualFixedUpdate(Time.deltaTime, m_ctx);
+        m_skillCtrl.ManualFixedUpdate(Time.fixedDeltaTime, m_ctx);
         Rb.linearVelocity = m_ctx.Direction * m_ctx.Speed;
         if (Rb.linearVelocity != Vector2.zero) FacingDir = Rb.linearVelocity.normalized;
     }
 
-    public void ResetAttackTimer()
+    #if UNITY_EDITOR || DEVELOPMENT_BUILD
+    public void ChangeMode(PlayerMode mode)
     {
-        m_attackTimer = AttackCooldown;
+        m_mode = mode;
     }
-    
-    public void SetAttacking(bool val)
-    {
-        IsAttacking = val;
-    }
-
-
-    // Debug
-    public void EnterAttackMode()
-    {
-        m_mode = PlayerMode.ATTACK;
-    }
-
-    public void ExitAttackMode()
-    {
-        if (FocusTF && FocusTF.TryGetComponent<SpriteRenderer>(out var comp))
-        {
-            comp.color = Color.white;
-        }
-        m_mode = PlayerMode.FREE;
-    }
+    #endif
 }

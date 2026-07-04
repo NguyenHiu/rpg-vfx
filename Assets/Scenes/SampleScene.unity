@@ -4553,9 +4553,9 @@ GameObject:
   - component: {fileID: 2130083348}
   - component: {fileID: 2130083350}
   - component: {fileID: 2130083351}
+  - component: {fileID: 2130083353}
   - component: {fileID: 2130083349}
   - component: {fileID: 2130083352}
-  - component: {fileID: 2130083353}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -4602,15 +4602,7 @@ MonoBehaviour:
   m_mode: 0
   m_stats: {fileID: 2130083353}
   m_skillCtrl: {fileID: 2130083352}
-  <FocusTF>k__BackingField: {fileID: 0}
-  m_battleRadius: 5.05
-  m_enemyLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  m_enemyScanDuration: 0.5
   <FacingDir>k__BackingField: {x: 0, y: 0}
-  <IsAttacking>k__BackingField: 0
-  <AttackCooldown>k__BackingField: 0
   <Weapon>k__BackingField: {fileID: 1078091622}
   m_moveAction:
     m_Name: Move
@@ -4621,27 +4613,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  m_dashAction:
-    m_Name: Dash
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: e9f647fb-fb2e-4f36-8d8b-70ebc36c0fab
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  m_attackAction:
-    m_Name: Attack
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 4778da3e-b2ee-4d34-a63a-155d961707fe
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
   <MoveVal>k__BackingField: {x: 0, y: 0}
-  <PressDashThisFrame>k__BackingField: 0
-  <PressAttackThisFrame>k__BackingField: 0
 --- !u!50 &2130083350
 Rigidbody2D:
   serializedVersion: 5

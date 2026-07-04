@@ -105,13 +105,13 @@ public class CustomDebug : MonoBehaviour
     {
         if (isForcedUntick || Player.Mode == PlayerMode.ATTACK)
         {
-            Player.ExitAttackMode();
+            Player.ChangeMode(PlayerMode.FREE);
             ToggleImg.sprite = UntickText;
             Debug.Log("Exit Attack Mode");
         }
         else if (Player.Mode == PlayerMode.FREE)
         {
-            Player.EnterAttackMode();
+            Player.ChangeMode(PlayerMode.ATTACK);
             ToggleImg.sprite = TickText;
             Debug.Log("Enter Attack Mode");
         }

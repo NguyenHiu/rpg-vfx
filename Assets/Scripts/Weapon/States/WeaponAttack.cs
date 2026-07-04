@@ -19,8 +19,6 @@ public class WeaponAttack : WeaponState
         SRLocalPosition = Weapon.SR.transform.localPosition;
         SRLocalScale = Weapon.SR.transform.localScale;
         SRLocalEulerAngle = Weapon.SR.transform.localEulerAngles;
-        
-        Player.SetAttacking(true);
         Weapon.PC2D.gameObject.SetActive(true);
 
         /// Find position (set to the weapon)
@@ -63,9 +61,7 @@ public class WeaponAttack : WeaponState
         Weapon.SR.transform.localScale = SRLocalScale;
         Weapon.SR.transform.localEulerAngles = SRLocalEulerAngle;
         
-        Player.SetAttacking(false);
         Weapon.PC2D.gameObject.SetActive(false);
         Weapon.SR.transform.DOKill();
-        Player.ResetAttackTimer();
     }
 }
