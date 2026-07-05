@@ -691,7 +691,7 @@ GameObject:
   - component: {fileID: 377088357}
   - component: {fileID: 377088360}
   m_Layer: 3
-  m_Name: _Scarecrow
+  m_Name: _Scarecrow 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1942,7 +1942,7 @@ GameObject:
   - component: {fileID: 784688513}
   - component: {fileID: 784688512}
   m_Layer: 3
-  m_Name: _Scarecrow
+  m_Name: _Scarecrow 2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

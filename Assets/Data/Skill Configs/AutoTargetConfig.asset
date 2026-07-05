@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AutoTargetConfig
   m_EditorClassIdentifier: Assembly-CSharp::AutoTargetCfg
   Name: Auto Target
-  Cooldown: 1
+  Cooldown: 0.01
   NTarget: 5
   Radius: 4
   EnemyLayer:

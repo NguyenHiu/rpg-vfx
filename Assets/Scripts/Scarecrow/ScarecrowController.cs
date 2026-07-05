@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class ScarecrowController : MonoBehaviour
 {
-    [field: SerializeField] public SpriteRenderer SR {get; private set; }
-    [field: SerializeField] public float BlinkDuration {get; private set; }
-    [field: SerializeField] public float Timer {get; private set; }
+    [field: SerializeField] public SpriteRenderer SR { get; private set; }
+    [field: SerializeField] public float BlinkDuration { get; private set; }
+    [field: SerializeField] public float Timer { get; private set; }
     private bool IsBlinking;
 
     // TODO: make the scarecrow loop left-right when being hit by rotating
     // TEST
-    [field: SerializeField] public Sequence Seq {get; private set; }
-    [field: SerializeField] public float Duration {get; private set; }
-    [field: SerializeField] public float Angle {get; private set; }
-    [field: SerializeField] public float iFrameDuration {get; private set; }
-    [field: SerializeField] public float iFrameTimer {get; private set; }
+    [field: SerializeField] public Sequence Seq { get; private set; }
+    [field: SerializeField] public float Duration { get; private set; }
+    [field: SerializeField] public float Angle { get; private set; }
+    [field: SerializeField] public float iFrameDuration { get; private set; }
+    [field: SerializeField] public float iFrameTimer { get; private set; }
 
     void OnDisable()
     {
@@ -53,7 +53,7 @@ public class ScarecrowController : MonoBehaviour
         IsBlinking = true;
 
         SR.DOKill();
-        SR.DOColor(Color.red, 0.5f)
+        SR.DOColor(Color.red, 0.08f)
             .SetLoops(-1, LoopType.Yoyo);
         HitAnim();
         return true;

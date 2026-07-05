@@ -32,18 +32,12 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField] public PlayerAnimController Anim;
     [field: SerializeField] public SpriteRenderer SR;
 
-    [Header("===== Stats =====")]
     [SerializeField] private PlayerMode m_mode;
     public PlayerMode Mode => m_mode;
     [SerializeField] private PlayerContext m_ctx;
     [SerializeField] private PlayerStats m_stats;
     [SerializeField] private SkillController m_skillCtrl;
-
-    // Attack
-    [field: Header("Attack  ")]
     [field: SerializeField] public Vector2 FacingDir { get; private set; }
-
-    [field: Header("Hand")]
     [field: SerializeField] public WeaponController Weapon { get; private set; }
 
     // Inputs
@@ -85,18 +79,11 @@ public class PlayerController : MonoBehaviour
         m_ctx.Speed = m_stats.GetWalkSpeed();
         m_skillCtrl.FixedUpdate_PassiveSkills(Time.fixedDeltaTime, m_ctx);
 
-        // Debug.Log("FixedUpdate");
-        // foreach (var go in m_ctx.Targets) 
-        //     Debug.Log(go.name);
-
         // AUTO TARGET in BATTLE MODE
         if (m_mode == PlayerMode.ATTACK && m_ctx.Targets.Count != 0)
             FacingDir = (m_ctx.Targets[0].transform.position - transform.position).normalized;
         else if (Rb.linearVelocity != Vector2.zero)
             FacingDir = Rb.linearVelocity.normalized;
-
-        // Debug.Log($"Count Targets: {m_ctx.Targets.Count}");
-        // Debug.Log($"Mode: {m_mode}");
 
         m_skillCtrl.FixedUpdate_ActiveSkills(Time.fixedDeltaTime, m_ctx);
         Rb.linearVelocity = m_ctx.Direction * m_ctx.Speed;
