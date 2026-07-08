@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class DashSkill : ActiveSkill
 {
@@ -10,11 +11,13 @@ public class DashSkill : ActiveSkill
     private TrailsController m_trailCtrl;
     private float m_dashTimer;
     private PlayerState m_prvState;
+    private SortingGroup m_playerSortingGroup;
 
-    public DashSkill(DashConfig cfg, SkillController skillCtrl, InputAction action, SpriteRenderer sampleSr, Transform trailParent) : base(cfg, skillCtrl, action)
+    public DashSkill(DashConfig cfg, SkillController skillCtrl, InputAction action, SpriteRenderer sampleSr, SortingGroup playerSortingGroup, Transform trailParent) : base(cfg, skillCtrl, action)
     {
         Cfg = cfg;
-        m_trailCtrl = new(sampleSr, trailParent, cfg);
+        m_playerSortingGroup = playerSortingGroup;
+        m_trailCtrl = new(sampleSr, m_playerSortingGroup, trailParent, cfg);
     }
 
     public override void FixedUpdate(float dt, PlayerContext context)
@@ -76,16 +79,18 @@ public class TrailsController
     private readonly SpriteRenderer m_sampleSr;
     public readonly Transform ParentTf;
     public readonly DashConfig Cfg;
+    public readonly SortingGroup ParentSortingG;
     private List<GhostTrail> m_trailPool;
     private bool m_isShowing;
     private float m_timer;
     private int m_trailIdx;
 
-    public TrailsController(SpriteRenderer sample, Transform parentTf, DashConfig cfg)
+    public TrailsController(SpriteRenderer sample, SortingGroup sortingGroup, Transform parentTf, DashConfig cfg)
     {
         ParentTf = parentTf;
         Cfg = cfg;
         m_sampleSr = sample;
+        ParentSortingG = sortingGroup;
         InitTrails();
     }
 
@@ -117,7 +122,7 @@ public class TrailsController
     private void SpawnTrail()
     {
         if (m_trailIdx >= m_trailPool.Count) m_trailIdx = 0;
-        m_trailPool[m_trailIdx].StartTrail(m_sampleSr, Cfg.TrailLifetime);
+        m_trailPool[m_trailIdx].StartTrail(m_sampleSr, Cfg.TrailLifetime, ParentSortingG.sortingOrder - 5);
         m_trailIdx++;
     }
 

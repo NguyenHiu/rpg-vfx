@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class SkillController : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class SkillController : MonoBehaviour
     [SerializeField] private string m_dashInputActionName;
     [SerializeField] private DashConfig m_dashCfg;
     [SerializeField] private SpriteRenderer m_trailSample;
+    [SerializeField] private SortingGroup m_playerSortingGroup;
     [SerializeField] private Transform m_trailParent;
 
     [Header("Basic Attack")]
@@ -33,7 +35,7 @@ public class SkillController : MonoBehaviour
         };
         m_activeSkills = new()
         {
-            new DashSkill(m_dashCfg, this, InputSystem.actions.FindAction(m_dashInputActionName), m_trailSample, m_trailParent),
+            new DashSkill(m_dashCfg, this, InputSystem.actions.FindAction(m_dashInputActionName), m_trailSample, m_playerSortingGroup, m_trailParent),
             new BasicAttack(m_basicAttackCfg, this, InputSystem.actions.FindAction(m_attackInputActionName))
         };
         m_lastSkill = null;

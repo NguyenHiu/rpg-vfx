@@ -2,6 +2,7 @@ using DG.Tweening;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
+[RequireComponent(typeof(DamageFlash))]
 public class ScarecrowController : MonoBehaviour
 {
     [field: SerializeField] public SpriteRenderer SR { get; private set; }
@@ -16,10 +17,16 @@ public class ScarecrowController : MonoBehaviour
     [field: SerializeField] public float Angle { get; private set; }
     [field: SerializeField] public float iFrameDuration { get; private set; }
     [field: SerializeField] public float iFrameTimer { get; private set; }
+    [SerializeField] private DamageFlash dmgFlash;
 
     void OnDisable()
     {
         SR.DOKill();
+    }
+
+    void Awake()
+    {
+        if (dmgFlash == null) dmgFlash = GetComponent<DamageFlash>();
     }
 
     void Start()
@@ -52,9 +59,10 @@ public class ScarecrowController : MonoBehaviour
         Timer = BlinkDuration;
         IsBlinking = true;
 
-        SR.DOKill();
-        SR.DOColor(Color.red, 0.08f)
-            .SetLoops(-1, LoopType.Yoyo);
+        dmgFlash.TriggerFlash();
+        // SR.DOKill();
+        // SR.DOColor(Color.red, 0.08f)
+        //     .SetLoops(-1, LoopType.Yoyo);
         HitAnim();
         return true;
     }

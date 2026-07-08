@@ -16,7 +16,7 @@ MonoBehaviour:
   Cooldown: 0.5
   Speed: 12
   Duration: 0.25
-  NGhostTrails: 5
+  NGhostTrails: 10
   TrailLifetime: 0.5
   TrailSpawnDelta: 0.12
   TrailPrefab: {fileID: 9112666078797984222, guid: c42f85800303b4c2aa4d4436ed911452, type: 3}

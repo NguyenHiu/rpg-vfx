@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class GhostTrail : MonoBehaviour
@@ -31,13 +32,14 @@ public class GhostTrail : MonoBehaviour
             EndTrail();
     }
 
-    public void StartTrail(SpriteRenderer sr, float liveTime)
+    public void StartTrail(SpriteRenderer sr, float liveTime, int sortingOrder)
     {
         m_liveTime = liveTime;
         m_sr.sprite = sr.sprite;
         transform.position = sr.transform.position;
         transform.localScale = sr.transform.localScale;
         transform.rotation = sr.transform.rotation;
+        m_sr.sortingOrder = sortingOrder;
 
         m_timer = m_liveTime / 2f;
         m_isRunning = true;

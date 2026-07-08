@@ -690,6 +690,7 @@ GameObject:
   - component: {fileID: 377088359}
   - component: {fileID: 377088357}
   - component: {fileID: 377088360}
+  - component: {fileID: 377088361}
   m_Layer: 3
   m_Name: _Scarecrow 1
   m_TagString: Enemy
@@ -911,6 +912,45 @@ MonoBehaviour:
   <Angle>k__BackingField: 8
   <iFrameDuration>k__BackingField: 0.2
   <iFrameTimer>k__BackingField: 0
+  dmgFlash: {fileID: 0}
+--- !u!114 &377088361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377088353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92d17f2fdc73eff48a142e9bf7ecdfd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageFlash
+  SR: {fileID: 0}
+  FlashDuration: 0.15
+  AnimCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &384326877
 GameObject:
   m_ObjectHideFlags: 0
@@ -1986,6 +2026,7 @@ GameObject:
   - component: {fileID: 784688514}
   - component: {fileID: 784688513}
   - component: {fileID: 784688512}
+  - component: {fileID: 784688518}
   m_Layer: 3
   m_Name: _Scarecrow 2
   m_TagString: Enemy
@@ -2027,6 +2068,7 @@ MonoBehaviour:
   <Angle>k__BackingField: 8
   <iFrameDuration>k__BackingField: 0.2
   <iFrameTimer>k__BackingField: 0
+  dmgFlash: {fileID: 0}
 --- !u!114 &784688513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2207,6 +2249,44 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &784688518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784688510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92d17f2fdc73eff48a142e9bf7ecdfd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageFlash
+  SR: {fileID: 0}
+  FlashDuration: 0.15
+  AnimCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &802205565
 GameObject:
   m_ObjectHideFlags: 0
@@ -2880,7 +2960,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127835814}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -3259,8 +3339,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 430565561
-  m_SortingLayer: 2
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 8793639957104055765, guid: 50d0ac9ea4d2b6a43bf68882c0e4ff96, type: 3}
@@ -4740,6 +4820,7 @@ MonoBehaviour:
   m_dashInputActionName: Dash
   m_dashCfg: {fileID: 11400000, guid: 0ac3f870b3cee564d985b32208eb0829, type: 2}
   m_trailSample: {fileID: 1446571702}
+  m_playerSortingGroup: {fileID: 1971937643}
   m_trailParent: {fileID: 1127835815}
   m_basicAttackCfg: {fileID: 11400000, guid: 2dfde5cd33d6c407eb2197634cf61558, type: 2}
   m_attackInputActionName: Attack
@@ -4892,8 +4973,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 68749930}
-  - {fileID: 2130083348}
   - {fileID: 1127835815}
+  - {fileID: 2130083348}
   - {fileID: 252429344}
   - {fileID: 212947539}
   - {fileID: 1795958542}
