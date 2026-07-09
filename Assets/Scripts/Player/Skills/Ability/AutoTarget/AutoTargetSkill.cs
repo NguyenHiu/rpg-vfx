@@ -26,7 +26,11 @@ public class AutoTargetSkill : PassiveSkill
 
     public override void FixedUpdate(float dt, PlayerContext context)
     {
+        if (!IsRunning) return;
+        
         base.FixedUpdate(dt, context);
+        if (!IsEnable) return;
+        Debug.Log("[AutoTargetSkill] - Fixed Update");
         context.Targets = Targets;
     }
 

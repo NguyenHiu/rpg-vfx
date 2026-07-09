@@ -113,15 +113,18 @@ public class SkillController : MonoBehaviour
 
     public Skill GetSkill(string name)
     {
-        foreach(var skill in m_activeSkills)
-        {
-            if (skill.GetCfg().Name == name) return skill;
-        }
+        if (m_activeSkills != null)
+            foreach (var skill in m_activeSkills)
+            {
+                if (skill != null && skill.GetCfg().Name == name) return skill;
+            }
 
-        foreach(var skill in m_passiveSkills)
-        {
-            if (skill.GetCfg().Name == name) return skill;
-        }
+        if (m_passiveSkills != null)
+            foreach (var skill in m_passiveSkills)
+            {
+                if (skill != null && skill.GetCfg().Name == name)
+                    return skill;
+            }
 
         return null;
     }

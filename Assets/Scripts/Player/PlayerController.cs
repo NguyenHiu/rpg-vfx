@@ -10,6 +10,7 @@ public enum PlayerMode
     ATTACK,
 }
 
+[Serializable]
 public class PlayerContext
 {
     public Vector2 Direction;
@@ -80,6 +81,7 @@ public class PlayerController : MonoBehaviour
     {
         m_ctx.Direction = MoveVal.normalized;
         m_ctx.Speed = m_stats.GetWalkSpeed();
+        m_ctx.Targets.Clear();
         m_skillCtrl.FixedUpdate_PassiveSkills(Time.fixedDeltaTime, m_ctx);
 
         // AUTO TARGET in BATTLE MODE

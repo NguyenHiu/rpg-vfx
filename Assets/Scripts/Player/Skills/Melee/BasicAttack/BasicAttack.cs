@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BasicAttack : ActiveSkill
+public class BasicAttack : MeleeSkill
 {
     // TODO: Use Cfg.Speed
     protected new BasicAttackCfg Cfg;

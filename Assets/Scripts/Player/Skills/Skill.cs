@@ -27,7 +27,7 @@ public class Skill
 
     public virtual bool Available()
     {
-        return m_timer <= 0.01f;
+        return m_timer <= 0.01f && IsEnable;
     }
     public virtual void Activate()
     {
