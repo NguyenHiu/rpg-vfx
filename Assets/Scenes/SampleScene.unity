@@ -4824,6 +4824,8 @@ MonoBehaviour:
   m_trailParent: {fileID: 1127835815}
   m_basicAttackCfg: {fileID: 11400000, guid: 2dfde5cd33d6c407eb2197634cf61558, type: 2}
   m_attackInputActionName: Attack
+  m_pierceAttackCfg: {fileID: 11400000, guid: b10f44cdb105a4ffd90912da1bdbe2aa, type: 2}
+  m_pierceInputActionName: Pierce Attack
   m_autoTargetCfg: {fileID: 11400000, guid: ea6ff040dbb9cf34492a1ca097f788b5, type: 2}
   m_centerTf: {fileID: 1391658911}
 --- !u!114 &2130083353

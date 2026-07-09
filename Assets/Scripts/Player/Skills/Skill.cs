@@ -14,6 +14,7 @@ public class Skill
     protected WeaponController Weapon;
     public bool IsRunning { get; protected set; }
     protected float m_timer = 0;
+    protected bool IsEnable;
 
     public Skill(SkillCfg cfg, SkillController skillCtrl)
     {
@@ -21,6 +22,7 @@ public class Skill
         SkillCtrl = skillCtrl;
         Player = SkillCtrl.Player;
         Weapon = SkillCtrl.Weapon;
+        IsEnable = true;
     }
 
     public virtual bool Available()
@@ -50,9 +52,13 @@ public class Skill
     {
     }
 
-    #if UNITY_EDITOR || DEVELOPMENT_BUILD
+    public void SetEnable(bool isEnable) => IsEnable = isEnable;
+
+    public SkillCfg GetCfg() => Cfg;
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
     public virtual void OnDrawGizmos()
     {
     }
-    #endif
+#endif
 }

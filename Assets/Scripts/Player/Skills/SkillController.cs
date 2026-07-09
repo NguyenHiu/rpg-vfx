@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Lumin;
 using UnityEngine.Rendering;
 
 public class SkillController : MonoBehaviour
@@ -23,6 +24,10 @@ public class SkillController : MonoBehaviour
     [SerializeField] private BasicAttackCfg m_basicAttackCfg;
     [SerializeField] private string m_attackInputActionName;
 
+    [Header("Pierce Attack")]
+    [SerializeField] private PierceAttackCfg m_pierceAttackCfg;
+    [SerializeField] private string m_pierceInputActionName;
+
     [Header("Auto Target")]
     [SerializeField] private AutoTargetCfg m_autoTargetCfg;
     [SerializeField] private Transform m_centerTf;
@@ -36,7 +41,8 @@ public class SkillController : MonoBehaviour
         m_activeSkills = new()
         {
             new DashSkill(m_dashCfg, this, InputSystem.actions.FindAction(m_dashInputActionName), m_trailSample, m_playerSortingGroup, m_trailParent),
-            new BasicAttack(m_basicAttackCfg, this, InputSystem.actions.FindAction(m_attackInputActionName))
+            new BasicAttack(m_basicAttackCfg, this, InputSystem.actions.FindAction(m_attackInputActionName)),
+            new PierceAttack(m_pierceAttackCfg, this, InputSystem.actions.FindAction(m_pierceInputActionName)),
         };
         m_lastSkill = null;
     }
@@ -103,5 +109,20 @@ public class SkillController : MonoBehaviour
         if (m_activeSkills != null)
             foreach (var skill in m_activeSkills)
                 skill?.OnDrawGizmos();
+    }
+
+    public Skill GetSkill(string name)
+    {
+        foreach(var skill in m_activeSkills)
+        {
+            if (skill.GetCfg().Name == name) return skill;
+        }
+
+        foreach(var skill in m_passiveSkills)
+        {
+            if (skill.GetCfg().Name == name) return skill;
+        }
+
+        return null;
     }
 }
