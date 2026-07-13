@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName="DashConfig", menuName ="ScriptableObject/Skill Configs/Dash")]
+[CreateAssetMenu(fileName="DashConfig", menuName ="SO/Skill Configs/Dash")]
 public class DashConfig : SkillCfg
 {
     public float Speed;

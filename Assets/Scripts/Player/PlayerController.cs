@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerStats m_stats;
     [SerializeField] private SkillController m_skillCtrl;
     [field: SerializeField] public Vector2 FacingDir { get; private set; }
-    [field: SerializeField] public WeaponController Weapon { get; private set; }
+    [field: SerializeField] public WeaponAnimController Weapon { get; private set; }
 
     // Inputs
     [Header("Inputs")]

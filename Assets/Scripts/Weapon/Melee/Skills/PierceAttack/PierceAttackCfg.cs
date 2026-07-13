@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName="PierceAttackConfig", menuName ="ScriptableObject/Skill Configs/Pierce Attack")]
+[CreateAssetMenu(fileName="PierceAttackConfig", menuName ="SO/Skill Configs/Pierce Attack")]
 public class PierceAttackCfg : SkillCfg
 {
     public float Speed;

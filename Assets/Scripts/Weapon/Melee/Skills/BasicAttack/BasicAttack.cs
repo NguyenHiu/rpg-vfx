@@ -1,5 +1,8 @@
-using UnityEngine;
 using UnityEngine.InputSystem;
+
+public interface IBasicAttack
+{
+}
 
 public class BasicAttack : MeleeSkill
 {

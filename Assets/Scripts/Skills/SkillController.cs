@@ -8,7 +8,7 @@ public class SkillController : MonoBehaviour
 {
     [Header("Skills Controller")]
     public PlayerController Player;
-    public WeaponController Weapon;
+    public WeaponAnimController Weapon;
     private List<ActiveSkill> m_activeSkills;
     private List<PassiveSkill> m_passiveSkills;
     private Skill m_lastSkill;

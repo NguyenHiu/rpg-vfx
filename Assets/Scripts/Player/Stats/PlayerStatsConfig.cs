@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName="PlayerStatsConfig", menuName ="ScriptableObject/PlayerStatsConfig")]
+[CreateAssetMenu(fileName="PlayerStatsConfig", menuName ="SO/Player Stats")]
 public class PlayerStatsConfig : ScriptableObject
 {
     public float WalkSpeed;
