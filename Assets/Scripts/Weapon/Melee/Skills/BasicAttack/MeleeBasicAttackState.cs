@@ -2,11 +2,11 @@ using System;
 using UnityEngine;
 using DG.Tweening;
 
-public class WeaponMeleeBasicAttack : WeaponAttack
+public class MeleeBasicAttackState : WeaponAttack
 {
-    public new MeleeWeaponController Weapon;
+    public new MeleeController Weapon;
 
-    public WeaponMeleeBasicAttack(MeleeWeaponController weapon, PlayerController player, string name) : base(weapon, player, name)
+    public MeleeBasicAttackState(MeleeController weapon, PlayerController player, string name) : base(weapon, player, name)
     {
         Weapon = weapon;
     }

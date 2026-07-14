@@ -11,7 +11,7 @@ public class Skill
     [SerializeField] protected readonly SkillCfg Cfg;
     [SerializeField] protected SkillController SkillCtrl;
     protected PlayerController Player;
-    protected WeaponAnimController Weapon;
+    protected WeaponController Weapon;
     public bool IsRunning { get; protected set; }
     protected float m_timer = 0;
     protected bool IsEnable;

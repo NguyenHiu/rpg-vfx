@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private InputActionAsset m_inputActions;
+    public InputActionAsset InputActions => m_inputActions;
     [field: SerializeField] public Rigidbody2D Rb { get; private set; }
     [field: SerializeField] public PlayerAnimController Anim;
     [field: SerializeField] public SpriteRenderer SR;

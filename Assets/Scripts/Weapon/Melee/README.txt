@@ -1,1 +1,1 @@
-This melee weapon includes: sword, pierce and axe.
+This melee weapon includes: sword, axe.

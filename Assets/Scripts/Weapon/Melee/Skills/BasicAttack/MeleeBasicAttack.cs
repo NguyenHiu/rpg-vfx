@@ -4,12 +4,12 @@ public interface IBasicAttack
 {
 }
 
-public class BasicAttack : MeleeSkill
+public class MeleeBasicAttack : MeleeSkill
 {
     // TODO: Use Cfg.Speed
-    protected new BasicAttackCfg Cfg;
+    protected new MeleeBasicAttackCfg Cfg;
 
-    public BasicAttack(BasicAttackCfg cfg, SkillController skillCtrl, InputAction action) : base(cfg, skillCtrl, action)
+    public MeleeBasicAttack(MeleeBasicAttackCfg cfg, SkillController skillCtrl, InputAction action) : base(cfg, skillCtrl, action)
     {
         Cfg = cfg;
     }

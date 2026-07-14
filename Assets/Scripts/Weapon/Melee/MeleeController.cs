@@ -1,17 +1,21 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-// Includes: Sword, Pierce, Axe
-public class MeleeWeaponController : WeaponController, IBasicAttack
+// Includes: Sword, Axe
+public class MeleeController : WeaponController, IBasicAttack
 {
     [Header("Requirements")]
-    [SerializeField] protected BasicAttackCfg m_basicAttackCfg;
-    public BasicAttackCfg BasicAttackCfg => m_basicAttackCfg;
+    [SerializeField] protected MeleeBasicAttackCfg m_basicAttackCfg;
+    public MeleeBasicAttackCfg BasicAttackCfg => m_basicAttackCfg;
+    [SerializeField] protected string m_basicAttackAction;
     [SerializeField] protected Transform m_headTf;
 
     [Header("View Only")]
     [SerializeField] protected float m_weaponLength;
     public float WeaponLength => m_weaponLength;
     [SerializeField] protected PolygonCollider2D m_basicAttackCollider;
+
+    public new List<MeleeSkill> ActiveSkills;
 
     void Awake()
     {
@@ -35,5 +39,13 @@ public class MeleeWeaponController : WeaponController, IBasicAttack
             new(sinVal*m_weaponLength, cosVal*m_weaponLength)
         };
         m_basicAttackCollider.SetPath(0, points);
+    }
+
+    protected void InitMeleeSkill()
+    {
+        ActiveSkills = new()
+        {
+            new MeleeBasicAttack(m_basicAttackCfg, m_skillCtrl, )  
+        };
     }
 }

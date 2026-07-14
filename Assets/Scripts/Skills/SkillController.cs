@@ -1,34 +1,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Lumin;
 using UnityEngine.Rendering;
 
 public class SkillController : MonoBehaviour
 {
-    [Header("Skills Controller")]
+    [Header("Requirements")]
     public PlayerController Player;
-    public WeaponAnimController Weapon;
+    public WeaponController Weapon;
+
+    [Header("View Only")]
     private List<ActiveSkill> m_activeSkills;
     private List<PassiveSkill> m_passiveSkills;
     private Skill m_lastSkill;
 
-    [Header("Dash")]
+    [Header("Player Based Skills")]
+    [Header("== Active Skills")]
+    [Header("> Dash")]
     [SerializeField] private string m_dashInputActionName;
     [SerializeField] private DashConfig m_dashCfg;
     [SerializeField] private SpriteRenderer m_trailSample;
     [SerializeField] private SortingGroup m_playerSortingGroup;
     [SerializeField] private Transform m_trailParent;
 
-    [Header("Basic Attack")]
-    [SerializeField] private BasicAttackCfg m_basicAttackCfg;
-    [SerializeField] private string m_attackInputActionName;
-
-    [Header("Pierce Attack")]
-    [SerializeField] private PierceAttackCfg m_pierceAttackCfg;
-    [SerializeField] private string m_pierceInputActionName;
-
-    [Header("Auto Target")]
+    [Header("== Passive Skills")]
+    [Header("> Auto Target")]
     [SerializeField] private AutoTargetCfg m_autoTargetCfg;
     [SerializeField] private Transform m_centerTf;
 
@@ -41,8 +37,6 @@ public class SkillController : MonoBehaviour
         m_activeSkills = new()
         {
             new DashSkill(m_dashCfg, this, InputSystem.actions.FindAction(m_dashInputActionName), m_trailSample, m_playerSortingGroup, m_trailParent),
-            new BasicAttack(m_basicAttackCfg, this, InputSystem.actions.FindAction(m_attackInputActionName)),
-            new PierceAttack(m_pierceAttackCfg, this, InputSystem.actions.FindAction(m_pierceInputActionName)),
         };
         m_lastSkill = null;
     }
@@ -52,6 +46,8 @@ public class SkillController : MonoBehaviour
         foreach (var skill in m_passiveSkills)
             skill.Update(dt);
         foreach (var skill in m_activeSkills)
+            skill.Update(dt);
+        foreach (var skill in Weapon.ActiveSkills)
             skill.Update(dt);
     }
 
