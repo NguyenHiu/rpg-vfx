@@ -16,8 +16,6 @@ public class MeleeBasicAttackState : WeaponAttack
         Debug.Log("[MeleeBasicAttackState] EnterCb");
         base.EnterCb(callback);
 
-        // TODO: Enable m_basicAttackCollider
-
         // Find position (set to the weapon)
         var attackPeak = Player.FacingDir * Weapon.BasicAttackCfg.Radius;
         var attackHandle = attackPeak.normalized * (attackPeak.magnitude - Weapon.WeaponLength);

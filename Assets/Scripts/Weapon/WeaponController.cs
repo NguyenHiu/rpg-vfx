@@ -10,6 +10,8 @@ public class WeaponController : MonoBehaviour
     public WeaponIdleAnimCfg IdleAnimCfg => m_idleAnimCfg;
     [SerializeField] protected SkillController m_skillCtrl;
     public SkillController SkillCtrl => m_skillCtrl;
+    [SerializeField] protected GameObject m_hitAreaPrefab;
+    public GameObject HitAreaPrefab => m_hitAreaPrefab;
 
     [Header("View Only")]
     [SerializeField] protected WeaponAnimController m_animCtrl;

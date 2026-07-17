@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PierceAttackCfg
   Name: Pierce Attack
   Cooldown: 1
+  Type: 1
   Speed: 25
   Duration: 0.2

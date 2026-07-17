@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName="Melee_Basic_Attack_Cfg", menuName ="SO/Skill Configs/Melee Basic Attack")]
-public class MeleeBasicAttackCfg : SkillCfg
+public class MeleeBasicAttackCfg : MeleeCfg
 {
     public float Speed;
     public float Angle;
