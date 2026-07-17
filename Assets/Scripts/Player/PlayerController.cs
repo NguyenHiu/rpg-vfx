@@ -34,7 +34,6 @@ public class PlayerController : MonoBehaviour
     [field: SerializeField] public Rigidbody2D Rb { get; private set; }
     [field: SerializeField] public PlayerAnimController Anim;
     [field: SerializeField] public SpriteRenderer SR;
-    [field: SerializeField] public Collider2D CD2D;
 
     [SerializeField] private PlayerMode m_mode;
     public PlayerMode Mode => m_mode;
@@ -69,7 +68,6 @@ public class PlayerController : MonoBehaviour
         m_skillCtrl = GetComponent<SkillController>();
         m_stats = GetComponent<PlayerStats>();
         m_ctx = new();
-        if (CD2D == null) CD2D = GetComponent<Collider2D>();
     }
 
     void Update()

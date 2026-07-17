@@ -25,6 +25,7 @@ public class WeaponIdle : WeaponState
             m_idlePos.x *= -1;
             m_idleAngle.z *= -1;
         }
+        Weapon.transform.localPosition = Vector2.zero;
         Weapon.SR.transform.localPosition = m_idlePos;
         Weapon.SR.transform.localEulerAngles = m_idleAngle;
 

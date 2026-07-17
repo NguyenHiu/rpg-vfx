@@ -20,11 +20,11 @@ public class PierceAttack : ActiveSkill
     {
         base.Activate();
 
-        m_pierceTimer = Cfg.Duration;
-        Player.CD2D.isTrigger = true;
-        m_piercingDir = Player.FacingDir;
-        m_targetSkill?.SetEnable(false);
-        Debug.Log("[PierceAttack] Activate");
+        // m_pierceTimer = Cfg.Duration;
+        // Player.CD2D.isTrigger = true;
+        // m_piercingDir = Player.FacingDir;
+        // m_targetSkill?.SetEnable(false);
+        // Debug.Log("[PierceAttack] Activate");
     }
 
     public override bool Available()
@@ -60,7 +60,7 @@ public class PierceAttack : ActiveSkill
     public override void Cancel()
     {
         base.Cancel();
-        Player.CD2D.isTrigger = false;
+        // Player.CD2D.isTrigger = false;
         m_targetSkill?.SetEnable(true);
     }
 }

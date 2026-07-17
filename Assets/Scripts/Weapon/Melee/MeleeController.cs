@@ -9,22 +9,25 @@ public class MeleeController : WeaponController, IBasicAttack
     public MeleeBasicAttackCfg BasicAttackCfg => m_basicAttackCfg;
     [SerializeField] protected string m_basicAttackAction;
     [SerializeField] protected Transform m_headTf;
+    [SerializeField] protected Animator m_slashAnim;
+    public Animator SlashAnim => m_slashAnim;
 
     [Header("View Only")]
     [SerializeField] protected float m_weaponLength;
     public float WeaponLength => m_weaponLength;
     [SerializeField] protected PolygonCollider2D m_basicAttackCollider;
-
-    public new List<MeleeSkill> ActiveSkills;
+    public PolygonCollider2D BasicAttackCollider => m_basicAttackCollider;
 
     void Awake()
     {
         InitBasicAttack();
+        InitMeleeSkill();
     }
 
     protected void InitBasicAttack()
     {
-        m_weaponLength = Mathf.Abs(m_headTf.localPosition.magnitude * m_sr.transform.localScale.x);
+        // m_weaponLength = Mathf.Abs(m_headTf.localPosition.magnitude * m_sr.transform.localScale.x);
+        m_weaponLength = (m_headTf.position - m_sr.transform.position).magnitude;
         m_basicAttackCollider.gameObject.SetActive(false);
 
         // Create the pizza collision xD
@@ -45,7 +48,7 @@ public class MeleeController : WeaponController, IBasicAttack
     {
         ActiveSkills = new()
         {
-            new MeleeBasicAttack(m_basicAttackCfg, m_skillCtrl, )  
+            new MeleeBasicAttack(m_basicAttackCfg, m_skillCtrl, m_skillCtrl.Player.InputActions.FindAction(m_basicAttackAction))
         };
     }
 }

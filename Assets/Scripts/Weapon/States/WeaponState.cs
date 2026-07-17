@@ -1,4 +1,4 @@
-
+using UnityEngine;
 using System;
 
 public enum WState
@@ -18,6 +18,10 @@ public class WeaponState : State
     {
         Weapon = weapon;
         Player = player;
+        if (Player == null)
+        {
+            Debug.Log("WeaponState, Player is null");
+        }
     }
 
     public virtual void EnterCb(Action callback)

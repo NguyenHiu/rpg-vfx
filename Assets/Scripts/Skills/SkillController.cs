@@ -47,8 +47,11 @@ public class SkillController : MonoBehaviour
             skill.Update(dt);
         foreach (var skill in m_activeSkills)
             skill.Update(dt);
-        foreach (var skill in Weapon.ActiveSkills)
-            skill.Update(dt);
+        if (Weapon.ActiveSkills != null)
+        {
+            foreach (var skill in Weapon.ActiveSkills)
+                skill.Update(dt);
+        }
     }
 
     // public void ManualFixedUpdate(float dt, PlayerContext context)
@@ -79,6 +82,20 @@ public class SkillController : MonoBehaviour
                 {
                     m_lastSkill = skill;
                     isUseSkill = true;
+                    break;
+                }
+            }
+
+            if (!isUseSkill && Weapon.ActiveSkills != null)
+            {
+                foreach (var skill in Weapon.ActiveSkills)
+                {
+                    if (skill.IsTriggering())
+                    {
+                        m_lastSkill = skill;
+                        isUseSkill = true;
+                        break;
+                    }
                 }
             }
         }

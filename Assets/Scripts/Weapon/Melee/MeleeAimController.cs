@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class MeleeAimController : WeaponAnimController
 {
-    protected new MeleeController m_weapon;
-
+    private MeleeController m_meleeWeapon;
+    
     protected override void InitState()
     {
         base.InitState();
-        m_states.Add(new MeleeBasicAttackState(m_weapon, m_player, "attack"));
+        m_meleeWeapon = (MeleeController) m_weapon;
+        m_states.Add(new MeleeBasicAttackState(m_meleeWeapon, m_player, "Attack"));
     }
 }

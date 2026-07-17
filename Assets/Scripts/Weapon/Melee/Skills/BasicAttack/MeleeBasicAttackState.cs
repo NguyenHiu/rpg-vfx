@@ -13,6 +13,7 @@ public class MeleeBasicAttackState : WeaponAttack
 
     public override void EnterCb(Action callback)
     {
+        Debug.Log("[MeleeBasicAttackState] EnterCb");
         base.EnterCb(callback);
 
         // TODO: Enable m_basicAttackCollider
@@ -21,6 +22,7 @@ public class MeleeBasicAttackState : WeaponAttack
         var attackPeak = Player.FacingDir * Weapon.BasicAttackCfg.Radius;
         var attackHandle = attackPeak.normalized * (attackPeak.magnitude - Weapon.WeaponLength);
         var attackPoint = attackHandle + Weapon.BasicAttackCfg.CenterOffset;
+        Debug.Log($"attackPoint: {attackPoint}");
         Weapon.transform.localPosition = attackPoint;
 
         // Reset the SR
@@ -39,10 +41,24 @@ public class MeleeBasicAttackState : WeaponAttack
         Weapon.SR.transform.DOLocalRotate(new(0, 0, Weapon.BasicAttackCfg.Angle * dir - deltaAngle), Weapon.BasicAttackCfg.Speed).OnComplete(() =>
         {
             Callback?.Invoke();
+            Weapon.BasicAttackCollider.gameObject.SetActive(false);
+        });
+        DOVirtual.DelayedCall(Weapon.BasicAttackCfg.Speed * 0.2f, () =>
+        {
+            Weapon.BasicAttackCollider.transform.localEulerAngles = new(0, 0, -deltaAngle);
+            Weapon.BasicAttackCollider.gameObject.SetActive(true);
         });
 
-        // TODO: rotate m_basicAttackCollider instead
-        // Weapon.PC2D.transform.localEulerAngles = new(0, 0, -deltaAngle); // Do not need to restore this one
+        // Set the slash animation
+        Weapon.SlashAnim.transform.localPosition = attackPeak;
+        Weapon.SlashAnim.transform.localEulerAngles = new(0, 0, -deltaAngle);
+        if (deltaAngle * Weapon.SlashAnim.transform.localScale.x < 0)
+        {
+            var localScale = Weapon.SlashAnim.transform.localScale;
+            localScale.x *= -1;
+            Weapon.SlashAnim.transform.localScale = localScale;
+        }
+        Weapon.SlashAnim.SetTrigger("Slash");
     }
 
 

@@ -13,6 +13,8 @@ public class ActiveSkill : Skill
 
     public virtual bool IsTriggering()
     {
+        // Debug.Log("Action.IsPressed(): " + Action.IsPressed());
+        // Debug.Log("Available(): " + Available());
         return Action.IsPressed() && Available();
     }
 
