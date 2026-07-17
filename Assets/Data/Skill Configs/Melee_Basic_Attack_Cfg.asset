@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e3ca4d8bab7f494fa367c21742baef7, type: 3}
-  m_Name: MeleeBasicAttackConfig
+  m_Name: Melee_Basic_Attack_Cfg
   m_EditorClassIdentifier: Assembly-CSharp::MeleeBasicAttackCfg
   Name: Basic Attack
   Cooldown: 0.2
