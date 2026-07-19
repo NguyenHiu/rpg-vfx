@@ -16,6 +16,7 @@ public class MeleeCfg : SkillCfg
 public class MeleeSkill : ActiveSkill
 {
     protected readonly new MeleeCfg Cfg;
+    public MELEE_SKILL Type => Cfg.Type;
 
     public MeleeSkill(MeleeCfg cfg, SkillController skillCtrl, InputAction action) : base(cfg, skillCtrl, action)
     {

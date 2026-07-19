@@ -4514,7 +4514,7 @@ MonoBehaviour:
   m_sr: {fileID: 3682623640831608443}
   m_idleAnimCfg: {fileID: 11400000, guid: 868de3fc27d77324aa6b9e7ddcc0176e, type: 2}
   m_skillCtrl: {fileID: 2130083352}
-  m_hitAreaPrefab: {fileID: 0}
+  m_hitAreaPrefab: {fileID: 1375672016911461975, guid: 898878eac4b4e4688af864833d529003, type: 3}
   m_animCtrl: {fileID: 6850383294617199755}
   m_basicAttackCfg: {fileID: 11400000, guid: 8e08eb8285a8648de8fb04794ca3b310, type: 2}
   m_basicAttackAction: Attack

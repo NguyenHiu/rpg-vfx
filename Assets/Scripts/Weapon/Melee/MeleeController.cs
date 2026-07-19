@@ -20,6 +20,8 @@ public class MeleeController : WeaponController, IBasicAttack
     [SerializeField] protected PolygonCollider2D m_pierceAttackCollider;
     public PolygonCollider2D PierceAttackCollider => m_pierceAttackCollider;
 
+    public new List<MeleeSkill> ActiveSkills;
+
     void Awake()
     {
         // m_weaponLength = Mathf.Abs(m_headTf.localPosition.magnitude * m_sr.transform.localScale.x);
@@ -44,5 +46,14 @@ public class MeleeController : WeaponController, IBasicAttack
     protected void InitPierceAttack()
     {
         
+    }
+
+    public MeleeSkill GetSkill(MELEE_SKILL type)
+    {
+        foreach(var skill in ActiveSkills)
+        {
+            if (skill.Type == type) return skill;
+        }
+        return null;
     }
 }

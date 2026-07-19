@@ -5,6 +5,7 @@ using DG.Tweening;
 public class MeleeBasicAttackState : WeaponAttack
 {
     public new MeleeController Weapon;
+    private MeleeBasicAttack m_skill;
 
     public MeleeBasicAttackState(MeleeController weapon, PlayerController player, string name) : base(weapon, player, name)
     {
@@ -15,6 +16,8 @@ public class MeleeBasicAttackState : WeaponAttack
     {
         Debug.Log("[MeleeBasicAttackState] EnterCb");
         base.EnterCb(callback);
+
+        m_skill ??= (MeleeBasicAttack) Weapon.GetSkill(MELEE_SKILL.BASIC_ATTACK);
 
         // Find position (set to the weapon)
         var attackPeak = Player.FacingDir * Weapon.BasicAttackCfg.Radius;
@@ -39,12 +42,12 @@ public class MeleeBasicAttackState : WeaponAttack
         Weapon.SR.transform.DOLocalRotate(new(0, 0, Weapon.BasicAttackCfg.Angle * dir - deltaAngle), Weapon.BasicAttackCfg.Speed).OnComplete(() =>
         {
             Callback?.Invoke();
-            Weapon.BasicAttackCollider.gameObject.SetActive(false);
+            m_skill?.Collider.gameObject.SetActive(false);
         });
         DOVirtual.DelayedCall(Weapon.BasicAttackCfg.Speed * 0.2f, () =>
         {
-            Weapon.BasicAttackCollider.transform.localEulerAngles = new(0, 0, -deltaAngle);
-            Weapon.BasicAttackCollider.gameObject.SetActive(true);
+            if (m_skill != null) m_skill.Collider.transform.localEulerAngles = new(0, 0, -deltaAngle);
+            m_skill?.Collider.gameObject.SetActive(true);
         });
 
         // Set the slash animation
