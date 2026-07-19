@@ -33,10 +33,12 @@ public class MeleeBasicAttack : MeleeSkill
             new(sinVal*Weapon.WeaponLength, cosVal*Weapon.WeaponLength)
         };
         Collider.SetPath(0, points);
+        Debug.Log($"[MeleeBasicAttack] Init Basic Attack Collider");
     }
 
     public override void Activate()
     {
+        Debug.Log($"[MeleeBasicAttack] Activate");
         base.Activate();
         Weapon.AnimCtrl.ChangeState(WState.ATTACK, CompleteAttack);
     }

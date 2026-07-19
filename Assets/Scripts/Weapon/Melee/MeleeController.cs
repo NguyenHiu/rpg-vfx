@@ -15,10 +15,6 @@ public class MeleeController : WeaponController, IBasicAttack
     [Header("View Only")]
     [SerializeField] protected float m_weaponLength;
     public float WeaponLength => m_weaponLength;
-    [SerializeField] protected PolygonCollider2D m_basicAttackCollider;
-    public PolygonCollider2D BasicAttackCollider => m_basicAttackCollider;
-    [SerializeField] protected PolygonCollider2D m_pierceAttackCollider;
-    public PolygonCollider2D PierceAttackCollider => m_pierceAttackCollider;
 
     public new List<MeleeSkill> ActiveSkills;
 
@@ -26,26 +22,16 @@ public class MeleeController : WeaponController, IBasicAttack
     {
         // m_weaponLength = Mathf.Abs(m_headTf.localPosition.magnitude * m_sr.transform.localScale.x);
         m_weaponLength = (m_headTf.position - m_sr.transform.position).magnitude;
-        InitBasicAttack();
         InitMeleeSkill();
     }
 
     protected void InitMeleeSkill()
     {
+        Debug.Log("InitMeleeSkill");
         ActiveSkills = new()
         {
             new MeleeBasicAttack(m_basicAttackCfg, m_skillCtrl, m_skillCtrl.Player.InputActions.FindAction(m_basicAttackAction))
         };
-    }
-
-    protected void InitBasicAttack()
-    {
-        m_basicAttackCollider.gameObject.SetActive(false);
-    }
-
-    protected void InitPierceAttack()
-    {
-        
     }
 
     public MeleeSkill GetSkill(MELEE_SKILL type)

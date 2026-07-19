@@ -97,6 +97,9 @@ public class SkillController : MonoBehaviour
                         break;
                     }
                 }
+            } else
+            {
+                Debug.Log("FixedUpdate_ActiveSkills");
             }
         }
 
