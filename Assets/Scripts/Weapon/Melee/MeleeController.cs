@@ -17,6 +17,8 @@ public class MeleeController : WeaponController, IBasicAttack
     [SerializeField] protected MeleePierceAttackCfg m_pierceCfg;
     public MeleePierceAttackCfg PierceCfg => m_pierceCfg;
     [SerializeField] protected string m_pierceAction;
+    [SerializeField] protected int m_piercingLayer;
+    public int PiercingLayer => m_piercingLayer;
 
     [Header("View Only")]
     [SerializeField] protected float m_weaponLength;
@@ -40,7 +42,7 @@ public class MeleeController : WeaponController, IBasicAttack
 
     public MeleeSkill GetSkill(MELEE_SKILL type)
     {
-        foreach(var skill in m_activeSkills)
+        foreach (var skill in m_activeSkills)
         {
             var meleeSkill = skill as MeleeSkill;
             if (meleeSkill.Type == type) return meleeSkill;

@@ -6,6 +6,7 @@ public class MeleePierceAttackState : WeaponState
     public new MeleeController Weapon;
     private MeleePierceAttack m_skill;
     private float m_animSpeed;
+    private int m_colliderLayer;
 
     public MeleePierceAttackState(MeleeController weapon, PlayerController player, string name) : base(weapon, player, name)
     {
@@ -16,11 +17,11 @@ public class MeleePierceAttackState : WeaponState
     public override void Enter()
     {
         base.Enter();
+        m_skill ??= (MeleePierceAttack)Weapon.GetSkill(MELEE_SKILL.PIERCE_ATTACK);
         m_animSpeed = Player.Anim.Anim.speed; // I know.. this looks ugly af
         Player.Anim.Anim.speed = 0f;
-        m_skill ??= (MeleePierceAttack)Weapon.GetSkill(MELEE_SKILL.PIERCE_ATTACK);
-        // TODO: Switch collider layer instead of turning on/off
-        Player.MoveCollider.enabled = false;
+        m_colliderLayer = Player.MoveCollider.gameObject.layer;
+        Player.MoveCollider.gameObject.layer = Weapon.PiercingLayer;
 
         // Find position (set to the weapon)
         var attackPeak = Player.FacingDir * Weapon.BasicAttackCfg.Radius;
@@ -42,7 +43,7 @@ public class MeleePierceAttackState : WeaponState
     {
         base.Exit();
         Player.Anim.Anim.speed = m_animSpeed;
-        Player.MoveCollider.enabled = true;
+        Player.MoveCollider.gameObject.layer = m_colliderLayer;
         m_skill?.Collider.gameObject.SetActive(false);
     }
 }

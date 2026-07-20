@@ -5238,6 +5238,7 @@ MonoBehaviour:
   m_slashAnim: {fileID: 141749596}
   m_pierceCfg: {fileID: 11400000, guid: b10f44cdb105a4ffd90912da1bdbe2aa, type: 2}
   m_pierceAction: Pierce Attack
+  m_piercingLayer: 6
   m_weaponLength: 0
 --- !u!1 &7006569062350262677
 GameObject:
