@@ -26,7 +26,6 @@ public class MeleeController : WeaponController, IBasicAttack
 
     void Awake()
     {
-        // m_weaponLength = Mathf.Abs(m_headTf.localPosition.magnitude * m_sr.transform.localScale.x);
         m_weaponLength = (m_headTf.position - m_sr.transform.position).magnitude;
         InitMeleeSkill();
     }

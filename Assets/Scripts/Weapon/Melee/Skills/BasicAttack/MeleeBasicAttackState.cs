@@ -17,7 +17,7 @@ public class MeleeBasicAttackState : WeaponState
     {
         base.EnterCb(callback);
 
-        m_skill ??= (MeleeBasicAttack) Weapon.GetSkill(MELEE_SKILL.BASIC_ATTACK);
+        m_skill ??= (MeleeBasicAttack)Weapon.GetSkill(MELEE_SKILL.BASIC_ATTACK);
 
         // Find position (set to the weapon)
         var attackPeak = Player.FacingDir * Weapon.BasicAttackCfg.Radius;
@@ -33,34 +33,50 @@ public class MeleeBasicAttackState : WeaponState
         var dir = Player.FacingDir.x >= 0 ? -1 : 1;
         var deltaAngle = Mathf.Atan2(Player.FacingDir.x, Player.FacingDir.y) * Mathf.Rad2Deg;
         Weapon.SR.transform.localEulerAngles = new(0, 0, -Weapon.BasicAttackCfg.Angle * dir - deltaAngle);
-        Weapon.SR.transform.DOLocalRotate(new(0, 0, Weapon.BasicAttackCfg.Angle * dir - deltaAngle), Weapon.BasicAttackCfg.Speed).OnComplete(() =>
+
+        // Set the slash animation
+        Weapon.SlashAnim.transform.localPosition = attackPeak;
+        Weapon.SlashAnim.transform.localEulerAngles = new(0, 0, -deltaAngle);
+        if (deltaAngle * Weapon.SlashAnim.transform.localScale.x > 0)
         {
-            Callback?.Invoke();
-            m_skill?.Collider.gameObject.SetActive(false);
-        });
+            var localScale = Weapon.SlashAnim.transform.localScale;
+            localScale.x *= -1;
+            Weapon.SlashAnim.transform.localScale = localScale;
+        }
+
+        Weapon.SR.transform
+            .DOLocalRotate(new(0, 0, Weapon.BasicAttackCfg.Angle * dir - deltaAngle), Weapon.BasicAttackCfg.Speed)
+            .OnComplete(() =>
+            {
+                Callback?.Invoke();
+                m_skill?.Collider.gameObject.SetActive(false);
+            })
+            .SetEase(Ease.OutCubic);
+
+        // Enable Collider -> Hit
         DOVirtual.DelayedCall(Weapon.BasicAttackCfg.Speed * 0.2f, () =>
         {
             if (m_skill != null) m_skill.Collider.transform.localEulerAngles = new(0, 0, -deltaAngle);
             m_skill?.Collider.gameObject.SetActive(true);
         });
 
-        // Set the slash animation
-        Weapon.SlashAnim.transform.localPosition = attackPeak;
-        Weapon.SlashAnim.transform.localEulerAngles = new(0, 0, -deltaAngle);
-        if (deltaAngle * Weapon.SlashAnim.transform.localScale.x <= 0)
+        // Show slash sprite
+        DOVirtual.DelayedCall(Weapon.BasicAttackCfg.Speed * 0.4f, () =>
         {
-            var localScale = Weapon.SlashAnim.transform.localScale;
-            localScale.x *= -1;
-            Weapon.SlashAnim.transform.localScale = localScale;
-        }
-        Weapon.SlashAnim.SetTrigger("Slash");
+            Weapon.SlashAnim.GetComponent<SpriteRenderer>().enabled = true;
+        });
+
+        // Hide slash sprite
+        DOVirtual.DelayedCall(Weapon.BasicAttackCfg.Speed * 0.7f, () =>
+        {
+            Weapon.SlashAnim.GetComponent<SpriteRenderer>().enabled = false;
+        });
     }
 
 
     public override void Exit()
     {
         base.Exit();
-        Debug.Log("Basic Attack Exit");
         Weapon.SR.transform.DOKill();
     }
 }

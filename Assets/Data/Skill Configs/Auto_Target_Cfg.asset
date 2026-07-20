@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: Auto Target
   Cooldown: 0.01
   NTarget: 5
-  Radius: 4
+  Radius: 2
   EnemyLayer:
     serializedVersion: 2
     m_Bits: 8
