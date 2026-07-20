@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScarecrowCfg
   Duration: 0.03
   Angle: 5
-  IFrameDuration: 0.01
+  IFrameDuration: 0.1
