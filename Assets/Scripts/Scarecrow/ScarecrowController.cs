@@ -1,31 +1,25 @@
 using DG.Tweening;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class ScarecrowController : MonoBehaviour
 {
-    [SerializeField] private Transform SpriteTf;
-
-    // TEST
-    [SerializeField] private Sequence Seq;
-    [SerializeField] private float Duration;
-    [SerializeField] private float Angle;
-    [SerializeField] private float iFrameDuration;
-    [SerializeField] private float iFrameTimer;
+    [Header("Requirements")]
+    [SerializeField] private Transform m_spriteTf;
+    [SerializeField] private ScarecrowCfg m_cfg;
     [SerializeField] private DamageFlash dmgFlash;
 
-    void OnDisable()
-    {
-    }
+    [Header("View Only")]
+    [SerializeField] private float iFrameTimer = 0;
+    [SerializeField] private Sequence Seq;
 
     void Start()
     {
         // Init sequence
         Seq = DOTween.Sequence().SetAutoKill(false);
         Seq.Pause();
-        Seq.Append(SpriteTf.DORotate(new(0, 0, -Angle), Duration));
-        Seq.Append(SpriteTf.DORotate(new(0, 0, Angle), Duration * 2));
-        Seq.Append(SpriteTf.DORotate(new(0, 0, 0), Duration));
+        Seq.Append(m_spriteTf.DORotate(new(0, 0, -m_cfg.Angle), m_cfg.Duration));
+        Seq.Append(m_spriteTf.DORotate(new(0, 0, m_cfg.Angle), m_cfg.Duration * 2));
+        Seq.Append(m_spriteTf.DORotate(new(0, 0, 0), m_cfg.Duration));
     }
 
     void Update()
@@ -37,7 +31,7 @@ public class ScarecrowController : MonoBehaviour
     {
         if (iFrameTimer > 0) return false;
         Debug.Log("Scarerow got hit");
-        iFrameTimer = iFrameDuration;
+        iFrameTimer = m_cfg.IFrameDuration;
 
         dmgFlash.TriggerFlash();
         HitAnim();
