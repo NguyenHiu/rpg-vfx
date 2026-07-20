@@ -16,8 +16,6 @@ public class MeleeController : WeaponController, IBasicAttack
     [SerializeField] protected float m_weaponLength;
     public float WeaponLength => m_weaponLength;
 
-    public new List<MeleeSkill> ActiveSkills;
-
     void Awake()
     {
         // m_weaponLength = Mathf.Abs(m_headTf.localPosition.magnitude * m_sr.transform.localScale.x);
@@ -28,7 +26,7 @@ public class MeleeController : WeaponController, IBasicAttack
     protected void InitMeleeSkill()
     {
         Debug.Log("InitMeleeSkill");
-        ActiveSkills = new()
+        m_activeSkills = new()
         {
             new MeleeBasicAttack(m_basicAttackCfg, m_skillCtrl, m_skillCtrl.Player.InputActions.FindAction(m_basicAttackAction))
         };
@@ -36,9 +34,10 @@ public class MeleeController : WeaponController, IBasicAttack
 
     public MeleeSkill GetSkill(MELEE_SKILL type)
     {
-        foreach(var skill in ActiveSkills)
+        foreach(var skill in m_activeSkills)
         {
-            if (skill.Type == type) return skill;
+            var meleeSkill = skill as MeleeSkill;
+            if (meleeSkill.Type == type) return meleeSkill;
         }
         return null;
     }

@@ -17,5 +17,6 @@ public class WeaponController : MonoBehaviour
     [SerializeField] protected WeaponAnimController m_animCtrl;
     public WeaponAnimController AnimCtrl => m_animCtrl;
     
-    public List<ActiveSkill> ActiveSkills;
+    [SerializeField] protected List<ActiveSkill> m_activeSkills;
+    public virtual List<ActiveSkill> ActiveSkills => m_activeSkills;
 }
