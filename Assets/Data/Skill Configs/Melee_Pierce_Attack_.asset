@@ -16,4 +16,7 @@ MonoBehaviour:
   Cooldown: 1
   Type: 1
   Speed: 25
-  Duration: 0.2
+  Angle: 24
+  Radius: 2
+  CenterOffset: {x: 0, y: 0}
+  Duration: 0.3

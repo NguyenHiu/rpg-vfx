@@ -5,12 +5,18 @@ using UnityEngine;
 public class MeleeController : WeaponController, IBasicAttack
 {
     [Header("Requirements")]
+    [Header("> Basic Attack")]
     [SerializeField] protected MeleeBasicAttackCfg m_basicAttackCfg;
     public MeleeBasicAttackCfg BasicAttackCfg => m_basicAttackCfg;
     [SerializeField] protected string m_basicAttackAction;
     [SerializeField] protected Transform m_headTf;
     [SerializeField] protected Animator m_slashAnim;
     public Animator SlashAnim => m_slashAnim;
+
+    [Header("> Pierce Attack")]
+    [SerializeField] protected MeleePierceAttackCfg m_pierceCfg;
+    public MeleePierceAttackCfg PierceCfg => m_pierceCfg;
+    [SerializeField] protected string m_pierceAction;
 
     [Header("View Only")]
     [SerializeField] protected float m_weaponLength;
@@ -25,10 +31,10 @@ public class MeleeController : WeaponController, IBasicAttack
 
     protected void InitMeleeSkill()
     {
-        Debug.Log("InitMeleeSkill");
         m_activeSkills = new()
         {
-            new MeleeBasicAttack(m_basicAttackCfg, m_skillCtrl, m_skillCtrl.Player.InputActions.FindAction(m_basicAttackAction))
+            new MeleeBasicAttack(m_basicAttackCfg, m_skillCtrl, m_skillCtrl.Player.InputActions.FindAction(m_basicAttackAction)),
+            new MeleePierceAttack(m_pierceCfg, m_skillCtrl, m_skillCtrl.Player.InputActions.FindAction(m_pierceAction)),
         };
     }
 

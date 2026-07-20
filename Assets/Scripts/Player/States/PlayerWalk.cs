@@ -15,7 +15,7 @@ public class PlayerWalk : PlayerState
     {
         base.Update();
 
-        if (Player.Rb.linearVelocity == Vector2.zero)
+        if (Player.RB.linearVelocity == Vector2.zero)
             PlayerAnim.ChangeState(backState);
         else DirectionCheck();
     }

@@ -37,7 +37,7 @@ public class DashSkill : ActiveSkill
 
     public override bool Available()
     {
-        return base.Available() && Player.Rb.linearVelocity != Vector2.zero;
+        return base.Available() && Player.RB.linearVelocity != Vector2.zero;
     }
 
     public override void Activate()
@@ -46,7 +46,7 @@ public class DashSkill : ActiveSkill
         m_prvState = Player.Anim.GetCurrentState();
         Player.Anim.ChangeState(PState.DASH);
         m_dashTimer = Cfg.Duration;
-        m_dashDir = Player.Rb.linearVelocity.normalized;
+        m_dashDir = Player.RB.linearVelocity.normalized;
         m_trailCtrl.StartTrails();
     }
 

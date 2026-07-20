@@ -25,28 +25,35 @@ public class PlayerContext
 [RequireComponent(typeof(SkillController))]
 [RequireComponent(typeof(PlayerStats))]
 
-[RequireComponent(typeof(Collider2D))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private InputActionAsset m_inputActions;
     public InputActionAsset InputActions => m_inputActions;
-    [field: SerializeField] public Rigidbody2D Rb { get; private set; }
-    [field: SerializeField] public PlayerAnimController Anim;
-    [field: SerializeField] public SpriteRenderer SR;
+    [SerializeField] private Rigidbody2D m_rb;
+    public Rigidbody2D RB => m_rb;
+    [SerializeField] private PlayerAnimController m_anim;
+    public PlayerAnimController Anim;
+    [SerializeField] private SpriteRenderer m_sr;
+    public SpriteRenderer SR => m_sr;
+    [SerializeField] private Collider2D m_moveCollider;
+    public Collider2D MoveCollider => m_moveCollider;
 
     [SerializeField] private PlayerMode m_mode;
     public PlayerMode Mode => m_mode;
     [SerializeField] private PlayerContext m_ctx;
     [SerializeField] private PlayerStats m_stats;
     [SerializeField] private SkillController m_skillCtrl;
-    [field: SerializeField] public Vector2 FacingDir { get; private set; }
-    [field: SerializeField] public WeaponAnimController Weapon { get; private set; }
+    [SerializeField] private Vector2 m_facingDir;
+    public Vector2 FacingDir => m_facingDir;
+    [SerializeField] private WeaponAnimController m_weapon;
+    public WeaponAnimController Weapon => m_weapon;
 
     // Inputs
     [Header("Inputs")]
     [SerializeField] private InputAction m_moveAction;
-    [field: SerializeField] public Vector2 MoveVal { get; private set; }
+    [SerializeField] private Vector2 m_moveVal;
+    public Vector2 MoveVal => m_moveVal;
 
     void OnEnable()
     {
@@ -72,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        MoveVal = m_moveAction.ReadValue<Vector2>();
+        m_moveVal = m_moveAction.ReadValue<Vector2>();
         m_skillCtrl.ManualUpdate(Time.deltaTime);
     }
 
@@ -85,12 +92,12 @@ public class PlayerController : MonoBehaviour
 
         // AUTO TARGET in BATTLE MODE
         if (m_mode == PlayerMode.ATTACK && m_ctx.Targets.Count != 0)
-            FacingDir = (m_ctx.Targets[0].transform.position - transform.position).normalized;
-        else if (Rb.linearVelocity != Vector2.zero)
-            FacingDir = Rb.linearVelocity.normalized;
+            m_facingDir = (m_ctx.Targets[0].transform.position - transform.position).normalized;
+        else if (m_rb.linearVelocity != Vector2.zero)
+            m_facingDir = m_rb.linearVelocity.normalized;
 
         m_skillCtrl.FixedUpdate_ActiveSkills(Time.fixedDeltaTime, m_ctx);
-        Rb.linearVelocity = m_ctx.Direction * m_ctx.Speed;
+        m_rb.linearVelocity = m_ctx.Direction * m_ctx.Speed;
     }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD

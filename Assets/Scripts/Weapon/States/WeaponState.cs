@@ -5,6 +5,7 @@ public enum WState
 {
     IDLE,
     ATTACK,
+    PIERCE_ATTACK,
 }
 
 public class WeaponState : State

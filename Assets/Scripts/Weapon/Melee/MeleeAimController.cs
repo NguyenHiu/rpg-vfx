@@ -9,5 +9,6 @@ public class MeleeAimController : WeaponAnimController
         base.InitState();
         m_meleeWeapon = (MeleeController) m_weapon;
         m_states.Add(new MeleeBasicAttackState(m_meleeWeapon, m_player, "Attack"));
+        m_states.Add(new MeleePierceAttackState(m_meleeWeapon, m_player, "Pierce Attack"));
     }
 }

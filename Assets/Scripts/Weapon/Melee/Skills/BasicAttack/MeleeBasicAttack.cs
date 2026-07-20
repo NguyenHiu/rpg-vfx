@@ -10,7 +10,8 @@ public class MeleeBasicAttack : MeleeSkill
     // TODO: Use Cfg.Speed
     protected new MeleeBasicAttackCfg Cfg;
     protected new MeleeController Weapon;
-    public PolygonCollider2D Collider;
+    protected PolygonCollider2D m_collider;
+    public PolygonCollider2D Collider => m_collider;
 
     public MeleeBasicAttack(MeleeBasicAttackCfg cfg, SkillController skillCtrl, InputAction action) : base(cfg, skillCtrl, action)
     {
@@ -18,9 +19,9 @@ public class MeleeBasicAttack : MeleeSkill
         Cfg = cfg;
 
         var go = GameObject.Instantiate(Weapon.HitAreaPrefab, Weapon.transform);
-        Collider = go.GetComponent<PolygonCollider2D>();
+        m_collider = go.GetComponent<PolygonCollider2D>();
         
-        Collider.gameObject.SetActive(false);
+        m_collider.gameObject.SetActive(false);
         // Create the pizza collision xD
         var rad = Weapon.BasicAttackCfg.Angle * Mathf.Deg2Rad;
         var sinVal = Mathf.Sin(rad);
@@ -32,8 +33,7 @@ public class MeleeBasicAttack : MeleeSkill
             new(0, Weapon.WeaponLength),
             new(sinVal*Weapon.WeaponLength, cosVal*Weapon.WeaponLength)
         };
-        Collider.SetPath(0, points);
-        Debug.Log($"[MeleeBasicAttack] Init Basic Attack Collider");
+        m_collider.SetPath(0, points);
     }
 
     public override void Activate()

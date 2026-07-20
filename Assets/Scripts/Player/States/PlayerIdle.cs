@@ -14,12 +14,12 @@ public class PlayerIdle : PlayerState
     {
         base.Update();
 
-        if (Player.Rb.linearVelocity != Vector2.zero || m_prevFacingDir != Player.FacingDir)
+        if (Player.RB.linearVelocity != Vector2.zero || m_prevFacingDir != Player.FacingDir)
         {
             m_prevFacingDir = Player.FacingDir;
             // Switch to Walk
             PState nxtState = PState.WALK;
-            var a = Player.Rb.linearVelocityX / Player.Rb.linearVelocityY;
+            var a = Player.RB.linearVelocityX / Player.RB.linearVelocityY;
             if (a < -PlayerAnimController.VIRTUAL_DIR_RANGE || a > PlayerAnimController.VIRTUAL_DIR_RANGE)
                 nxtState = PState.WALK_SIDE;
             else if (Player.FacingDir.y > 0)
