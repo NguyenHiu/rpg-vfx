@@ -35,13 +35,13 @@ public class MeleeBasicAttackState : WeaponState
         Weapon.SR.transform.localEulerAngles = new(0, 0, -Weapon.BasicAttackCfg.Angle * dir - deltaAngle);
 
         // Set the slash animation
-        Weapon.SlashAnim.transform.localPosition = attackPeak;
-        Weapon.SlashAnim.transform.localEulerAngles = new(0, 0, -deltaAngle);
-        if (deltaAngle * Weapon.SlashAnim.transform.localScale.x > 0)
+        Weapon.SlashSR.transform.localPosition = attackPeak;
+        Weapon.SlashSR.transform.localEulerAngles = new(0, 0, -deltaAngle);
+        if (deltaAngle * Weapon.SlashSR.transform.localScale.x > 0)
         {
-            var localScale = Weapon.SlashAnim.transform.localScale;
+            var localScale = Weapon.SlashSR.transform.localScale;
             localScale.x *= -1;
-            Weapon.SlashAnim.transform.localScale = localScale;
+            Weapon.SlashSR.transform.localScale = localScale;
         }
 
         Weapon.SR.transform
@@ -63,13 +63,13 @@ public class MeleeBasicAttackState : WeaponState
         // Show slash sprite
         DOVirtual.DelayedCall(Weapon.BasicAttackCfg.Speed * 0.4f, () =>
         {
-            Weapon.SlashAnim.GetComponent<SpriteRenderer>().enabled = true;
+            if (Weapon.SlashSR) Weapon.SlashSR.enabled = true;
         });
 
         // Hide slash sprite
         DOVirtual.DelayedCall(Weapon.BasicAttackCfg.Speed * 0.7f, () =>
         {
-            Weapon.SlashAnim.GetComponent<SpriteRenderer>().enabled = false;
+            if (Weapon.SlashSR) Weapon.SlashSR.enabled = false;
         });
     }
 

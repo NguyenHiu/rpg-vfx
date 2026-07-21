@@ -10,8 +10,8 @@ public class MeleeController : WeaponController, IBasicAttack
     public MeleeBasicAttackCfg BasicAttackCfg => m_basicAttackCfg;
     [SerializeField] protected string m_basicAttackAction;
     [SerializeField] protected Transform m_headTf;
-    [SerializeField] protected Animator m_slashAnim;
-    public Animator SlashAnim => m_slashAnim;
+    [SerializeField] protected SpriteRenderer m_slashSR;
+    public SpriteRenderer SlashSR => m_slashSR;
 
     [Header("> Pierce Attack")]
     [SerializeField] protected MeleePierceAttackCfg m_pierceCfg;

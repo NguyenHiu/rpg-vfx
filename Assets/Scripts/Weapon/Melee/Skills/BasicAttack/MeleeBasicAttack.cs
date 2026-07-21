@@ -9,13 +9,11 @@ public class MeleeBasicAttack : MeleeSkill
 {
     // TODO: Use Cfg.Speed
     protected new MeleeBasicAttackCfg Cfg;
-    protected new MeleeController Weapon;
     protected PolygonCollider2D m_collider;
     public PolygonCollider2D Collider => m_collider;
 
     public MeleeBasicAttack(MeleeBasicAttackCfg cfg, SkillController skillCtrl, InputAction action) : base(cfg, skillCtrl, action)
     {
-        Weapon = (MeleeController)skillCtrl.Weapon;
         Cfg = cfg;
 
         var go = GameObject.Instantiate(Weapon.HitAreaPrefab, Weapon.transform);
@@ -23,7 +21,7 @@ public class MeleeBasicAttack : MeleeSkill
         
         m_collider.gameObject.SetActive(false);
         // Create the pizza collision xD
-        var rad = Weapon.BasicAttackCfg.Angle * Mathf.Deg2Rad;
+        var rad = Cfg.Angle * Mathf.Deg2Rad;
         var sinVal = Mathf.Sin(rad);
         var cosVal = Mathf.Cos(rad);
         Vector2[] points = new Vector2[]
@@ -47,5 +45,10 @@ public class MeleeBasicAttack : MeleeSkill
     {
         Weapon.AnimCtrl.ChangeState(WState.IDLE);
         Cancel();
+    }
+
+    public override void FixedUpdate(float dt, PlayerContext context)
+    {
+        base.FixedUpdate(dt, context);
     }
 }

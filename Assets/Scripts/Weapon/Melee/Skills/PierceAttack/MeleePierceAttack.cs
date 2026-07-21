@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 public class MeleePierceAttack : MeleeSkill
 {
     protected new MeleePierceAttackCfg Cfg;
-    protected new MeleeController Weapon;
     protected float m_pierceTimer;
     protected Vector2 m_piercingDir;
     protected AutoTargetSkill m_targetSkill;
@@ -14,17 +13,15 @@ public class MeleePierceAttack : MeleeSkill
 
     public MeleePierceAttack(MeleePierceAttackCfg cfg, SkillController skillCtrl, InputAction action) : base(cfg, skillCtrl, action)
     {
-        Weapon = (MeleeController)skillCtrl.Weapon;
         Cfg = cfg;
         m_targetSkill = (AutoTargetSkill) SkillCtrl.GetSkill("Auto Target");
-
 
         var go = GameObject.Instantiate(Weapon.HitAreaPrefab, Weapon.transform);
         m_collider = go.GetComponent<PolygonCollider2D>();
         
         m_collider.gameObject.SetActive(false);
         // Create the pizza collision xD
-        var rad = Weapon.PierceCfg.Angle * Mathf.Deg2Rad;
+        var rad = Cfg.Angle * Mathf.Deg2Rad;
         var sinVal = Mathf.Sin(rad);
         var cosVal = Mathf.Cos(rad);
         Vector2[] points = new Vector2[]
