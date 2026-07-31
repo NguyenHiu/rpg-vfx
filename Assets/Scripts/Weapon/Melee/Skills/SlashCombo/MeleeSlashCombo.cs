@@ -6,20 +6,20 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Slash combo includes 3 steps: slash on correct direction -> revert direction -> piercing
 /// </summary>
-public class SlashCombo : MeleeSkill
+public class MeleeSlashCombo : MeleeSkill
 {
     /// NOTE:
     /// We need 2 different colliders for this skills: one for slash and one for piercing
     protected PolygonCollider2D m_slashCollider;
     protected PolygonCollider2D m_pierceCollider;
-    protected new SlashComboCfg Cfg;
+    protected new MeleeSlashComboCfg Cfg;
 
     // Skill Properties
     protected int m_stepIdx;
     protected int m_maxStep;
     protected float m_comboTimer;
 
-    public SlashCombo(SlashComboCfg cfg, SkillController skillCtrl, InputAction action) : base(cfg, skillCtrl, action)
+    public MeleeSlashCombo(MeleeSlashComboCfg cfg, SkillController skillCtrl, InputAction action) : base(cfg, skillCtrl, action)
     {
         Cfg = cfg;
         m_maxStep = 3;
@@ -76,5 +76,24 @@ public class SlashCombo : MeleeSkill
             m_stepIdx = 0;
         }
         
+    }
+
+    public override void Activate()
+    {
+        base.Activate();
+        Debug.Log($"[MeleeSlashCombo] Activate");
+        Weapon.AnimCtrl.ChangeState(WState.SLASH_COMBO, CompleteAttack);
+    }
+
+    public void CompleteAttack()
+    {
+        Weapon.AnimCtrl.ChangeState(WState.IDLE);
+        Cancel();
+    }
+
+    public override void Cancel()
+    {
+        base.Cancel();
+        Debug.Log($"[MeleeSlashCombo] Cancel");
     }
 }

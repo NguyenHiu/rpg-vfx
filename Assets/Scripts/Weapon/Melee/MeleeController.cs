@@ -20,6 +20,10 @@ public class MeleeController : WeaponController, IBasicAttack
     [SerializeField] protected int m_piercingLayer;
     public int PiercingLayer => m_piercingLayer;
 
+    [Header("> Slash combo")]
+    [SerializeField] protected MeleeSlashComboCfg m_slashComboCfg;
+    public MeleeSlashComboCfg SlashComboCfg => m_slashComboCfg;
+
     [Header("View Only")]
     [SerializeField] protected float m_weaponLength;
     public float WeaponLength => m_weaponLength;
@@ -34,8 +38,9 @@ public class MeleeController : WeaponController, IBasicAttack
     {
         m_activeSkills = new()
         {
-            new MeleeBasicAttack(m_basicAttackCfg, m_skillCtrl, m_skillCtrl.Player.InputActions.FindAction(m_basicAttackAction)),
+            // new MeleeBasicAttack(m_basicAttackCfg, m_skillCtrl, m_skillCtrl.Player.InputActions.FindAction(m_basicAttackAction)),
             new MeleePierceAttack(m_pierceCfg, m_skillCtrl, m_skillCtrl.Player.InputActions.FindAction(m_pierceAction)),
+            new MeleeSlashCombo(m_slashComboCfg, m_skillCtrl, m_skillCtrl.Player.InputActions.FindAction(m_basicAttackAction)),
         };
     }
 

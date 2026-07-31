@@ -6,6 +6,7 @@ public enum WState
     IDLE,
     ATTACK,
     PIERCE_ATTACK,
+    SLASH_COMBO,
 }
 
 public class WeaponState : State

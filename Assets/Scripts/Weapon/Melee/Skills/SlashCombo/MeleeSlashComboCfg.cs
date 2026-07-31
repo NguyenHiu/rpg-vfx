@@ -1,8 +1,8 @@
 
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Slash_Combo_Cfg", menuName = "SO/Skill Configs/Slash Combo")]
-public class SlashComboCfg : MeleeCfg
+[CreateAssetMenu(fileName = "Melee_Slash_Combo_Cfg", menuName = "SO/Skill Configs/Melee Slash Combo")]
+public class MeleeSlashComboCfg : MeleeCfg
 {
     public float SlashSpeed;
     public float SlashAngle;
