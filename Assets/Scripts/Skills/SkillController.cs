@@ -54,12 +54,6 @@ public class SkillController : MonoBehaviour
         }
     }
 
-    // public void ManualFixedUpdate(float dt, PlayerContext context)
-    // {
-    //     FixedUpdate_PassiveSkills(dt, context);
-    //     FixedUpdate_ActiveSkills(dt, context);
-    // }
-
     public void FixedUpdate_PassiveSkills(float dt, PlayerContext context)
     {
         // Allow inf passive skills activate at once

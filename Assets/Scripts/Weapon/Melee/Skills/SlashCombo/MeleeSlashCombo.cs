@@ -15,7 +15,7 @@ public class MeleeSlashCombo : MeleeSkill
     protected new MeleeSlashComboCfg Cfg;
 
     // Skill Properties
-    protected int m_stepIdx;
+    public int StepIdx { get; protected set; }
     protected int m_maxStep;
     protected float m_comboTimer;
 
@@ -70,23 +70,26 @@ public class MeleeSlashCombo : MeleeSkill
     {
         base.FixedUpdate(dt, context);
 
-        if (m_comboTimer < 0 && m_stepIdx != 0)
+        if (m_comboTimer < 0 && StepIdx != 0 && !IsRunning)
         {
             // Restart Combo
-            m_stepIdx = 0;
+            StepIdx = 0;
         }
-        
+
     }
 
     public override void Activate()
     {
         base.Activate();
-        Debug.Log($"[MeleeSlashCombo] Activate");
+        // Debug.Log($"[MeleeSlashCombo] Activate");
         Weapon.AnimCtrl.ChangeState(WState.SLASH_COMBO, CompleteAttack);
     }
 
     public void CompleteAttack()
     {
+        StepIdx += 1;
+        if (StepIdx >= m_maxStep) StepIdx = 0;
+
         Weapon.AnimCtrl.ChangeState(WState.IDLE);
         Cancel();
     }
@@ -94,6 +97,6 @@ public class MeleeSlashCombo : MeleeSkill
     public override void Cancel()
     {
         base.Cancel();
-        Debug.Log($"[MeleeSlashCombo] Cancel");
+        // Debug.Log($"[MeleeSlashCombo] Cancel");
     }
 }
