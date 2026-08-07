@@ -59,8 +59,8 @@ public class SkillController : MonoBehaviour
         // Allow inf passive skills activate at once
         foreach (var skill in m_passiveSkills)
         {
-            if (skill.MeetCondition())
-                skill.Activate();
+            // TODO: change name
+            // NOT FixedUpdate
             skill.FixedUpdate(dt, context);
         }
     }
